@@ -1,8 +1,12 @@
 """La sélection d'indicateurs : le contrat entre l'agent et le classeur.
 
-Au jalon 4, elle vient d'une fixture écrite à la main. Au jalon 6, elle viendra
+Au jalon 4, elle venait d'une fixture écrite à la main ; au jalon 6, elle viendra
 du modèle. La forme ne change pas, et c'est délibéré : le constructeur du
 classeur n'a jamais besoin de savoir d'où elle sort.
+
+Ce module ne décode rien. Le passage du texte brut à cet objet est le travail de
+`parsing.py`, qui porte les gardes — c'est la seule frontière par où passe ce
+que le modèle a produit.
 
 Un indicateur ne porte aucune valeur. Il porte une *spécification* — mesure,
 dimension, comparaison — que Python revalide contre le catalogue avant de
@@ -13,10 +17,7 @@ une mesure.
 
 from __future__ import annotations
 
-import json
 from dataclasses import dataclass, field
-from pathlib import Path
-from typing import Any
 
 from loom_report_demo.analysis import catalogue as cat
 from loom_report_demo.analysis.cadrages import COMPARAISON, PRINCIPAL, Cadrage
@@ -92,18 +93,3 @@ class Selection:
         hypotheses = [h.identifiant for h in self.ecartees]
         if len(set(hypotheses)) != len(hypotheses):
             raise ValueError("Deux hypothèses écartées portent le même identifiant.")
-
-
-def depuis_dict(donnees: dict[str, Any]) -> Selection:
-    selection = Selection(
-        niveau=Niveau(donnees["niveau"]),
-        variables=tuple(Indicateur(**x) for x in donnees.get("variables", ())),
-        ecartees=tuple(HypothesePerdue(**x) for x in donnees.get("ecartees", ())),
-        message_direction=donnees.get("message_direction", ""),
-    )
-    selection.valider()
-    return selection
-
-
-def charger(chemin: Path) -> Selection:
-    return depuis_dict(json.loads(chemin.read_text(encoding="utf-8")))

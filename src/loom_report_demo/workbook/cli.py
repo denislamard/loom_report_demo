@@ -13,7 +13,7 @@ from pathlib import Path
 
 from loom_report_demo import paths
 from loom_report_demo.workbook import construire
-from loom_report_demo.workbook.selection import charger
+from loom_report_demo.parsing import charger
 
 
 def executer(argv: list[str] | None = None) -> int:

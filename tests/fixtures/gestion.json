@@ -1,6 +1,40 @@
 {
   "niveau": "gestion",
   "message_direction": "Le volume de devis progresse plus vite que le chiffre d'affaires : la transformation est le premier levier de la période.",
+  "hypotheses": [
+    {
+      "identifiant": "H1",
+      "enonce": "La transformation dépend du délai auquel le devis est relancé",
+      "statut": "retenue"
+    },
+    {
+      "identifiant": "H2",
+      "enonce": "La marge décroche sur un segment de montant particulier",
+      "statut": "retenue"
+    },
+    {
+      "identifiant": "H3",
+      "enonce": "La montée en charge des techniciens récents pèse sur les heures passées",
+      "statut": "retenue"
+    },
+    {
+      "identifiant": "H4",
+      "enonce": "L'encours se concentre sur des créances anciennes plutôt que sur un retard diffus",
+      "statut": "retenue"
+    },
+    {
+      "identifiant": "H5",
+      "enonce": "L'agence de Montpellier, ouverte récemment, tire la marge du groupe vers le bas",
+      "statut": "ecartee",
+      "motif": "Réfutée : Montpellier affiche un taux de marge supérieur à celui de Bordeaux sur la période."
+    },
+    {
+      "identifiant": "H6",
+      "enonce": "La dégradation de la marge vient d'une déformation du mix métier",
+      "statut": "ecartee",
+      "motif": "Réfutée : la décomposition d'écart attribue l'essentiel de la variation au volume, pas au mix."
+    }
+  ],
   "variables": [
     {
       "mesure": "taux_transformation",
@@ -33,18 +67,6 @@
       "pourquoi": "L'encours pèse plus de deux cents mille euros : sa répartition par ancienneté dit ce qui relève de la relance et ce qui relève du contentieux.",
       "decision_attendue": "Engager le recouvrement sur les créances au-delà du seuil, sans attendre la clôture.",
       "hypothese_source": "H4"
-    }
-  ],
-  "ecartees": [
-    {
-      "identifiant": "H5",
-      "enonce": "L'agence de Montpellier, ouverte récemment, tire la marge du groupe vers le bas",
-      "motif": "Réfutée : Montpellier affiche un taux de marge supérieur à celui de Bordeaux sur la période."
-    },
-    {
-      "identifiant": "H6",
-      "enonce": "La dégradation de la marge vient d'une déformation du mix métier",
-      "motif": "Réfutée : la décomposition d'écart attribue l'essentiel de la variation au volume, pas au mix."
     }
   ]
 }

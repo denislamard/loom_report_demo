@@ -35,7 +35,8 @@ from loom_report_demo.workbook import ORDRE, construire
 from loom_report_demo.workbook import formules as f
 from loom_report_demo.workbook.feuilles_donnees import ecrire_feuilles
 from loom_report_demo.workbook.schema import FEUILLE_DE_BASE, construire_schemas
-from loom_report_demo.workbook.selection import Indicateur, Selection, charger as charger_selection
+from loom_report_demo.parsing import charger as charger_selection
+from loom_report_demo.workbook.selection import Indicateur, Selection
 
 FIXTURE = Path(__file__).parent / "fixtures" / "gestion.json"
 
@@ -239,15 +240,14 @@ def test_la_selection_refuse_un_croisement_tautologique() -> None:
 
 
 def test_la_selection_refuse_deux_hypotheses_de_meme_identifiant() -> None:
-    from loom_report_demo.workbook.selection import HypothesePerdue, depuis_dict
+    """Le décodage relève du parsing depuis le jalon 5 ; la garde reste la même."""
+    from loom_report_demo.parsing import ErreurSortie, analyser
+    from loom_report_demo.workbook.selection import HypothesePerdue
 
     contenu = json.loads(FIXTURE.read_text(encoding="utf-8"))
-    contenu["ecartees"] = [
-        {"identifiant": "H1", "enonce": "a", "motif": "b"},
-        {"identifiant": "H1", "enonce": "c", "motif": "d"},
-    ]
-    with pytest.raises(ValueError, match="identifiant"):
-        depuis_dict(contenu)
+    contenu["hypotheses"][1]["identifiant"] = contenu["hypotheses"][0]["identifiant"]
+    with pytest.raises(ErreurSortie, match="identifiant"):
+        analyser(contenu)
     assert HypothesePerdue("H1", "a", "b").identifiant == "H1"
 
 
