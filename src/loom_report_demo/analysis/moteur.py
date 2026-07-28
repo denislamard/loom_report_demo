@@ -190,7 +190,23 @@ def ventiler(
             f"où la dimension {cle_dimension!r} n'existe pas."
         )
 
-    borne = fenetre(cadrage, donnees.situation, donnees.debut)
+    return ventiler_fenetre(
+        donnees, mesure, dimension, fenetre(cadrage, donnees.situation, donnees.debut), filtre
+    )
+
+
+def ventiler_fenetre(
+    donnees: Donnees,
+    mesure: cat.Mesure,
+    dimension: cat.Dimension,
+    borne: Fenetre,
+    filtre: Filtre | None = None,
+) -> Ventilation:
+    """Ventilation sur une fenêtre déjà résolue.
+
+    Sert au criblage, qui découpe la période en moitiés pour éprouver la
+    stabilité d'un écart : ces fenêtres-là ne correspondent à aucun cadrage.
+    """
     table = _appliquer_filtre(
         _fenetrer(donnees.table(mesure.base), mesure.base, borne), mesure.base, filtre
     )
@@ -221,8 +237,8 @@ def ventiler(
         )
 
     return Ventilation(
-        mesure=cle_mesure,
-        dimension=cle_dimension,
+        mesure=mesure.cle,
+        dimension=dimension.cle,
         fenetre=borne,
         ensemble=ensemble,
         modalites=tuple(modalites),

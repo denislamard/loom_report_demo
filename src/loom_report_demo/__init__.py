@@ -2,7 +2,7 @@
 
 import asyncio
 
-__all__ = ["main", "profil", "run", "seed"]
+__all__ = ["candidats", "main", "profil", "run", "seed"]
 
 
 async def main() -> None:
@@ -34,3 +34,10 @@ def profil() -> None:
     from loom_report_demo.analysis.cli import run as executer_profil
 
     executer_profil()
+
+
+def candidats() -> None:
+    """Affiche le criblage : ce que le code trouve seul. Sans clé d'API."""
+    from loom_report_demo.analysis.cli import run_candidats
+
+    run_candidats()

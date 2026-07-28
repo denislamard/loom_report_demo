@@ -70,6 +70,24 @@ class Nature(StrEnum):
     STOCK = "stock"
 
 
+class Conversion(StrEnum):
+    """Comment convertir un écart sur cette mesure en euros de marge annuelle.
+
+    C'est ce qui rend deux candidats comparables : sans unité commune, le
+    criblage ne peut pas dire si six points d'écart sur un taux d'accord pèsent
+    plus ou moins qu'un point de marge sur une agence.
+    """
+
+    #: Le numérateur est déjà de la marge en euros.
+    MARGE = "marge"
+    #: Le numérateur est du chiffre d'affaires : à multiplier par le taux de marge.
+    CHIFFRE_AFFAIRES = "chiffre_affaires"
+    #: Le numérateur est en heures : à multiplier par le coût horaire moyen.
+    HEURES = "heures"
+    #: Non convertible. Le candidat reste scoré sur les quatre autres critères.
+    AUCUNE = "aucune"
+
+
 class Sens(StrEnum):
     """Direction souhaitable. Détermine quelle modalité est « la pire »."""
 
@@ -111,13 +129,11 @@ class Mesure:
     sens: Sens
     niveaux: frozenset[Niveau]
     nature: Nature = Nature.FLUX
+    conversion: Conversion = Conversion.AUCUNE
     agregat: Agregat | None = None
     #: Nom d'une fonction du registre `moteur.SPECIALES`, pour les rares mesures
     #: que l'algèbre des agrégats ne couvre pas.
     special: str | None = None
-    #: Une mesure matérialisable peut être convertie en euros : c'est elle qui
-    #: alimentera le score de matérialité du criblage, au jalon 3.
-    materialisable: bool = True
     description: str = ""
 
     def __post_init__(self) -> None:
@@ -130,6 +146,11 @@ class Mesure:
     @property
     def comparable_entre_periodes(self) -> bool:
         return self.nature is Nature.FLUX
+
+    @property
+    def materialisable(self) -> bool:
+        """Un écart sur cette mesure se chiffre-t-il en euros ?"""
+        return self.conversion is not Conversion.AUCUNE
 
 
 @dataclass(frozen=True, slots=True)
@@ -144,6 +165,12 @@ class Dimension:
     ordonnee: bool = False
     #: Ordre imposé des modalités, pour les dimensions ordonnées.
     modalites: tuple[str, ...] = field(default_factory=tuple)
+    #: Mesures avec lesquelles le croisement est TAUTOLOGIQUE : la dimension est
+    #: dérivée de la grandeur mesurée, le résultat est vrai par construction.
+    #: « Le panier moyen croît avec la tranche de montant » n'est pas un constat,
+    #: c'est une définition. Un humain le voit d'un coup d'œil ; aucun des cinq
+    #: scores ne le détecte, et un modèle le retiendrait avec assurance.
+    tautologiques: frozenset[str] = field(default_factory=frozenset)
     description: str = ""
 
     def concerne(self, niveau: Niveau) -> bool:
@@ -189,6 +216,7 @@ _MESURES: tuple[Mesure, ...] = (
         unite=Unite.POURCENT,
         sens=Sens.HAUT,
         niveaux=_TOUS,
+        conversion=Conversion.MARGE,
         agregat=Agregat(numerateur="marge", denominateur="montant_ht"),
         description="Marge sur coûts directs rapportée au chiffre d'affaires, hors structure.",
     ),
@@ -212,7 +240,6 @@ _MESURES: tuple[Mesure, ...] = (
         niveaux=_STRAT_GESTION,
         nature=Nature.STOCK,
         agregat=Agregat(numerateur="encours", denominateur="montant_ttc", facteur=365.0),
-        materialisable=False,
         description="Encours rapporté au chiffre d'affaires TTC de la période, ramené en jours.",
     ),
     Mesure(
@@ -223,7 +250,6 @@ _MESURES: tuple[Mesure, ...] = (
         sens=Sens.BAS,
         niveaux=_GESTION_OPE,
         agregat=Agregat(numerateur="delai_reel_pondere", denominateur="est_payee"),
-        materialisable=False,
         description=(
             "Moyenne des délais constatés sur les factures réglées. Attention au biais de "
             "survie : les mauvais payeurs récents n'ont pas encore payé et sortent du calcul. "
@@ -239,7 +265,6 @@ _MESURES: tuple[Mesure, ...] = (
         niveaux=_GESTION_OPE,
         nature=Nature.STOCK,
         agregat=Agregat(numerateur="en_retard", denominateur="ligne"),
-        materialisable=False,
         description="Factures échues et non réglées, rapportées au nombre total de factures.",
     ),
     Mesure(
@@ -251,7 +276,6 @@ _MESURES: tuple[Mesure, ...] = (
         niveaux=_OPE,
         nature=Nature.STOCK,
         agregat=Agregat(numerateur="retard_pondere", denominateur="encours"),
-        materialisable=False,
         description=(
             "Retard moyen pondéré par le montant : un gros impayé pèse plus qu'un petit."
         ),
@@ -265,7 +289,6 @@ _MESURES: tuple[Mesure, ...] = (
         niveaux=_OPE,
         nature=Nature.STOCK,
         agregat=Agregat(numerateur="exception"),
-        materialisable=False,
         description="Créances dépassant le seuil de recouvrement, à traiter individuellement.",
     ),
     Mesure(
@@ -276,7 +299,6 @@ _MESURES: tuple[Mesure, ...] = (
         sens=Sens.BAS,
         niveaux=_STRAT,
         special="concentration_client",
-        materialisable=False,
         description=(
             "Part du chiffre d'affaires réalisée par les dix pour cent de clients les plus "
             "contributeurs. Mesure un risque de dépendance, pas une performance."
@@ -290,6 +312,7 @@ _MESURES: tuple[Mesure, ...] = (
         unite=Unite.POURCENT,
         sens=Sens.HAUT,
         niveaux=_TOUS,
+        conversion=Conversion.CHIFFRE_AFFAIRES,
         agregat=Agregat(numerateur="ca_gagne", denominateur="montant_arbitre"),
         description=(
             "Euros gagnés rapportés aux euros arbitrés. En valeur et non en nombre : un taux "
@@ -313,6 +336,7 @@ _MESURES: tuple[Mesure, ...] = (
         unite=Unite.EUROS,
         sens=Sens.HAUT,
         niveaux=_STRAT_GESTION,
+        conversion=Conversion.CHIFFRE_AFFAIRES,
         agregat=Agregat(numerateur="ca_gagne", denominateur="est_gagne"),
         description="Montant moyen des devis acceptés.",
     ),
@@ -324,7 +348,6 @@ _MESURES: tuple[Mesure, ...] = (
         sens=Sens.BAS,
         niveaux=_GESTION_OPE,
         agregat=Agregat(numerateur="delai_relance_pondere", denominateur="est_relance"),
-        materialisable=False,
         description="Nombre de jours entre l'émission du devis et le premier rappel.",
     ),
     Mesure(
@@ -335,7 +358,6 @@ _MESURES: tuple[Mesure, ...] = (
         sens=Sens.HAUT,
         niveaux=_GESTION_OPE,
         agregat=Agregat(numerateur="est_relance", denominateur="ligne"),
-        materialisable=False,
         description="Devis ayant fait l'objet d'au moins un rappel.",
     ),
     Mesure(
@@ -346,7 +368,6 @@ _MESURES: tuple[Mesure, ...] = (
         sens=Sens.HAUT,
         niveaux=_OPE,
         agregat=Agregat(numerateur="relance_rapide", denominateur="ligne"),
-        materialisable=False,
         description=(
             "Devis relancés sous trois jours, seuil au-delà duquel la transformation chute."
         ),
@@ -359,6 +380,7 @@ _MESURES: tuple[Mesure, ...] = (
         unite=Unite.POURCENT,
         sens=Sens.BAS,
         niveaux=_GESTION_OPE,
+        conversion=Conversion.HEURES,
         agregat=Agregat(
             numerateur="heures_reelles", denominateur="heures_devisees", decalage=-1.0
         ),
@@ -381,8 +403,8 @@ _MESURES: tuple[Mesure, ...] = (
         unite=Unite.EUROS,
         sens=Sens.HAUT,
         niveaux=_STRAT,
+        conversion=Conversion.CHIFFRE_AFFAIRES,
         agregat=Agregat(numerateur="ca_lie", distinct="technicien_id"),
-        materialisable=False,
         description="Production rapportée à l'effectif réellement actif sur la période.",
     ),
 )
@@ -402,6 +424,7 @@ _DIMENSIONS: tuple[Dimension, ...] = (
         colonne="metier",
         bases=frozenset(Base),
         niveaux=_TOUS,
+        tautologiques=frozenset({"panier_moyen_gagne"}),
         description="Plomberie, chauffage, électricité, salle de bain, dépannage.",
     ),
     Dimension(
@@ -432,6 +455,9 @@ _DIMENSIONS: tuple[Dimension, ...] = (
         colonne="profil_paiement",
         bases=frozenset({Base.FACTURES}),
         niveaux=_GESTION_OPE,
+        tautologiques=frozenset(
+            {"delai_reglement", "taux_retard_paiement", "age_moyen_file_recouvrement", "dso"}
+        ),
         ordonnee=True,
         modalites=("Bon payeur", "Standard", "Lent", "Litigieux"),
     ),
@@ -458,6 +484,13 @@ _DIMENSIONS: tuple[Dimension, ...] = (
         colonne="tranche_relance",
         bases=frozenset({Base.DEVIS}),
         niveaux=_GESTION_OPE,
+        tautologiques=frozenset(
+            {
+            "delai_1ere_relance",
+            "taux_devis_relances",
+            "respect_delai_relance",
+            }
+        ),
         ordonnee=True,
         modalites=("0-3 j", "4-7 j", "8-15 j", "Plus de 15 j", "Jamais relancé"),
     ),
@@ -467,6 +500,16 @@ _DIMENSIONS: tuple[Dimension, ...] = (
         colonne="tranche_age_creance",
         bases=frozenset({Base.FACTURES}),
         niveaux=_GESTION_OPE,
+        tautologiques=frozenset(
+            {
+            "age_moyen_file_recouvrement",
+            "taux_retard_paiement",
+            "exceptions_ouvertes",
+            "encours_client",
+            "delai_reglement",
+            "dso",
+            }
+        ),
         ordonnee=True,
         modalites=("Réglée", "Non échu", "1-30 j", "31-60 j", "61-90 j", "Plus de 90 j"),
     ),
@@ -476,6 +519,7 @@ _DIMENSIONS: tuple[Dimension, ...] = (
         colonne="prestation",
         bases=frozenset({Base.DEVIS, Base.FACTURES}),
         niveaux=_GESTION,
+        tautologiques=frozenset({"panier_moyen_gagne"}),
         description="Libellé du catalogue, vingt modalités.",
     ),
     Dimension(
@@ -484,6 +528,15 @@ _DIMENSIONS: tuple[Dimension, ...] = (
         colonne="tranche_montant",
         bases=frozenset({Base.DEVIS, Base.FACTURES}),
         niveaux=_GESTION_OPE,
+        tautologiques=frozenset(
+            {
+            "ca_facture_ht",
+            "ca_devise_ht",
+            "panier_moyen_gagne",
+            "marge_brute",
+            "marge_production",
+            }
+        ),
         ordonnee=True,
         modalites=("Moins de 1 k€", "1 à 5 k€", "5 à 15 k€", "Plus de 15 k€"),
     ),
@@ -529,7 +582,7 @@ def croisements_valides(niveau: Niveau) -> tuple[tuple[str, str], ...]:
         (m.cle, d.cle)
         for m in mesures_du_niveau(niveau)
         for d in dimensions_du_niveau(niveau)
-        if d.disponible_sur(m.base)
+        if d.disponible_sur(m.base) and m.cle not in d.tautologiques
     )
 
 
@@ -552,4 +605,9 @@ def valider(cle_mesure: str, cle_dimension: str | None, niveau: Niveau) -> None:
         raise ValueError(
             f"{cle_mesure!r} se calcule sur la table {m.base.value}, "
             f"où la dimension {cle_dimension!r} n'existe pas."
+        )
+    if cle_mesure in d.tautologiques:
+        raise ValueError(
+            f"Croisement tautologique : {cle_dimension!r} est dérivée de la grandeur "
+            f"mesurée par {cle_mesure!r}, le résultat serait vrai par construction."
         )
