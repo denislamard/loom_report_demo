@@ -2,7 +2,7 @@
 
 import asyncio
 
-__all__ = ["candidats", "main", "profil", "run", "seed"]
+__all__ = ["candidats", "main", "profil", "rapport", "run", "seed"]
 
 
 async def main() -> None:
@@ -41,3 +41,10 @@ def candidats() -> None:
     from loom_report_demo.analysis.cli import run_candidats
 
     run_candidats()
+
+
+def rapport() -> None:
+    """Produit le classeur à partir d'une sélection d'indicateurs. Sans clé d'API."""
+    from loom_report_demo.workbook.cli import run as executer_rapport
+
+    executer_rapport()

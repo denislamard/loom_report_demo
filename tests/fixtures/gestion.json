@@ -1,0 +1,50 @@
+{
+  "niveau": "gestion",
+  "message_direction": "Le volume de devis progresse plus vite que le chiffre d'affaires : la transformation est le premier levier de la période.",
+  "variables": [
+    {
+      "mesure": "taux_transformation",
+      "dimension": "tranche_relance",
+      "seuil_alerte": 0.25,
+      "pourquoi": "Le délai de première relance sépare nettement les devis gagnés des devis perdus, et il se dégrade à mesure que le volume monte.",
+      "decision_attendue": "Fixer un délai de relance maximal et l'outiller, plutôt que de le laisser à l'appréciation de chacun.",
+      "hypothese_source": "H1"
+    },
+    {
+      "mesure": "taux_marge_brute",
+      "dimension": "tranche_montant",
+      "seuil_alerte": 0.30,
+      "pourquoi": "La marge se dégrade d'un exercice à l'autre : reste à savoir si le chiffrage décroche sur un segment particulier.",
+      "decision_attendue": "Revoir la grille de chiffrage sur le segment le moins rentable avant d'agir sur les achats.",
+      "hypothese_source": "H2"
+    },
+    {
+      "mesure": "taux_derive_horaire",
+      "dimension": "anciennete_technicien",
+      "seuil_alerte": 0.10,
+      "pourquoi": "Deux vagues d'embauche en trois exercices : la montée en charge des nouveaux pèse peut-être sur les heures passées.",
+      "decision_attendue": "Ajuster les temps devisés sur les interventions confiées aux techniciens de moins d'un an.",
+      "hypothese_source": "H3"
+    },
+    {
+      "mesure": "encours_client",
+      "dimension": "tranche_age_creance",
+      "seuil_alerte": null,
+      "pourquoi": "L'encours pèse plus de deux cents mille euros : sa répartition par ancienneté dit ce qui relève de la relance et ce qui relève du contentieux.",
+      "decision_attendue": "Engager le recouvrement sur les créances au-delà du seuil, sans attendre la clôture.",
+      "hypothese_source": "H4"
+    }
+  ],
+  "ecartees": [
+    {
+      "identifiant": "H5",
+      "enonce": "L'agence de Montpellier, ouverte récemment, tire la marge du groupe vers le bas",
+      "motif": "Réfutée : Montpellier affiche un taux de marge supérieur à celui de Bordeaux sur la période."
+    },
+    {
+      "identifiant": "H6",
+      "enonce": "La dégradation de la marge vient d'une déformation du mix métier",
+      "motif": "Réfutée : la décomposition d'écart attribue l'essentiel de la variation au volume, pas au mix."
+    }
+  ]
+}
