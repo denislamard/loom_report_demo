@@ -1,0 +1,1020 @@
+client_id;nom_client;type_client;ville;code_postal;agence_rattachement;canal_acquisition;date_creation;profil_paiement
+CLI-0051;Marc Da Silva;Particulier;Toulouse;31000;Toulouse;Site web;2018-02-14;Bon payeur
+CLI-0022;Rachida Faure;Particulier;Libourne;33500;Bordeaux;Bouche-à-oreille;2018-03-13;Standard
+CLI-0025;Clinique du Parc 47;Syndic;Pessac;33600;Bordeaux;Google Ads;2018-03-14;Standard
+CLI-0098;Fanny Marchal;Particulier;Mérignac;33700;Bordeaux;Bouche-à-oreille;2018-04-08;Bon payeur
+CLI-0062;Joëlle Dupuis;Particulier;Tournefeuille;31170;Toulouse;Bouche-à-oreille;2018-04-28;Bon payeur
+CLI-0092;Valérie Rey;Particulier;Tournefeuille;31170;Toulouse;Bouche-à-oreille;2018-05-03;Standard
+CLI-0045;EHPAD Les Glycines 84;Syndic;Bègles;33130;Bordeaux;Site web;2018-05-09;Lent
+CLI-0097;Damien Masson;Particulier;Muret;31600;Toulouse;Prospection;2018-05-15;Standard
+CLI-0114;Hélène Moreau;Particulier;Talence;33400;Bordeaux;Google Ads;2018-06-02;Bon payeur
+CLI-0008;Nathalie Aubert;Particulier;Blagnac;31700;Toulouse;Bouche-à-oreille;2018-06-03;Bon payeur
+CLI-0125;Inès Gaillard;Particulier;Tournefeuille;31170;Toulouse;Bouche-à-oreille;2018-06-10;Lent
+CLI-0117;Rachida Rey;Particulier;Tournefeuille;31170;Toulouse;Site web;2018-06-25;Standard
+CLI-0017;Foncia Occitanie 2;Professionnel;Toulouse;31000;Toulouse;Google Ads;2018-07-13;Standard
+CLI-0145;EHPAD Les Glycines 66;Collectivité;Mérignac;33700;Bordeaux;Prospection;2018-07-20;Bon payeur
+CLI-0013;Cabinet dentaire Ansel 33;Professionnel;Colomiers;31770;Toulouse;Bouche-à-oreille;2018-08-07;Standard
+CLI-0156;Delphine Guerin;Particulier;Libourne;33500;Bordeaux;Bouche-à-oreille;2018-08-11;Bon payeur
+CLI-0014;Olivier Barbier;Particulier;Mérignac;33700;Bordeaux;Bouche-à-oreille;2018-08-20;Bon payeur
+CLI-0140;Restaurant Le Bistrot 86;Syndic;Blagnac;31700;Toulouse;Bouche-à-oreille;2018-08-20;Standard
+CLI-0112;Gaëlle Vidal;Particulier;Bègles;33130;Bordeaux;Site web;2018-09-03;Standard
+CLI-0042;Joëlle Bonnet;Particulier;Mérignac;33700;Bordeaux;Bouche-à-oreille;2018-09-14;Standard
+CLI-0059;Ibrahim Perrin;Particulier;Mérignac;33700;Bordeaux;Annuaire pro;2018-09-20;Bon payeur
+CLI-0185;Serge Dubois;Particulier;Pessac;33600;Bordeaux;Partenaire;2018-10-11;Bon payeur
+CLI-0003;Office HLM Aquitaine 66;Professionnel;Muret;31600;Toulouse;Annuaire pro;2018-10-21;Standard
+CLI-0148;Adrien Masson;Particulier;Talence;33400;Bordeaux;Annuaire pro;2018-10-30;Standard
+CLI-0110;Camille Guerin;Particulier;Muret;31600;Toulouse;Prospection;2018-11-12;Bon payeur
+CLI-0060;Kevin Millet;Particulier;Muret;31600;Toulouse;Partenaire;2018-11-15;Standard
+CLI-0179;Auto-école Conduite Plus 75;Professionnel;Libourne;33500;Bordeaux;Bouche-à-oreille;2018-11-20;Standard
+CLI-0135;Cabinet dentaire Ansel 39;Professionnel;Bordeaux;33000;Bordeaux;Site web;2018-11-21;Litigieux
+CLI-0079;Gaëlle Léger;Particulier;Mérignac;33700;Bordeaux;Bouche-à-oreille;2018-11-28;Standard
+CLI-0142;Ulysse Girard;Particulier;Bordeaux;33000;Bordeaux;Prospection;2018-12-05;Standard
+CLI-0086;Gérard Guerin;Particulier;Blagnac;31700;Toulouse;Bouche-à-oreille;2018-12-11;Bon payeur
+CLI-0168;Alain Da Silva;Particulier;Talence;33400;Bordeaux;Bouche-à-oreille;2019-01-04;Lent
+CLI-0129;Hôtel Le Cardinal 47;Professionnel;Blagnac;31700;Toulouse;Site web;2019-01-25;Bon payeur
+CLI-0131;Nathalie Girard;Particulier;Balma;31130;Toulouse;Google Ads;2019-01-27;Bon payeur
+CLI-0006;Quentin Dubois;Particulier;Pessac;33600;Bordeaux;Google Ads;2019-02-07;Standard
+CLI-0074;Hélène Aubert;Particulier;Mérignac;33700;Bordeaux;Site web;2019-02-15;Standard
+CLI-0030;Hélène Renard;Particulier;Muret;31600;Toulouse;Annuaire pro;2019-02-26;Lent
+CLI-0118;Ulysse Renard;Particulier;Toulouse;31000;Toulouse;Partenaire;2019-02-28;Bon payeur
+CLI-0127;Yasmine Robin;Particulier;Balma;31130;Toulouse;Partenaire;2019-02-28;Standard
+CLI-0073;SARL Toitures Sud 5;Professionnel;Balma;31130;Toulouse;Annuaire pro;2019-03-24;Lent
+CLI-0158;Laure Lemoine;Particulier;Talence;33400;Bordeaux;Bouche-à-oreille;2019-03-24;Bon payeur
+CLI-0019;Tiphaine Dubois;Particulier;Libourne;33500;Bordeaux;Annuaire pro;2019-03-26;Bon payeur
+CLI-0033;Cabinet Vergne Immobilier 96;Syndic;Talence;33400;Bordeaux;Site web;2019-04-03;Litigieux
+CLI-0189;EHPAD Les Glycines 98;Professionnel;Mérignac;33700;Bordeaux;Bouche-à-oreille;2019-04-15;Lent
+CLI-0176;Cabinet Vergne Immobilier 41;Professionnel;Blagnac;31700;Toulouse;Partenaire;2019-05-12;Bon payeur
+CLI-0119;Serge Lemoine;Particulier;Mérignac;33700;Bordeaux;Bouche-à-oreille;2019-05-20;Bon payeur
+CLI-0106;Camille Roussel;Particulier;Balma;31130;Toulouse;Bouche-à-oreille;2019-05-23;Bon payeur
+CLI-0052;Camille Noel;Particulier;Toulouse;31000;Toulouse;Bouche-à-oreille;2019-05-25;Standard
+CLI-0041;Damien Dupuis;Particulier;Muret;31600;Toulouse;Annuaire pro;2019-06-08;Standard
+CLI-0065;Hélène Blanc;Particulier;Mérignac;33700;Bordeaux;Bouche-à-oreille;2019-06-17;Litigieux
+CLI-0036;Camille Masson;Particulier;Tournefeuille;31170;Toulouse;Site web;2019-06-21;Standard
+CLI-0174;Office HLM Aquitaine 38;Professionnel;Bordeaux;33000;Bordeaux;Google Ads;2019-06-22;Bon payeur
+CLI-0061;SCI Les Tilleuls 88;Professionnel;Balma;31130;Toulouse;Bouche-à-oreille;2019-06-29;Standard
+CLI-0144;Marc Faure;Particulier;Toulouse;31000;Toulouse;Annuaire pro;2019-07-03;Standard
+CLI-0188;Olivier Dupuis;Particulier;Talence;33400;Bordeaux;Bouche-à-oreille;2019-07-04;Standard
+CLI-0169;Clinique du Parc 60;Professionnel;Pessac;33600;Bordeaux;Partenaire;2019-07-05;Lent
+CLI-0141;Rachida Rey;Particulier;Pessac;33600;Bordeaux;Google Ads;2019-07-11;Bon payeur
+CLI-0009;Yasmine Charpentier;Particulier;Balma;31130;Toulouse;Bouche-à-oreille;2019-07-17;Standard
+CLI-0047;Fanny Léger;Particulier;Talence;33400;Bordeaux;Google Ads;2019-07-26;Standard
+CLI-0157;Ulysse Masson;Particulier;Bordeaux;33000;Bordeaux;Bouche-à-oreille;2019-07-27;Lent
+CLI-0050;Tiphaine Perrin;Particulier;Colomiers;31770;Toulouse;Annuaire pro;2019-07-29;Standard
+CLI-0089;Ulysse Masson;Particulier;Bègles;33130;Bordeaux;Site web;2019-09-10;Bon payeur
+CLI-0149;Serge Marchal;Particulier;Colomiers;31770;Toulouse;Bouche-à-oreille;2019-09-14;Bon payeur
+CLI-0111;Rachida Marchal;Particulier;Talence;33400;Bordeaux;Site web;2019-10-01;Bon payeur
+CLI-0032;Franck Nguyen;Particulier;Balma;31130;Toulouse;Bouche-à-oreille;2019-10-02;Standard
+CLI-0057;Pharmacie Centrale 74;Syndic;Colomiers;31770;Toulouse;Site web;2019-10-18;Bon payeur
+CLI-0056;Marc Masson;Particulier;Talence;33400;Bordeaux;Bouche-à-oreille;2019-11-01;Standard
+CLI-0064;Lycée Saint-Exupéry 67;Professionnel;Toulouse;31000;Toulouse;Bouche-à-oreille;2019-11-06;Standard
+CLI-0175;Franck Léger;Particulier;Muret;31600;Toulouse;Bouche-à-oreille;2019-11-06;Bon payeur
+CLI-0040;Restaurant Le Bistrot 94;Professionnel;Mérignac;33700;Bordeaux;Annuaire pro;2019-11-28;Standard
+CLI-0096;Serge Noel;Particulier;Pessac;33600;Bordeaux;Bouche-à-oreille;2019-12-05;Standard
+CLI-0048;Ibrahim Dubois;Particulier;Muret;31600;Toulouse;Site web;2019-12-06;Standard
+CLI-0070;Kevin Aubert;Particulier;Tournefeuille;31170;Toulouse;Annuaire pro;2019-12-14;Bon payeur
+CLI-0095;Camille Colin;Particulier;Libourne;33500;Bordeaux;Bouche-à-oreille;2019-12-18;Standard
+CLI-0020;Inès Bonnet;Particulier;Pessac;33600;Bordeaux;Bouche-à-oreille;2020-01-04;Standard
+CLI-0181;Résidence Belvédère 15;Professionnel;Balma;31130;Toulouse;Annuaire pro;2020-02-01;Bon payeur
+CLI-0104;Kevin Vidal;Particulier;Blagnac;31700;Toulouse;Site web;2020-02-09;Bon payeur
+CLI-0015;Quentin Blanc;Particulier;Libourne;33500;Bordeaux;Site web;2020-02-27;Bon payeur
+CLI-0121;Camping Les Pins 76;Syndic;Balma;31130;Toulouse;Annuaire pro;2020-03-04;Bon payeur
+CLI-0177;Béatrice Faure;Particulier;Toulouse;31000;Toulouse;Bouche-à-oreille;2020-03-07;Standard
+CLI-0120;Gaëlle Bonnet;Particulier;Balma;31130;Toulouse;Annuaire pro;2020-03-14;Lent
+CLI-0053;Adrien Da Silva;Particulier;Pessac;33600;Bordeaux;Annuaire pro;2020-03-18;Lent
+CLI-0027;Kevin Chevalier;Particulier;Toulouse;31000;Toulouse;Prospection;2020-03-25;Bon payeur
+CLI-0124;Rachida Dupuis;Particulier;Balma;31130;Toulouse;Site web;2020-03-31;Lent
+CLI-0001;Cabinet dentaire Ansel 9;Professionnel;Bordeaux;33000;Bordeaux;Partenaire;2020-04-03;Lent
+CLI-0075;Groupe scolaire Jean-Jaurès 67;Syndic;Blagnac;31700;Toulouse;Annuaire pro;2020-05-09;Litigieux
+CLI-0152;Rachida Vidal;Particulier;Bordeaux;33000;Bordeaux;Annuaire pro;2020-05-15;Standard
+CLI-0039;Alain Brun;Particulier;Mérignac;33700;Bordeaux;Google Ads;2020-05-20;Standard
+CLI-0055;Boulangerie Marchetti 84;Professionnel;Bordeaux;33000;Bordeaux;Site web;2020-06-09;Standard
+CLI-0182;Supérette Vival 49;Professionnel;Bordeaux;33000;Bordeaux;Partenaire;2020-06-12;Bon payeur
+CLI-0091;Rachida Blanc;Particulier;Pessac;33600;Bordeaux;Annuaire pro;2020-06-30;Bon payeur
+CLI-0102;Ibrahim Poirier;Particulier;Tournefeuille;31170;Toulouse;Bouche-à-oreille;2020-07-04;Bon payeur
+CLI-0139;Ibrahim Lemoine;Particulier;Libourne;33500;Bordeaux;Bouche-à-oreille;2020-07-30;Bon payeur
+CLI-0151;Groupe scolaire Jean-Jaurès 30;Syndic;Talence;33400;Bordeaux;Partenaire;2020-08-07;Standard
+CLI-0076;Pauline Gaillard;Particulier;Muret;31600;Toulouse;Prospection;2020-08-13;Bon payeur
+CLI-0146;William Renard;Particulier;Mérignac;33700;Bordeaux;Bouche-à-oreille;2020-08-20;Standard
+CLI-0007;Fanny Charpentier;Particulier;Colomiers;31770;Toulouse;Bouche-à-oreille;2020-09-04;Standard
+CLI-0043;Valérie Dupuis;Particulier;Tournefeuille;31170;Toulouse;Site web;2020-09-04;Bon payeur
+CLI-0078;CCAS de Muret 8;Collectivité;Colomiers;31770;Toulouse;Site web;2020-09-08;Lent
+CLI-0109;Foncia Occitanie 47;Professionnel;Muret;31600;Toulouse;Google Ads;2020-09-11;Standard
+CLI-0046;Cabinet Vergne Immobilier 16;Syndic;Balma;31130;Toulouse;Partenaire;2020-09-19;Bon payeur
+CLI-0138;Béatrice Barbier;Particulier;Blagnac;31700;Toulouse;Annuaire pro;2020-10-04;Standard
+CLI-0160;Laure Aubert;Particulier;Bordeaux;33000;Bordeaux;Bouche-à-oreille;2020-10-06;Standard
+CLI-0005;Ulysse Aubert;Particulier;Pessac;33600;Bordeaux;Bouche-à-oreille;2020-10-29;Standard
+CLI-0067;CCAS de Muret 25;Professionnel;Bègles;33130;Bordeaux;Partenaire;2020-10-29;Standard
+CLI-0031;CCAS de Muret 85;Professionnel;Pessac;33600;Bordeaux;Bouche-à-oreille;2020-11-03;Standard
+CLI-0024;Ulysse Barbier;Particulier;Mérignac;33700;Bordeaux;Google Ads;2020-11-08;Standard
+CLI-0088;Yasmine Rey;Particulier;Colomiers;31770;Toulouse;Prospection;2020-11-13;Standard
+CLI-0018;Hélène Colin;Particulier;Mérignac;33700;Bordeaux;Site web;2020-11-15;Bon payeur
+CLI-0147;Kevin Vidal;Particulier;Libourne;33500;Bordeaux;Bouche-à-oreille;2020-11-17;Litigieux
+CLI-0068;Joëlle Aubert;Particulier;Pessac;33600;Bordeaux;Bouche-à-oreille;2020-11-18;Bon payeur
+CLI-0084;Supérette Vival 71;Professionnel;Muret;31600;Toulouse;Site web;2020-11-21;Standard
+CLI-0187;Franck Blanc;Particulier;Libourne;33500;Bordeaux;Annuaire pro;2020-11-21;Standard
+CLI-0161;Alain Faure;Particulier;Talence;33400;Bordeaux;Prospection;2020-12-02;Bon payeur
+CLI-0010;Gaëlle Chevalier;Particulier;Talence;33400;Bordeaux;Annuaire pro;2020-12-12;Bon payeur
+CLI-0136;Camille Vidal;Particulier;Muret;31600;Toulouse;Bouche-à-oreille;2020-12-22;Bon payeur
+CLI-0080;Elsa Faure;Particulier;Bordeaux;33000;Bordeaux;Annuaire pro;2020-12-25;Bon payeur
+CLI-0108;Auto-école Conduite Plus 27;Professionnel;Tournefeuille;31170;Toulouse;Partenaire;2020-12-30;Lent
+CLI-0012;Delphine Millet;Particulier;Tournefeuille;31170;Toulouse;Bouche-à-oreille;2021-01-01;Bon payeur
+CLI-0159;SCI Les Tilleuls 57;Syndic;Mérignac;33700;Bordeaux;Site web;2021-01-25;Lent
+CLI-0107;Serge Bonnet;Particulier;Colomiers;31770;Toulouse;Prospection;2021-01-26;Standard
+CLI-0132;Yasmine Lefèvre;Particulier;Blagnac;31700;Toulouse;Partenaire;2021-01-28;Bon payeur
+CLI-0116;William Brun;Particulier;Pessac;33600;Bordeaux;Bouche-à-oreille;2021-01-29;Bon payeur
+CLI-0137;Damien Lefèvre;Particulier;Bègles;33130;Bordeaux;Bouche-à-oreille;2021-02-12;Standard
+CLI-0126;Valérie Bonnet;Particulier;Bègles;33130;Bordeaux;Bouche-à-oreille;2021-02-22;Standard
+CLI-0190;Rachida Renard;Particulier;Colomiers;31770;Toulouse;Partenaire;2021-02-25;Standard
+CLI-0130;Rachida Renard;Particulier;Blagnac;31700;Toulouse;Bouche-à-oreille;2021-02-26;Standard
+CLI-0002;Marc Brun;Particulier;Bordeaux;33000;Bordeaux;Site web;2021-03-01;Bon payeur
+CLI-0101;Joëlle Perrin;Particulier;Libourne;33500;Bordeaux;Site web;2021-03-09;Standard
+CLI-0115;Marc Guerin;Particulier;Libourne;33500;Bordeaux;Bouche-à-oreille;2021-04-10;Standard
+CLI-0171;Cabinet vétérinaire Dorel 66;Syndic;Blagnac;31700;Toulouse;Prospection;2021-04-23;Standard
+CLI-0016;Franck Dubois;Particulier;Bordeaux;33000;Bordeaux;Annuaire pro;2021-04-24;Standard
+CLI-0180;Ulysse Millet;Particulier;Toulouse;31000;Toulouse;Bouche-à-oreille;2021-05-13;Standard
+CLI-0049;Tiphaine Marchal;Particulier;Bègles;33130;Bordeaux;Annuaire pro;2021-05-16;Standard
+CLI-0083;Lycée Saint-Exupéry 81;Collectivité;Tournefeuille;31170;Toulouse;Bouche-à-oreille;2021-06-01;Standard
+CLI-0099;Gaëlle Renard;Particulier;Bordeaux;33000;Bordeaux;Site web;2021-06-01;Bon payeur
+CLI-0037;Pauline Barbier;Particulier;Balma;31130;Toulouse;Bouche-à-oreille;2021-06-02;Bon payeur
+CLI-0178;Adrien Bonnet;Particulier;Balma;31130;Toulouse;Bouche-à-oreille;2021-06-09;Bon payeur
+CLI-0077;Cédric Léger;Particulier;Bègles;33130;Bordeaux;Partenaire;2021-06-14;Standard
+CLI-0186;Pauline Noel;Particulier;Bègles;33130;Bordeaux;Site web;2021-06-16;Bon payeur
+CLI-0172;Nathalie Noel;Particulier;Talence;33400;Bordeaux;Bouche-à-oreille;2021-06-21;Bon payeur
+CLI-0167;Joëlle Berger;Particulier;Muret;31600;Toulouse;Partenaire;2021-06-25;Bon payeur
+CLI-0184;Valérie Noel;Particulier;Balma;31130;Toulouse;Bouche-à-oreille;2021-06-27;Lent
+CLI-0166;Nathalie Poirier;Particulier;Talence;33400;Bordeaux;Partenaire;2021-07-05;Bon payeur
+CLI-0044;Résidence Belvédère 25;Syndic;Bordeaux;33000;Bordeaux;Bouche-à-oreille;2021-07-31;Standard
+CLI-0063;William Barbier;Particulier;Bègles;33130;Bordeaux;Bouche-à-oreille;2021-08-02;Standard
+CLI-0128;Hugo Brun;Particulier;Pessac;33600;Bordeaux;Prospection;2021-08-03;Bon payeur
+CLI-0026;Quentin Perrin;Particulier;Bordeaux;33000;Bordeaux;Bouche-à-oreille;2021-08-04;Standard
+CLI-0134;Ibrahim Perrin;Particulier;Toulouse;31000;Toulouse;Bouche-à-oreille;2021-08-04;Standard
+CLI-0038;Joëlle Faure;Particulier;Talence;33400;Bordeaux;Prospection;2021-08-16;Standard
+CLI-0028;Nathalie Chevalier;Particulier;Tournefeuille;31170;Toulouse;Bouche-à-oreille;2021-08-19;Bon payeur
+CLI-0054;Cédric Colin;Particulier;Talence;33400;Bordeaux;Annuaire pro;2021-08-26;Standard
+CLI-0150;William Lemoine;Particulier;Libourne;33500;Bordeaux;Bouche-à-oreille;2021-08-26;Standard
+CLI-0082;Cédric Nguyen;Particulier;Balma;31130;Toulouse;Prospection;2021-08-30;Bon payeur
+CLI-0163;Yasmine Girard;Particulier;Blagnac;31700;Toulouse;Partenaire;2021-09-01;Standard
+CLI-0058;Elsa Gaillard;Particulier;Balma;31130;Toulouse;Annuaire pro;2021-09-12;Standard
+CLI-0122;Hélène Bonnet;Particulier;Balma;31130;Toulouse;Bouche-à-oreille;2021-09-18;Standard
+CLI-0154;Cédric Lemoine;Particulier;Talence;33400;Bordeaux;Annuaire pro;2021-10-30;Bon payeur
+CLI-0071;Marc Roussel;Particulier;Tournefeuille;31170;Toulouse;Bouche-à-oreille;2021-11-03;Bon payeur
+CLI-0123;Gérard Colin;Particulier;Blagnac;31700;Toulouse;Site web;2021-11-07;Standard
+CLI-0113;SCI Les Tilleuls 4;Professionnel;Libourne;33500;Bordeaux;Prospection;2021-11-10;Lent
+CLI-0066;Syndic Gestion Aquitaine 59;Professionnel;Balma;31130;Toulouse;Annuaire pro;2021-12-16;Bon payeur
+CLI-0170;Alain Berger;Particulier;Blagnac;31700;Toulouse;Bouche-à-oreille;2021-12-18;Standard
+CLI-0029;Alain Moreau;Particulier;Pessac;33600;Bordeaux;Site web;2022-01-13;Standard
+CLI-0004;Quentin Guerin;Particulier;Bègles;33130;Bordeaux;Partenaire;2022-01-14;Standard
+CLI-0165;Elsa Da Silva;Particulier;Bordeaux;33000;Bordeaux;Site web;2022-01-14;Lent
+CLI-0100;Cédric Faure;Particulier;Mérignac;33700;Bordeaux;Partenaire;2022-01-18;Lent
+CLI-0072;Gérard Bonnet;Particulier;Talence;33400;Bordeaux;Partenaire;2022-02-28;Bon payeur
+CLI-0164;Cédric Brun;Particulier;Colomiers;31770;Toulouse;Bouche-à-oreille;2022-03-05;Standard
+CLI-0023;Joëlle Millet;Particulier;Tournefeuille;31170;Toulouse;Site web;2022-03-18;Bon payeur
+CLI-0069;Cabinet vétérinaire Dorel 18;Professionnel;Blagnac;31700;Toulouse;Bouche-à-oreille;2022-03-19;Standard
+CLI-0105;Gaëlle Roussel;Particulier;Muret;31600;Toulouse;Partenaire;2022-03-29;Standard
+CLI-0103;Ibrahim Barbier;Particulier;Muret;31600;Toulouse;Bouche-à-oreille;2022-03-31;Standard
+CLI-0155;Adrien Guerin;Particulier;Talence;33400;Bordeaux;Site web;2022-04-06;Lent
+CLI-0035;Gérard Aubert;Particulier;Bègles;33130;Bordeaux;Bouche-à-oreille;2022-04-12;Lent
+CLI-0133;SARL Toitures Sud 11;Syndic;Libourne;33500;Bordeaux;Site web;2022-04-16;Lent
+CLI-0173;Valérie Blanc;Particulier;Talence;33400;Bordeaux;Bouche-à-oreille;2022-04-22;Bon payeur
+CLI-0087;Hugo Noel;Particulier;Muret;31600;Toulouse;Bouche-à-oreille;2022-04-23;Bon payeur
+CLI-0183;Hélène Dupuis;Particulier;Talence;33400;Bordeaux;Bouche-à-oreille;2022-04-24;Bon payeur
+CLI-0021;Quentin Brun;Particulier;Bordeaux;33000;Bordeaux;Site web;2022-05-02;Standard
+CLI-0162;Yasmine Gaillard;Particulier;Pessac;33600;Bordeaux;Annuaire pro;2022-05-03;Standard
+CLI-0093;SCI Les Tilleuls 18;Professionnel;Libourne;33500;Bordeaux;Bouche-à-oreille;2022-05-07;Standard
+CLI-0034;Gérard Noel;Particulier;Muret;31600;Toulouse;Bouche-à-oreille;2022-05-08;Bon payeur
+CLI-0085;Pauline Faure;Particulier;Muret;31600;Toulouse;Partenaire;2022-05-08;Lent
+CLI-0090;Hélène Renard;Particulier;Talence;33400;Bordeaux;Bouche-à-oreille;2022-05-23;Bon payeur
+CLI-0143;Gérard Colin;Particulier;Blagnac;31700;Toulouse;Bouche-à-oreille;2022-05-28;Bon payeur
+CLI-0011;Serge Nguyen;Particulier;Pessac;33600;Bordeaux;Google Ads;2022-05-30;Standard
+CLI-0081;Joëlle Millet;Particulier;Pessac;33600;Bordeaux;Site web;2022-06-06;Standard
+CLI-0153;Adrien Roussel;Particulier;Bègles;33130;Bordeaux;Bouche-à-oreille;2022-06-14;Standard
+CLI-0094;Garage Autoplus 11;Professionnel;Colomiers;31770;Toulouse;Bouche-à-oreille;2022-06-17;Standard
+CLI-0191;Serge Aubert;Particulier;Pessac;33600;Bordeaux;Bouche-à-oreille;2022-07-04;Standard
+CLI-0192;Ulysse Dubois;Particulier;Blagnac;31700;Toulouse;Bouche-à-oreille;2022-07-05;Standard
+CLI-0193;Laure Nguyen;Particulier;Mérignac;33700;Bordeaux;Bouche-à-oreille;2022-07-10;Bon payeur
+CLI-0194;Résidence Belvédère 15;Syndic;Muret;31600;Toulouse;Google Ads;2022-07-14;Lent
+CLI-0195;Marc Masson;Particulier;Mérignac;33700;Bordeaux;Bouche-à-oreille;2022-07-17;Bon payeur
+CLI-0196;Béatrice Robin;Particulier;Bègles;33130;Bordeaux;Annuaire pro;2022-07-18;Standard
+CLI-0197;Marc Noel;Particulier;Libourne;33500;Bordeaux;Annuaire pro;2022-07-23;Bon payeur
+CLI-0198;EHPAD Les Glycines 97;Syndic;Pessac;33600;Bordeaux;Bouche-à-oreille;2022-07-25;Standard
+CLI-0199;Elsa Bonnet;Particulier;Blagnac;31700;Toulouse;Bouche-à-oreille;2022-07-29;Bon payeur
+CLI-0200;Ibrahim Da Silva;Particulier;Mérignac;33700;Bordeaux;Annuaire pro;2022-08-02;Standard
+CLI-0201;Inès Moreau;Particulier;Balma;31130;Toulouse;Google Ads;2022-08-03;Standard
+CLI-0202;Camille Guerin;Particulier;Bègles;33130;Bordeaux;Bouche-à-oreille;2022-08-06;Bon payeur
+CLI-0203;Rachida Dupuis;Particulier;Colomiers;31770;Toulouse;Annuaire pro;2022-08-08;Standard
+CLI-0204;Camille Rey;Particulier;Balma;31130;Toulouse;Bouche-à-oreille;2022-08-09;Standard
+CLI-0205;Garage Autoplus 11;Professionnel;Mérignac;33700;Bordeaux;Partenaire;2022-08-11;Standard
+CLI-0206;Groupe scolaire Jean-Jaurès 72;Syndic;Colomiers;31770;Toulouse;Bouche-à-oreille;2022-08-13;Bon payeur
+CLI-0207;Adrien Nguyen;Particulier;Blagnac;31700;Toulouse;Bouche-à-oreille;2022-08-15;Litigieux
+CLI-0208;Gérard Rey;Particulier;Pessac;33600;Bordeaux;Prospection;2022-08-19;Standard
+CLI-0209;Damien Colin;Particulier;Tournefeuille;31170;Toulouse;Annuaire pro;2022-08-23;Standard
+CLI-0210;William Vidal;Particulier;Toulouse;31000;Toulouse;Prospection;2022-08-26;Litigieux
+CLI-0211;Gérard Chevalier;Particulier;Pessac;33600;Bordeaux;Bouche-à-oreille;2022-08-28;Standard
+CLI-0212;CCAS de Muret 64;Professionnel;Pessac;33600;Bordeaux;Partenaire;2022-09-01;Standard
+CLI-0213;Garage Autoplus 32;Professionnel;Bordeaux;33000;Bordeaux;Bouche-à-oreille;2022-09-02;Lent
+CLI-0214;Quentin Perrin;Particulier;Muret;31600;Toulouse;Bouche-à-oreille;2022-09-05;Bon payeur
+CLI-0215;Émile Poirier;Particulier;Toulouse;31000;Toulouse;Google Ads;2022-09-06;Bon payeur
+CLI-0216;Inès Vidal;Particulier;Bègles;33130;Bordeaux;Google Ads;2022-09-09;Lent
+CLI-0217;Kevin Barbier;Particulier;Mérignac;33700;Bordeaux;Bouche-à-oreille;2022-09-13;Standard
+CLI-0218;Résidence Les Oliviers 90;Syndic;Pessac;33600;Bordeaux;Annuaire pro;2022-09-14;Lent
+CLI-0219;Franck Gaillard;Particulier;Blagnac;31700;Toulouse;Bouche-à-oreille;2022-09-16;Standard
+CLI-0220;Joëlle Nguyen;Particulier;Libourne;33500;Bordeaux;Site web;2022-09-19;Standard
+CLI-0221;Gaëlle Robin;Particulier;Bordeaux;33000;Bordeaux;Google Ads;2022-09-21;Lent
+CLI-0222;Béatrice Millet;Particulier;Bègles;33130;Bordeaux;Annuaire pro;2022-09-22;Bon payeur
+CLI-0223;Yasmine Da Silva;Particulier;Bordeaux;33000;Bordeaux;Annuaire pro;2022-09-23;Standard
+CLI-0224;Nathalie Roussel;Particulier;Colomiers;31770;Toulouse;Bouche-à-oreille;2022-09-25;Bon payeur
+CLI-0225;Rachida Léger;Particulier;Tournefeuille;31170;Toulouse;Prospection;2022-09-26;Standard
+CLI-0226;Béatrice Girard;Particulier;Bègles;33130;Bordeaux;Bouche-à-oreille;2022-09-28;Standard
+CLI-0227;Hugo Masson;Particulier;Tournefeuille;31170;Toulouse;Bouche-à-oreille;2022-09-30;Lent
+CLI-0228;Inès Dubois;Particulier;Blagnac;31700;Toulouse;Annuaire pro;2022-10-02;Standard
+CLI-0229;Franck Noel;Particulier;Colomiers;31770;Toulouse;Google Ads;2022-10-04;Lent
+CLI-0230;Salle de sport Ironfit 79;Professionnel;Mérignac;33700;Bordeaux;Partenaire;2022-10-05;Bon payeur
+CLI-0231;Salle de sport Ironfit 3;Professionnel;Talence;33400;Bordeaux;Annuaire pro;2022-10-11;Bon payeur
+CLI-0232;Kevin Renard;Particulier;Bordeaux;33000;Bordeaux;Partenaire;2022-10-14;Standard
+CLI-0233;Ibrahim Dupuis;Particulier;Colomiers;31770;Toulouse;Site web;2022-10-16;Lent
+CLI-0234;Alain Masson;Particulier;Blagnac;31700;Toulouse;Annuaire pro;2022-10-20;Lent
+CLI-0235;Damien Aubert;Particulier;Tournefeuille;31170;Toulouse;Bouche-à-oreille;2022-10-23;Lent
+CLI-0236;Marc Charpentier;Particulier;Balma;31130;Toulouse;Bouche-à-oreille;2022-10-30;Bon payeur
+CLI-0237;Hugo Gaillard;Particulier;Muret;31600;Toulouse;Bouche-à-oreille;2022-11-03;Bon payeur
+CLI-0238;Elsa Dubois;Particulier;Mérignac;33700;Bordeaux;Google Ads;2022-11-04;Lent
+CLI-0239;Ibrahim Vidal;Particulier;Pessac;33600;Bordeaux;Annuaire pro;2022-11-08;Standard
+CLI-0240;EHPAD Les Glycines 19;Syndic;Libourne;33500;Bordeaux;Prospection;2022-11-09;Standard
+CLI-0241;Olivier Millet;Particulier;Muret;31600;Toulouse;Partenaire;2022-11-10;Bon payeur
+CLI-0242;Delphine Blanc;Particulier;Toulouse;31000;Toulouse;Bouche-à-oreille;2022-11-11;Bon payeur
+CLI-0243;Boulangerie Marchetti 59;Professionnel;Libourne;33500;Bordeaux;Bouche-à-oreille;2022-11-15;Bon payeur
+CLI-0244;Boulangerie Marchetti 85;Professionnel;Talence;33400;Bordeaux;Partenaire;2022-11-17;Litigieux
+CLI-0245;Cabinet vétérinaire Dorel 5;Professionnel;Balma;31130;Toulouse;Site web;2022-11-19;Standard
+CLI-0246;Émile Chevalier;Particulier;Blagnac;31700;Toulouse;Bouche-à-oreille;2022-11-20;Standard
+CLI-0247;Restaurant Le Bistrot 2;Professionnel;Talence;33400;Bordeaux;Google Ads;2022-11-28;Lent
+CLI-0248;Tiphaine Colin;Particulier;Mérignac;33700;Bordeaux;Prospection;2022-11-29;Bon payeur
+CLI-0249;Laure Dupuis;Particulier;Toulouse;31000;Toulouse;Site web;2022-12-01;Lent
+CLI-0250;EHPAD Les Glycines 1;Syndic;Toulouse;31000;Toulouse;Prospection;2022-12-07;Bon payeur
+CLI-0251;Delphine Moreau;Particulier;Pessac;33600;Bordeaux;Partenaire;2022-12-12;Bon payeur
+CLI-0252;Delphine Millet;Particulier;Pessac;33600;Bordeaux;Bouche-à-oreille;2022-12-13;Standard
+CLI-0253;Émile Barbier;Particulier;Bègles;33130;Bordeaux;Site web;2022-12-18;Bon payeur
+CLI-0254;Serge Masson;Particulier;Blagnac;31700;Toulouse;Annuaire pro;2022-12-30;Standard
+CLI-0255;Hélène Guerin;Particulier;Libourne;33500;Bordeaux;Bouche-à-oreille;2023-01-01;Lent
+CLI-0256;Émile Renard;Particulier;Mérignac;33700;Bordeaux;Bouche-à-oreille;2023-01-03;Standard
+CLI-0257;Pharmacie Centrale 93;Professionnel;Tournefeuille;31170;Toulouse;Prospection;2023-01-05;Bon payeur
+CLI-0258;Foncia Occitanie 22;Professionnel;Mérignac;33700;Bordeaux;Partenaire;2023-01-07;Standard
+CLI-0259;Hôtel Le Cardinal 46;Professionnel;Talence;33400;Bordeaux;Site web;2023-01-10;Lent
+CLI-0260;Résidence Les Oliviers 88;Professionnel;Blagnac;31700;Toulouse;Site web;2023-01-14;Lent
+CLI-0261;Émile Faure;Particulier;Blagnac;31700;Toulouse;Partenaire;2023-01-15;Standard
+CLI-0262;Yasmine Dupuis;Particulier;Colomiers;31770;Toulouse;Bouche-à-oreille;2023-01-17;Standard
+CLI-0263;Menuiserie Lacoste 27;Syndic;Bordeaux;33000;Bordeaux;Partenaire;2023-01-18;Standard
+CLI-0264;Damien Chevalier;Particulier;Balma;31130;Toulouse;Annuaire pro;2023-01-21;Standard
+CLI-0265;Yasmine Lefèvre;Particulier;Talence;33400;Bordeaux;Bouche-à-oreille;2023-01-22;Standard
+CLI-0266;Hélène Nguyen;Particulier;Blagnac;31700;Toulouse;Bouche-à-oreille;2023-01-25;Lent
+CLI-0267;Nathalie Berger;Particulier;Bordeaux;33000;Bordeaux;Bouche-à-oreille;2023-01-26;Bon payeur
+CLI-0268;Joëlle Vidal;Particulier;Blagnac;31700;Toulouse;Site web;2023-01-28;Standard
+CLI-0269;Inès Renard;Particulier;Toulouse;31000;Toulouse;Site web;2023-01-30;Bon payeur
+CLI-0270;Elsa Colin;Particulier;Pessac;33600;Bordeaux;Annuaire pro;2023-02-01;Bon payeur
+CLI-0271;William Chevalier;Particulier;Mérignac;33700;Bordeaux;Bouche-à-oreille;2023-02-06;Bon payeur
+CLI-0272;Menuiserie Lacoste 52;Professionnel;Muret;31600;Toulouse;Partenaire;2023-02-07;Standard
+CLI-0273;Gérard Guerin;Particulier;Talence;33400;Bordeaux;Bouche-à-oreille;2023-02-12;Bon payeur
+CLI-0274;Yasmine Barbier;Particulier;Bordeaux;33000;Bordeaux;Google Ads;2023-02-15;Bon payeur
+CLI-0275;Cabinet dentaire Ansel 12;Professionnel;Talence;33400;Bordeaux;Partenaire;2023-02-16;Litigieux
+CLI-0276;Syndic Gestion Aquitaine 49;Professionnel;Libourne;33500;Bordeaux;Bouche-à-oreille;2023-02-22;Litigieux
+CLI-0277;Franck Chevalier;Particulier;Blagnac;31700;Toulouse;Site web;2023-02-27;Standard
+CLI-0278;Hugo Charpentier;Particulier;Libourne;33500;Bordeaux;Site web;2023-03-02;Standard
+CLI-0279;Gaëlle Chevalier;Particulier;Muret;31600;Toulouse;Bouche-à-oreille;2023-03-04;Bon payeur
+CLI-0280;Joëlle Masson;Particulier;Pessac;33600;Bordeaux;Annuaire pro;2023-03-09;Standard
+CLI-0281;Rachida Robin;Particulier;Bègles;33130;Bordeaux;Google Ads;2023-03-10;Standard
+CLI-0282;Valérie Roussel;Particulier;Pessac;33600;Bordeaux;Bouche-à-oreille;2023-03-12;Bon payeur
+CLI-0283;Inès Aubert;Particulier;Bègles;33130;Bordeaux;Bouche-à-oreille;2023-03-13;Bon payeur
+CLI-0284;Garage Autoplus 89;Professionnel;Colomiers;31770;Toulouse;Partenaire;2023-03-17;Standard
+CLI-0285;Marc Guerin;Particulier;Bègles;33130;Bordeaux;Site web;2023-03-18;Lent
+CLI-0286;Camille Nguyen;Particulier;Bordeaux;33000;Bordeaux;Bouche-à-oreille;2023-03-21;Standard
+CLI-0287;Quentin Rey;Particulier;Balma;31130;Toulouse;Bouche-à-oreille;2023-03-23;Standard
+CLI-0288;Franck Barbier;Particulier;Blagnac;31700;Toulouse;Partenaire;2023-03-25;Bon payeur
+CLI-0289;Alain Charpentier;Particulier;Bordeaux;33000;Bordeaux;Partenaire;2023-03-26;Lent
+CLI-0290;Elsa Nguyen;Particulier;Blagnac;31700;Toulouse;Bouche-à-oreille;2023-03-28;Bon payeur
+CLI-0291;Résidence Les Oliviers 90;Professionnel;Libourne;33500;Bordeaux;Partenaire;2023-03-29;Standard
+CLI-0292;Boulangerie Marchetti 50;Professionnel;Bègles;33130;Bordeaux;Bouche-à-oreille;2023-03-30;Standard
+CLI-0293;Résidence Les Oliviers 39;Professionnel;Colomiers;31770;Toulouse;Annuaire pro;2023-03-31;Standard
+CLI-0294;Foncia Occitanie 37;Professionnel;Toulouse;31000;Toulouse;Prospection;2023-04-03;Standard
+CLI-0295;Kevin Da Silva;Particulier;Toulouse;31000;Toulouse;Partenaire;2023-04-07;Standard
+CLI-0296;Foncia Occitanie 71;Professionnel;Talence;33400;Bordeaux;Site web;2023-04-10;Bon payeur
+CLI-0297;Supérette Vival 65;Professionnel;Libourne;33500;Bordeaux;Google Ads;2023-04-14;Bon payeur
+CLI-0298;Nathalie Robin;Particulier;Tournefeuille;31170;Toulouse;Bouche-à-oreille;2023-04-22;Standard
+CLI-0299;Auto-école Conduite Plus 59;Professionnel;Blagnac;31700;Toulouse;Partenaire;2023-04-23;Standard
+CLI-0300;Foncia Occitanie 85;Professionnel;Toulouse;31000;Toulouse;Site web;2023-04-24;Litigieux
+CLI-0301;Gaëlle Roussel;Particulier;Balma;31130;Toulouse;Bouche-à-oreille;2023-04-26;Bon payeur
+CLI-0302;Adrien Vidal;Particulier;Bègles;33130;Bordeaux;Bouche-à-oreille;2023-04-28;Standard
+CLI-0303;Cédric Robin;Particulier;Mérignac;33700;Bordeaux;Partenaire;2023-05-01;Standard
+CLI-0304;Menuiserie Lacoste 57;Professionnel;Colomiers;31770;Toulouse;Site web;2023-05-02;Lent
+CLI-0305;William Noel;Particulier;Balma;31130;Toulouse;Bouche-à-oreille;2023-05-04;Bon payeur
+CLI-0306;Fanny Aubert;Particulier;Bègles;33130;Bordeaux;Prospection;2023-05-07;Standard
+CLI-0307;Franck Aubert;Particulier;Bordeaux;33000;Bordeaux;Bouche-à-oreille;2023-05-10;Lent
+CLI-0308;Franck Da Silva;Particulier;Pessac;33600;Bordeaux;Prospection;2023-05-14;Bon payeur
+CLI-0309;Cédric Guerin;Particulier;Talence;33400;Bordeaux;Annuaire pro;2023-05-20;Bon payeur
+CLI-0310;SARL Toitures Sud 37;Professionnel;Libourne;33500;Bordeaux;Annuaire pro;2023-05-29;Standard
+CLI-0311;SCI Les Tilleuls 81;Syndic;Toulouse;31000;Toulouse;Prospection;2023-05-30;Bon payeur
+CLI-0312;Supérette Vival 78;Professionnel;Toulouse;31000;Toulouse;Bouche-à-oreille;2023-05-31;Standard
+CLI-0313;SCI Les Tilleuls 56;Syndic;Mérignac;33700;Bordeaux;Bouche-à-oreille;2023-06-01;Litigieux
+CLI-0314;Valérie Blanc;Particulier;Mérignac;33700;Bordeaux;Site web;2023-06-03;Bon payeur
+CLI-0315;Menuiserie Lacoste 66;Professionnel;Pessac;33600;Bordeaux;Bouche-à-oreille;2023-06-11;Bon payeur
+CLI-0316;Serge Gaillard;Particulier;Muret;31600;Toulouse;Site web;2023-06-13;Standard
+CLI-0317;Émile Gaillard;Particulier;Libourne;33500;Bordeaux;Annuaire pro;2023-06-15;Standard
+CLI-0318;Camille Colin;Particulier;Toulouse;31000;Toulouse;Site web;2023-06-17;Standard
+CLI-0319;Laure Marchal;Particulier;Colomiers;31770;Toulouse;Annuaire pro;2023-06-19;Bon payeur
+CLI-0320;Laure Aubert;Particulier;Libourne;33500;Bordeaux;Google Ads;2023-06-21;Bon payeur
+CLI-0321;Émile Girard;Particulier;Libourne;33500;Bordeaux;Google Ads;2023-06-28;Standard
+CLI-0322;Olivier Rey;Particulier;Talence;33400;Bordeaux;Bouche-à-oreille;2023-07-04;Standard
+CLI-0323;Ibrahim Faure;Particulier;Pessac;33600;Bordeaux;Site web;2023-07-08;Lent
+CLI-0324;Adrien Léger;Particulier;Mérignac;33700;Bordeaux;Site web;2023-07-09;Litigieux
+CLI-0325;Alain Lemoine;Particulier;Colomiers;31770;Toulouse;Prospection;2023-07-10;Standard
+CLI-0326;Adrien Millet;Particulier;Toulouse;31000;Toulouse;Bouche-à-oreille;2023-07-13;Standard
+CLI-0327;Cabinet vétérinaire Dorel 33;Professionnel;Muret;31600;Toulouse;Google Ads;2023-07-15;Standard
+CLI-0328;Hélène Chevalier;Particulier;Libourne;33500;Bordeaux;Bouche-à-oreille;2023-07-16;Bon payeur
+CLI-0329;Quentin Léger;Particulier;Talence;33400;Bordeaux;Site web;2023-07-17;Standard
+CLI-0330;Pauline Da Silva;Particulier;Muret;31600;Toulouse;Google Ads;2023-07-23;Standard
+CLI-0331;Serge Chevalier;Particulier;Libourne;33500;Bordeaux;Prospection;2023-07-24;Standard
+CLI-0332;Ibrahim Girard;Particulier;Pessac;33600;Bordeaux;Site web;2023-07-26;Standard
+CLI-0333;Restaurant Le Bistrot 36;Professionnel;Colomiers;31770;Toulouse;Prospection;2023-07-27;Lent
+CLI-0334;Serge Roussel;Particulier;Muret;31600;Toulouse;Google Ads;2023-07-28;Standard
+CLI-0335;SCI Les Tilleuls 66;Syndic;Bordeaux;33000;Bordeaux;Prospection;2023-07-29;Bon payeur
+CLI-0336;Elsa Aubert;Particulier;Blagnac;31700;Toulouse;Partenaire;2023-08-01;Standard
+CLI-0337;Ibrahim Robin;Particulier;Balma;31130;Toulouse;Bouche-à-oreille;2023-08-04;Standard
+CLI-0338;Foncia Occitanie 98;Collectivité;Pessac;33600;Bordeaux;Google Ads;2023-08-05;Bon payeur
+CLI-0339;Cédric Léger;Particulier;Mérignac;33700;Bordeaux;Site web;2023-08-12;Bon payeur
+CLI-0340;Béatrice Colin;Particulier;Talence;33400;Bordeaux;Site web;2023-08-14;Lent
+CLI-0341;Syndic Gestion Aquitaine 93;Collectivité;Colomiers;31770;Toulouse;Bouche-à-oreille;2023-08-16;Standard
+CLI-0342;Delphine Noel;Particulier;Colomiers;31770;Toulouse;Bouche-à-oreille;2023-08-20;Bon payeur
+CLI-0343;Groupe scolaire Jean-Jaurès 10;Professionnel;Talence;33400;Bordeaux;Bouche-à-oreille;2023-08-23;Bon payeur
+CLI-0344;Restaurant Le Bistrot 67;Syndic;Balma;31130;Toulouse;Bouche-à-oreille;2023-08-24;Lent
+CLI-0345;Olivier Barbier;Particulier;Bègles;33130;Bordeaux;Bouche-à-oreille;2023-08-28;Standard
+CLI-0346;Delphine Berger;Particulier;Libourne;33500;Bordeaux;Site web;2023-09-01;Bon payeur
+CLI-0347;Camille Blanc;Particulier;Blagnac;31700;Toulouse;Prospection;2023-09-03;Standard
+CLI-0348;Elsa Vidal;Particulier;Bègles;33130;Bordeaux;Prospection;2023-09-04;Bon payeur
+CLI-0349;Serge Poirier;Particulier;Muret;31600;Toulouse;Bouche-à-oreille;2023-09-05;Standard
+CLI-0350;Delphine Da Silva;Particulier;Bordeaux;33000;Bordeaux;Google Ads;2023-09-06;Standard
+CLI-0351;Cabinet comptable Serval 35;Syndic;Pessac;33600;Bordeaux;Partenaire;2023-09-10;Standard
+CLI-0352;Résidence Belvédère 97;Professionnel;Bègles;33130;Bordeaux;Bouche-à-oreille;2023-09-12;Standard
+CLI-0353;Gérard Moreau;Particulier;Toulouse;31000;Toulouse;Partenaire;2023-09-13;Standard
+CLI-0354;Laure Brun;Particulier;Bordeaux;33000;Bordeaux;Prospection;2023-09-17;Bon payeur
+CLI-0355;Quentin Moreau;Particulier;Bègles;33130;Bordeaux;Annuaire pro;2023-09-18;Bon payeur
+CLI-0356;Mairie de Lattes 28;Syndic;Libourne;33500;Bordeaux;Annuaire pro;2023-09-21;Lent
+CLI-0357;Clinique du Parc 45;Syndic;Blagnac;31700;Toulouse;Site web;2023-09-26;Lent
+CLI-0358;Mairie de Lattes 27;Professionnel;Mérignac;33700;Bordeaux;Site web;2023-09-29;Standard
+CLI-0359;Rachida Da Silva;Particulier;Libourne;33500;Bordeaux;Site web;2023-09-30;Standard
+CLI-0360;Delphine Da Silva;Particulier;Bègles;33130;Bordeaux;Bouche-à-oreille;2023-10-05;Bon payeur
+CLI-0361;Inès Renard;Particulier;Talence;33400;Bordeaux;Partenaire;2023-10-07;Bon payeur
+CLI-0362;Adrien Renard;Particulier;Pessac;33600;Bordeaux;Site web;2023-10-09;Bon payeur
+CLI-0363;Tiphaine Bonnet;Particulier;Talence;33400;Bordeaux;Bouche-à-oreille;2023-10-10;Lent
+CLI-0364;Serge Masson;Particulier;Talence;33400;Bordeaux;Site web;2023-10-14;Standard
+CLI-0365;Ibrahim Dubois;Particulier;Muret;31600;Toulouse;Site web;2023-10-15;Standard
+CLI-0366;Kevin Poirier;Particulier;Balma;31130;Toulouse;Bouche-à-oreille;2023-10-17;Bon payeur
+CLI-0367;Delphine Dubois;Particulier;Balma;31130;Toulouse;Bouche-à-oreille;2023-10-18;Bon payeur
+CLI-0368;Hôtel Le Cardinal 62;Collectivité;Muret;31600;Toulouse;Google Ads;2023-10-21;Standard
+CLI-0369;Kevin Léger;Particulier;Pessac;33600;Bordeaux;Site web;2023-10-22;Bon payeur
+CLI-0370;Elsa Bonnet;Particulier;Blagnac;31700;Toulouse;Bouche-à-oreille;2023-10-24;Bon payeur
+CLI-0371;Joëlle Bonnet;Particulier;Talence;33400;Bordeaux;Partenaire;2023-10-26;Standard
+CLI-0372;EHPAD Les Glycines 91;Professionnel;Libourne;33500;Bordeaux;Site web;2023-10-28;Litigieux
+CLI-0373;Camping Les Pins 3;Professionnel;Bègles;33130;Bordeaux;Prospection;2023-10-29;Lent
+CLI-0374;Ibrahim Marchal;Particulier;Bordeaux;33000;Bordeaux;Google Ads;2023-10-30;Bon payeur
+CLI-0375;Franck Barbier;Particulier;Libourne;33500;Bordeaux;Bouche-à-oreille;2023-11-01;Standard
+CLI-0376;Olivier Berger;Particulier;Bègles;33130;Bordeaux;Partenaire;2023-11-02;Standard
+CLI-0377;Résidence Belvédère 94;Professionnel;Pessac;33600;Bordeaux;Google Ads;2023-11-03;Standard
+CLI-0378;Kevin Charpentier;Particulier;Bègles;33130;Bordeaux;Google Ads;2023-11-04;Bon payeur
+CLI-0379;Gaëlle Bonnet;Particulier;Bordeaux;33000;Bordeaux;Site web;2023-11-06;Standard
+CLI-0380;Hugo Roussel;Particulier;Tournefeuille;31170;Toulouse;Annuaire pro;2023-11-08;Standard
+CLI-0381;Inès Moreau;Particulier;Bègles;33130;Bordeaux;Bouche-à-oreille;2023-11-18;Standard
+CLI-0382;Cabinet dentaire Ansel 22;Professionnel;Toulouse;31000;Toulouse;Site web;2023-11-22;Bon payeur
+CLI-0383;Émile Brun;Particulier;Bègles;33130;Bordeaux;Site web;2023-11-26;Standard
+CLI-0384;Franck Aubert;Particulier;Muret;31600;Toulouse;Site web;2023-11-29;Standard
+CLI-0385;Kevin Berger;Particulier;Libourne;33500;Bordeaux;Bouche-à-oreille;2023-12-01;Bon payeur
+CLI-0386;Hôtel Le Cardinal 23;Collectivité;Mérignac;33700;Bordeaux;Bouche-à-oreille;2023-12-02;Lent
+CLI-0387;Olivier Marchal;Particulier;Toulouse;31000;Toulouse;Google Ads;2023-12-04;Bon payeur
+CLI-0388;Damien Blanc;Particulier;Blagnac;31700;Toulouse;Annuaire pro;2023-12-06;Standard
+CLI-0389;Auto-école Conduite Plus 8;Professionnel;Mérignac;33700;Bordeaux;Site web;2023-12-08;Standard
+CLI-0390;Joëlle Guerin;Particulier;Bègles;33130;Bordeaux;Bouche-à-oreille;2023-12-10;Standard
+CLI-0391;Foncia Occitanie 32;Syndic;Mérignac;33700;Bordeaux;Site web;2023-12-11;Lent
+CLI-0392;Résidence Les Oliviers 19;Syndic;Libourne;33500;Bordeaux;Site web;2023-12-13;Standard
+CLI-0393;William Perrin;Particulier;Pessac;33600;Bordeaux;Annuaire pro;2023-12-14;Bon payeur
+CLI-0394;Restaurant Le Bistrot 74;Professionnel;Colomiers;31770;Toulouse;Bouche-à-oreille;2023-12-15;Bon payeur
+CLI-0395;Tiphaine Girard;Particulier;Bègles;33130;Bordeaux;Site web;2023-12-17;Standard
+CLI-0396;Serge Perrin;Particulier;Muret;31600;Toulouse;Partenaire;2023-12-19;Standard
+CLI-0397;EHPAD Les Glycines 21;Syndic;Pessac;33600;Bordeaux;Site web;2023-12-21;Lent
+CLI-0398;Hôtel Le Cardinal 3;Syndic;Toulouse;31000;Toulouse;Bouche-à-oreille;2023-12-23;Lent
+CLI-0399;Résidence Belvédère 66;Syndic;Muret;31600;Toulouse;Bouche-à-oreille;2023-12-24;Standard
+CLI-0400;Hôtel Le Cardinal 70;Professionnel;Muret;31600;Toulouse;Bouche-à-oreille;2023-12-25;Bon payeur
+CLI-0401;Nathalie Roussel;Particulier;Blagnac;31700;Toulouse;Partenaire;2023-12-27;Standard
+CLI-0402;Inès Lemoine;Particulier;Bordeaux;33000;Bordeaux;Site web;2023-12-30;Lent
+CLI-0403;Cédric Masson;Particulier;Pessac;33600;Bordeaux;Bouche-à-oreille;2023-12-31;Standard
+CLI-0404;Groupe scolaire Jean-Jaurès 83;Professionnel;Tournefeuille;31170;Toulouse;Annuaire pro;2024-01-03;Standard
+CLI-0405;Franck Chevalier;Particulier;Bègles;33130;Bordeaux;Google Ads;2024-01-04;Standard
+CLI-0406;Pauline Dubois;Particulier;Colomiers;31770;Toulouse;Google Ads;2024-01-06;Standard
+CLI-0407;SARL Toitures Sud 36;Collectivité;Colomiers;31770;Toulouse;Partenaire;2024-01-07;Standard
+CLI-0408;Quentin Noel;Particulier;Bègles;33130;Bordeaux;Prospection;2024-01-08;Bon payeur
+CLI-0409;Office HLM Aquitaine 12;Professionnel;Tournefeuille;31170;Toulouse;Annuaire pro;2024-01-11;Bon payeur
+CLI-0410;Groupe scolaire Jean-Jaurès 94;Professionnel;Talence;33400;Bordeaux;Partenaire;2024-01-15;Bon payeur
+CLI-0411;EHPAD Les Glycines 80;Professionnel;Bègles;33130;Bordeaux;Bouche-à-oreille;2024-01-18;Bon payeur
+CLI-0412;SARL Toitures Sud 13;Professionnel;Libourne;33500;Bordeaux;Prospection;2024-01-21;Standard
+CLI-0413;Pauline Dupuis;Particulier;Bègles;33130;Bordeaux;Bouche-à-oreille;2024-01-24;Standard
+CLI-0414;Adrien Nguyen;Particulier;Blagnac;31700;Toulouse;Google Ads;2024-01-25;Standard
+CLI-0415;Rachida Masson;Particulier;Bordeaux;33000;Bordeaux;Google Ads;2024-01-27;Lent
+CLI-0416;Olivier Charpentier;Particulier;Mérignac;33700;Bordeaux;Google Ads;2024-02-02;Standard
+CLI-0417;Damien Noel;Particulier;Tournefeuille;31170;Toulouse;Prospection;2024-02-03;Lent
+CLI-0418;Tiphaine Charpentier;Particulier;Libourne;33500;Bordeaux;Site web;2024-02-05;Standard
+CLI-0419;Damien Millet;Particulier;Tournefeuille;31170;Toulouse;Prospection;2024-02-06;Standard
+CLI-0420;Camping Les Pins 87;Syndic;Muret;31600;Toulouse;Site web;2024-02-07;Lent
+CLI-0421;Gérard Blanc;Particulier;Pessac;33600;Bordeaux;Annuaire pro;2024-02-08;Bon payeur
+CLI-0422;Serge Bonnet;Particulier;Mérignac;33700;Bordeaux;Site web;2024-02-09;Bon payeur
+CLI-0423;Syndic Gestion Aquitaine 33;Syndic;Bègles;33130;Bordeaux;Bouche-à-oreille;2024-02-11;Lent
+CLI-0424;Cédric Barbier;Particulier;Bègles;33130;Bordeaux;Bouche-à-oreille;2024-02-13;Standard
+CLI-0425;Lycée Saint-Exupéry 41;Professionnel;Balma;31130;Toulouse;Site web;2024-02-15;Lent
+CLI-0426;Hélène Dubois;Particulier;Toulouse;31000;Toulouse;Bouche-à-oreille;2024-02-17;Bon payeur
+CLI-0427;Quentin Lefèvre;Particulier;Libourne;33500;Bordeaux;Bouche-à-oreille;2024-02-19;Standard
+CLI-0428;Adrien Lemoine;Particulier;Blagnac;31700;Toulouse;Google Ads;2024-02-24;Bon payeur
+CLI-0429;Boulangerie Marchetti 42;Syndic;Toulouse;31000;Toulouse;Site web;2024-02-27;Lent
+CLI-0430;Franck Dubois;Particulier;Blagnac;31700;Toulouse;Site web;2024-03-01;Bon payeur
+CLI-0431;Hôtel Le Cardinal 59;Syndic;Balma;31130;Toulouse;Bouche-à-oreille;2024-03-02;Bon payeur
+CLI-0432;SARL Toitures Sud 29;Professionnel;Libourne;33500;Bordeaux;Site web;2024-03-06;Standard
+CLI-0433;Pauline Moreau;Particulier;Toulouse;31000;Toulouse;Google Ads;2024-03-08;Standard
+CLI-0434;Elsa Faure;Particulier;Mérignac;33700;Bordeaux;Annuaire pro;2024-03-09;Bon payeur
+CLI-0435;Yasmine Guerin;Particulier;Blagnac;31700;Toulouse;Site web;2024-03-10;Standard
+CLI-0436;Laure Barbier;Particulier;Libourne;33500;Bordeaux;Bouche-à-oreille;2024-03-11;Bon payeur
+CLI-0437;Boulangerie Marchetti 52;Syndic;Bordeaux;33000;Bordeaux;Site web;2024-03-14;Lent
+CLI-0438;Fanny Masson;Particulier;Balma;31130;Toulouse;Prospection;2024-03-17;Bon payeur
+CLI-0439;William Lemoine;Particulier;Mérignac;33700;Bordeaux;Bouche-à-oreille;2024-03-18;Standard
+CLI-0440;Marc Bonnet;Particulier;Mérignac;33700;Bordeaux;Bouche-à-oreille;2024-03-19;Litigieux
+CLI-0441;Lycée Saint-Exupéry 65;Professionnel;Talence;33400;Bordeaux;Google Ads;2024-03-21;Standard
+CLI-0442;Adrien Chevalier;Particulier;Tournefeuille;31170;Toulouse;Bouche-à-oreille;2024-03-25;Standard
+CLI-0443;Résidence Belvédère 9;Collectivité;Mérignac;33700;Bordeaux;Prospection;2024-03-26;Litigieux
+CLI-0444;Résidence Belvédère 44;Professionnel;Bordeaux;33000;Bordeaux;Partenaire;2024-03-28;Standard
+CLI-0445;Office HLM Aquitaine 42;Professionnel;Bordeaux;33000;Bordeaux;Partenaire;2024-03-29;Standard
+CLI-0446;SCI Les Tilleuls 12;Syndic;Libourne;33500;Bordeaux;Site web;2024-03-30;Bon payeur
+CLI-0447;EHPAD Les Glycines 61;Syndic;Bordeaux;33000;Bordeaux;Site web;2024-04-01;Lent
+CLI-0448;Camping Les Pins 48;Professionnel;Tournefeuille;31170;Toulouse;Prospection;2024-04-04;Lent
+CLI-0449;Restaurant Le Bistrot 6;Professionnel;Talence;33400;Bordeaux;Google Ads;2024-04-05;Standard
+CLI-0450;Fanny Chevalier;Particulier;Libourne;33500;Bordeaux;Prospection;2024-04-06;Bon payeur
+CLI-0451;Serge Brun;Particulier;Libourne;33500;Bordeaux;Site web;2024-04-11;Bon payeur
+CLI-0452;Nathalie Léger;Particulier;Bègles;33130;Bordeaux;Partenaire;2024-04-16;Bon payeur
+CLI-0453;Delphine Bonnet;Particulier;Pessac;33600;Bordeaux;Google Ads;2024-04-17;Bon payeur
+CLI-0454;Émile Dubois;Particulier;Pessac;33600;Bordeaux;Annuaire pro;2024-04-19;Standard
+CLI-0455;Béatrice Moreau;Particulier;Balma;31130;Toulouse;Bouche-à-oreille;2024-04-21;Bon payeur
+CLI-0456;Brasserie du Port 77;Professionnel;Pessac;33600;Bordeaux;Bouche-à-oreille;2024-04-22;Bon payeur
+CLI-0457;Ibrahim Blanc;Particulier;Talence;33400;Bordeaux;Site web;2024-04-23;Bon payeur
+CLI-0458;Gaëlle Brun;Particulier;Balma;31130;Toulouse;Site web;2024-04-24;Lent
+CLI-0459;Menuiserie Lacoste 5;Professionnel;Mérignac;33700;Bordeaux;Prospection;2024-04-25;Bon payeur
+CLI-0460;SCI Les Tilleuls 87;Professionnel;Tournefeuille;31170;Toulouse;Bouche-à-oreille;2024-04-26;Bon payeur
+CLI-0461;Marc Da Silva;Particulier;Tournefeuille;31170;Toulouse;Annuaire pro;2024-04-27;Standard
+CLI-0462;Pharmacie Centrale 52;Professionnel;Bordeaux;33000;Bordeaux;Bouche-à-oreille;2024-04-28;Standard
+CLI-0463;Gaëlle Roussel;Particulier;Muret;31600;Toulouse;Partenaire;2024-04-29;Standard
+CLI-0464;Hélène Aubert;Particulier;Libourne;33500;Bordeaux;Bouche-à-oreille;2024-05-01;Standard
+CLI-0465;Valérie Poirier;Particulier;Bordeaux;33000;Bordeaux;Bouche-à-oreille;2024-05-05;Bon payeur
+CLI-0466;Salle de sport Ironfit 23;Collectivité;Pessac;33600;Bordeaux;Site web;2024-05-06;Standard
+CLI-0467;Elsa Poirier;Particulier;Bègles;33130;Bordeaux;Google Ads;2024-05-07;Standard
+CLI-0468;Serge Millet;Particulier;Libourne;33500;Bordeaux;Bouche-à-oreille;2024-05-08;Standard
+CLI-0469;Auto-école Conduite Plus 57;Professionnel;Toulouse;31000;Toulouse;Partenaire;2024-05-09;Standard
+CLI-0470;Marc Girard;Particulier;Talence;33400;Bordeaux;Bouche-à-oreille;2024-05-11;Bon payeur
+CLI-0471;Cabinet comptable Serval 40;Syndic;Muret;31600;Toulouse;Partenaire;2024-05-13;Litigieux
+CLI-0472;Hôtel Le Cardinal 37;Professionnel;Talence;33400;Bordeaux;Bouche-à-oreille;2024-05-14;Standard
+CLI-0473;Damien Chevalier;Particulier;Balma;31130;Toulouse;Site web;2024-05-15;Bon payeur
+CLI-0474;SARL Toitures Sud 24;Professionnel;Toulouse;31000;Toulouse;Google Ads;2024-05-17;Lent
+CLI-0475;Serge Brun;Particulier;Tournefeuille;31170;Toulouse;Partenaire;2024-05-19;Lent
+CLI-0476;Émile Blanc;Particulier;Pessac;33600;Bordeaux;Site web;2024-05-20;Standard
+CLI-0477;Groupe scolaire Jean-Jaurès 99;Professionnel;Talence;33400;Bordeaux;Google Ads;2024-05-23;Standard
+CLI-0478;Gaëlle Vidal;Particulier;Bordeaux;33000;Bordeaux;Bouche-à-oreille;2024-05-24;Standard
+CLI-0479;Menuiserie Lacoste 45;Professionnel;Talence;33400;Bordeaux;Site web;2024-05-26;Litigieux
+CLI-0480;Elsa Colin;Particulier;Tournefeuille;31170;Toulouse;Site web;2024-05-27;Standard
+CLI-0481;Auto-école Conduite Plus 22;Syndic;Bordeaux;33000;Bordeaux;Bouche-à-oreille;2024-05-29;Standard
+CLI-0482;Supérette Vival 20;Syndic;Balma;31130;Toulouse;Partenaire;2024-06-01;Standard
+CLI-0483;Béatrice Perrin;Particulier;Pessac;33600;Bordeaux;Bouche-à-oreille;2024-06-02;Standard
+CLI-0484;Hugo Girard;Particulier;Talence;33400;Bordeaux;Bouche-à-oreille;2024-06-04;Standard
+CLI-0485;Franck Gaillard;Particulier;Balma;31130;Toulouse;Bouche-à-oreille;2024-06-05;Standard
+CLI-0486;William Moreau;Particulier;Bordeaux;33000;Bordeaux;Google Ads;2024-06-07;Bon payeur
+CLI-0487;EHPAD Les Glycines 32;Professionnel;Bordeaux;33000;Bordeaux;Annuaire pro;2024-06-08;Bon payeur
+CLI-0488;Hôtel Le Cardinal 30;Syndic;Toulouse;31000;Toulouse;Annuaire pro;2024-06-09;Lent
+CLI-0489;Fanny Masson;Particulier;Bordeaux;33000;Bordeaux;Site web;2024-06-10;Standard
+CLI-0490;Auto-école Conduite Plus 30;Syndic;Libourne;33500;Bordeaux;Bouche-à-oreille;2024-06-12;Litigieux
+CLI-0491;Supérette Vival 58;Professionnel;Talence;33400;Bordeaux;Prospection;2024-06-13;Lent
+CLI-0492;Camille Da Silva;Particulier;Bordeaux;33000;Bordeaux;Partenaire;2024-06-16;Standard
+CLI-0493;Office HLM Aquitaine 72;Syndic;Mérignac;33700;Bordeaux;Annuaire pro;2024-06-17;Standard
+CLI-0494;Mairie de Lattes 5;Professionnel;Talence;33400;Bordeaux;Bouche-à-oreille;2024-06-19;Lent
+CLI-0495;Office HLM Aquitaine 7;Syndic;Pessac;33600;Bordeaux;Google Ads;2024-06-20;Bon payeur
+CLI-0496;Clinique du Parc 40;Professionnel;Balma;31130;Toulouse;Google Ads;2024-06-21;Litigieux
+CLI-0497;William Bonnet;Particulier;Muret;31600;Toulouse;Annuaire pro;2024-06-22;Standard
+CLI-0498;Rachida Marchal;Particulier;Colomiers;31770;Toulouse;Site web;2024-06-24;Lent
+CLI-0499;Boulangerie Marchetti 87;Professionnel;Pessac;33600;Bordeaux;Google Ads;2024-06-25;Standard
+CLI-0500;Fanny Girard;Particulier;Talence;33400;Bordeaux;Bouche-à-oreille;2024-06-26;Bon payeur
+CLI-0501;Damien Nguyen;Particulier;Bordeaux;33000;Bordeaux;Partenaire;2024-06-29;Bon payeur
+CLI-0502;Ulysse Brun;Particulier;Colomiers;31770;Toulouse;Bouche-à-oreille;2024-06-30;Bon payeur
+CLI-0503;Laure Moreau;Particulier;Pessac;33600;Bordeaux;Bouche-à-oreille;2024-07-02;Standard
+CLI-0504;Boulangerie Marchetti 98;Professionnel;Talence;33400;Bordeaux;Bouche-à-oreille;2024-07-03;Standard
+CLI-0505;Boulangerie Marchetti 82;Syndic;Bordeaux;33000;Bordeaux;Bouche-à-oreille;2024-07-07;Standard
+CLI-0506;Office HLM Aquitaine 63;Professionnel;Pessac;33600;Bordeaux;Google Ads;2024-07-09;Bon payeur
+CLI-0507;Cabinet comptable Serval 36;Syndic;Libourne;33500;Bordeaux;Site web;2024-07-11;Lent
+CLI-0508;Kevin Perrin;Particulier;Talence;33400;Bordeaux;Bouche-à-oreille;2024-07-12;Lent
+CLI-0509;Auto-école Conduite Plus 5;Collectivité;Mérignac;33700;Bordeaux;Annuaire pro;2024-07-14;Standard
+CLI-0510;Yasmine Barbier;Particulier;Talence;33400;Bordeaux;Google Ads;2024-07-17;Bon payeur
+CLI-0511;Pauline Blanc;Particulier;Toulouse;31000;Toulouse;Site web;2024-07-19;Standard
+CLI-0512;CCAS de Muret 77;Professionnel;Tournefeuille;31170;Toulouse;Bouche-à-oreille;2024-07-23;Lent
+CLI-0513;Groupe scolaire Jean-Jaurès 73;Professionnel;Bègles;33130;Bordeaux;Bouche-à-oreille;2024-07-25;Bon payeur
+CLI-0514;Rachida Noel;Particulier;Balma;31130;Toulouse;Google Ads;2024-07-26;Standard
+CLI-0515;Tiphaine Noel;Particulier;Mérignac;33700;Bordeaux;Site web;2024-07-27;Bon payeur
+CLI-0516;Ulysse Nguyen;Particulier;Bègles;33130;Bordeaux;Google Ads;2024-07-28;Bon payeur
+CLI-0517;Olivier Da Silva;Particulier;Muret;31600;Toulouse;Prospection;2024-07-30;Lent
+CLI-0518;Résidence Belvédère 87;Professionnel;Tournefeuille;31170;Toulouse;Bouche-à-oreille;2024-07-31;Bon payeur
+CLI-0519;CCAS de Muret 52;Syndic;Pessac;33600;Bordeaux;Google Ads;2024-08-02;Lent
+CLI-0520;Serge Moreau;Particulier;Bègles;33130;Bordeaux;Annuaire pro;2024-08-03;Standard
+CLI-0521;Béatrice Blanc;Particulier;Bègles;33130;Bordeaux;Google Ads;2024-08-04;Standard
+CLI-0522;Mairie de Lattes 60;Professionnel;Bordeaux;33000;Bordeaux;Site web;2024-08-06;Bon payeur
+CLI-0523;Office HLM Aquitaine 87;Syndic;Colomiers;31770;Toulouse;Bouche-à-oreille;2024-08-07;Lent
+CLI-0524;Menuiserie Lacoste 75;Collectivité;Libourne;33500;Bordeaux;Prospection;2024-08-11;Bon payeur
+CLI-0525;Gaëlle Barbier;Particulier;Pessac;33600;Bordeaux;Annuaire pro;2024-08-12;Bon payeur
+CLI-1006;Serge Barbier;Particulier;Sète;34200;Montpellier;Bouche-à-oreille;2024-08-12;Standard
+CLI-0991;Brasserie du Port 32;Professionnel;Lattes;34970;Montpellier;Bouche-à-oreille;2024-08-13;Bon payeur
+CLI-0993;Cabinet dentaire Ansel 96;Collectivité;Castelnau-le-Lez;34170;Montpellier;Google Ads;2024-08-13;Standard
+CLI-0997;Serge Chevalier;Particulier;Castelnau-le-Lez;34170;Montpellier;Partenaire;2024-08-13;Bon payeur
+CLI-0526;Kevin Robin;Particulier;Bègles;33130;Bordeaux;Bouche-à-oreille;2024-08-14;Bon payeur
+CLI-0983;Pharmacie Centrale 69;Professionnel;Montpellier;34000;Montpellier;Site web;2024-08-14;Bon payeur
+CLI-0527;Inès Perrin;Particulier;Libourne;33500;Bordeaux;Annuaire pro;2024-08-15;Lent
+CLI-0978;Inès Dupuis;Particulier;Castelnau-le-Lez;34170;Montpellier;Bouche-à-oreille;2024-08-15;Bon payeur
+CLI-0528;Camille Renard;Particulier;Bordeaux;33000;Bordeaux;Site web;2024-08-16;Standard
+CLI-0988;Pauline Faure;Particulier;Lattes;34970;Montpellier;Bouche-à-oreille;2024-08-16;Standard
+CLI-1007;Cabinet comptable Serval 18;Professionnel;Lunel;34400;Montpellier;Google Ads;2024-08-16;Lent
+CLI-0989;Office HLM Aquitaine 21;Syndic;Montpellier;34000;Montpellier;Bouche-à-oreille;2024-08-17;Bon payeur
+CLI-0999;Franck Bonnet;Particulier;Lunel;34400;Montpellier;Prospection;2024-08-17;Bon payeur
+CLI-1008;Cabinet vétérinaire Dorel 55;Professionnel;Castelnau-le-Lez;34170;Montpellier;Annuaire pro;2024-08-17;Bon payeur
+CLI-0529;Groupe scolaire Jean-Jaurès 25;Professionnel;Colomiers;31770;Toulouse;Bouche-à-oreille;2024-08-18;Standard
+CLI-0995;Alain Roussel;Particulier;Montpellier;34000;Montpellier;Bouche-à-oreille;2024-08-18;Lent
+CLI-1005;Gérard Guerin;Particulier;Béziers;34500;Montpellier;Prospection;2024-08-18;Standard
+CLI-0530;Camille Da Silva;Particulier;Toulouse;31000;Toulouse;Google Ads;2024-08-19;Bon payeur
+CLI-0977;William Masson;Particulier;Lunel;34400;Montpellier;Partenaire;2024-08-19;Lent
+CLI-0981;Hôtel Le Cardinal 84;Collectivité;Sète;34200;Montpellier;Annuaire pro;2024-08-19;Standard
+CLI-1004;Serge Dupuis;Particulier;Lattes;34970;Montpellier;Partenaire;2024-08-19;Standard
+CLI-0984;Clinique du Parc 10;Professionnel;Lunel;34400;Montpellier;Partenaire;2024-08-20;Standard
+CLI-0990;Olivier Lemoine;Particulier;Lattes;34970;Montpellier;Google Ads;2024-08-20;Standard
+CLI-1011;Valérie Perrin;Particulier;Sète;34200;Montpellier;Bouche-à-oreille;2024-08-20;Bon payeur
+CLI-1014;Émile Barbier;Particulier;Sète;34200;Montpellier;Site web;2024-08-20;Standard
+CLI-1001;CCAS de Muret 68;Syndic;Montpellier;34000;Montpellier;Bouche-à-oreille;2024-08-21;Standard
+CLI-1013;Office HLM Aquitaine 98;Professionnel;Sète;34200;Montpellier;Site web;2024-08-21;Standard
+CLI-0531;SARL Toitures Sud 25;Collectivité;Mérignac;33700;Bordeaux;Bouche-à-oreille;2024-08-22;Litigieux
+CLI-0532;Nathalie Lefèvre;Particulier;Pessac;33600;Bordeaux;Partenaire;2024-08-23;Litigieux
+CLI-1002;Valérie Moreau;Particulier;Castelnau-le-Lez;34170;Montpellier;Site web;2024-08-24;Bon payeur
+CLI-0533;Boulangerie Marchetti 42;Professionnel;Libourne;33500;Bordeaux;Bouche-à-oreille;2024-08-25;Litigieux
+CLI-1003;Cabinet Vergne Immobilier 3;Collectivité;Lattes;34970;Montpellier;Bouche-à-oreille;2024-08-25;Standard
+CLI-1015;Delphine Dupuis;Particulier;Lunel;34400;Montpellier;Annuaire pro;2024-08-25;Bon payeur
+CLI-0534;Camille Dupuis;Particulier;Colomiers;31770;Toulouse;Partenaire;2024-08-26;Standard
+CLI-0987;Auto-école Conduite Plus 82;Collectivité;Montpellier;34000;Montpellier;Partenaire;2024-08-26;Bon payeur
+CLI-0994;Ulysse Charpentier;Particulier;Sète;34200;Montpellier;Partenaire;2024-08-26;Lent
+CLI-0998;Lycée Saint-Exupéry 69;Professionnel;Lunel;34400;Montpellier;Bouche-à-oreille;2024-08-26;Lent
+CLI-0535;Mairie de Lattes 8;Professionnel;Talence;33400;Bordeaux;Site web;2024-08-27;Bon payeur
+CLI-0985;Kevin Bonnet;Particulier;Béziers;34500;Montpellier;Annuaire pro;2024-08-27;Bon payeur
+CLI-0986;Alain Dupuis;Particulier;Sète;34200;Montpellier;Bouche-à-oreille;2024-08-27;Bon payeur
+CLI-0992;Camille Brun;Particulier;Montpellier;34000;Montpellier;Bouche-à-oreille;2024-08-27;Bon payeur
+CLI-1009;Delphine Da Silva;Particulier;Sète;34200;Montpellier;Site web;2024-08-27;Bon payeur
+CLI-1010;Cédric Poirier;Particulier;Castelnau-le-Lez;34170;Montpellier;Site web;2024-08-27;Standard
+CLI-1016;Delphine Poirier;Particulier;Lunel;34400;Montpellier;Site web;2024-08-27;Standard
+CLI-1017;Laure Girard;Particulier;Béziers;34500;Montpellier;Google Ads;2024-08-27;Bon payeur
+CLI-0536;Gaëlle Chevalier;Particulier;Muret;31600;Toulouse;Partenaire;2024-08-28;Standard
+CLI-0975;Ulysse Vidal;Particulier;Sète;34200;Montpellier;Partenaire;2024-08-28;Bon payeur
+CLI-0980;Brasserie du Port 38;Professionnel;Lunel;34400;Montpellier;Bouche-à-oreille;2024-08-28;Bon payeur
+CLI-0979;Franck Charpentier;Particulier;Lattes;34970;Montpellier;Partenaire;2024-08-29;Bon payeur
+CLI-0537;Camille Masson;Particulier;Toulouse;31000;Toulouse;Google Ads;2024-08-30;Bon payeur
+CLI-0982;Salle de sport Ironfit 13;Syndic;Sète;34200;Montpellier;Annuaire pro;2024-08-30;Standard
+CLI-1019;Joëlle Faure;Particulier;Sète;34200;Montpellier;Annuaire pro;2024-08-30;Bon payeur
+CLI-0976;Clinique du Parc 18;Professionnel;Béziers;34500;Montpellier;Bouche-à-oreille;2024-08-31;Bon payeur
+CLI-0996;Salle de sport Ironfit 27;Syndic;Sète;34200;Montpellier;Bouche-à-oreille;2024-08-31;Bon payeur
+CLI-1000;Pauline Barbier;Particulier;Castelnau-le-Lez;34170;Montpellier;Site web;2024-09-01;Bon payeur
+CLI-1012;Clinique du Parc 97;Professionnel;Lattes;34970;Montpellier;Partenaire;2024-09-01;Standard
+CLI-1018;Damien Colin;Particulier;Castelnau-le-Lez;34170;Montpellier;Bouche-à-oreille;2024-09-01;Bon payeur
+CLI-0538;Tiphaine Marchal;Particulier;Pessac;33600;Bordeaux;Annuaire pro;2024-09-03;Bon payeur
+CLI-0539;Elsa Nguyen;Particulier;Tournefeuille;31170;Toulouse;Site web;2024-09-05;Bon payeur
+CLI-0540;Marc Gaillard;Particulier;Béziers;34500;Montpellier;Site web;2024-09-06;Bon payeur
+CLI-0541;Boulangerie Marchetti 43;Professionnel;Blagnac;31700;Toulouse;Bouche-à-oreille;2024-09-07;Standard
+CLI-0542;Cabinet vétérinaire Dorel 17;Professionnel;Castelnau-le-Lez;34170;Montpellier;Prospection;2024-09-15;Lent
+CLI-0543;Quentin Lefèvre;Particulier;Lattes;34970;Montpellier;Bouche-à-oreille;2024-09-17;Bon payeur
+CLI-0544;Office HLM Aquitaine 74;Syndic;Toulouse;31000;Toulouse;Partenaire;2024-09-19;Litigieux
+CLI-0545;Mairie de Lattes 52;Syndic;Toulouse;31000;Toulouse;Partenaire;2024-09-20;Litigieux
+CLI-0546;CCAS de Muret 73;Professionnel;Sète;34200;Montpellier;Site web;2024-09-23;Bon payeur
+CLI-0547;Adrien Lemoine;Particulier;Lunel;34400;Montpellier;Bouche-à-oreille;2024-09-24;Lent
+CLI-0548;Groupe scolaire Jean-Jaurès 57;Collectivité;Talence;33400;Bordeaux;Prospection;2024-09-25;Bon payeur
+CLI-0549;Nathalie Léger;Particulier;Toulouse;31000;Toulouse;Annuaire pro;2024-09-28;Bon payeur
+CLI-0550;Elsa Roussel;Particulier;Tournefeuille;31170;Toulouse;Bouche-à-oreille;2024-09-29;Standard
+CLI-0551;Marc Da Silva;Particulier;Castelnau-le-Lez;34170;Montpellier;Partenaire;2024-10-01;Standard
+CLI-0552;Hugo Charpentier;Particulier;Montpellier;34000;Montpellier;Bouche-à-oreille;2024-10-02;Bon payeur
+CLI-0553;EHPAD Les Glycines 64;Professionnel;Colomiers;31770;Toulouse;Prospection;2024-10-04;Standard
+CLI-0554;Cabinet comptable Serval 64;Syndic;Muret;31600;Toulouse;Site web;2024-10-05;Bon payeur
+CLI-0555;Tiphaine Berger;Particulier;Balma;31130;Toulouse;Site web;2024-10-06;Standard
+CLI-0556;Restaurant Le Bistrot 40;Professionnel;Lunel;34400;Montpellier;Bouche-à-oreille;2024-10-07;Bon payeur
+CLI-0557;Cabinet vétérinaire Dorel 42;Professionnel;Bègles;33130;Bordeaux;Annuaire pro;2024-10-08;Standard
+CLI-0558;William Perrin;Particulier;Béziers;34500;Montpellier;Prospection;2024-10-10;Standard
+CLI-0559;Marc Faure;Particulier;Bordeaux;33000;Bordeaux;Google Ads;2024-10-11;Bon payeur
+CLI-0560;Quentin Perrin;Particulier;Libourne;33500;Bordeaux;Bouche-à-oreille;2024-10-12;Bon payeur
+CLI-0561;Émile Roussel;Particulier;Talence;33400;Bordeaux;Bouche-à-oreille;2024-10-14;Bon payeur
+CLI-0562;Inès Vidal;Particulier;Muret;31600;Toulouse;Partenaire;2024-10-18;Bon payeur
+CLI-0563;Béatrice Gaillard;Particulier;Colomiers;31770;Toulouse;Site web;2024-10-20;Bon payeur
+CLI-0564;Pauline Girard;Particulier;Sète;34200;Montpellier;Prospection;2024-10-21;Standard
+CLI-0565;Fanny Noel;Particulier;Bègles;33130;Bordeaux;Google Ads;2024-10-27;Bon payeur
+CLI-0566;Franck Lefèvre;Particulier;Blagnac;31700;Toulouse;Bouche-à-oreille;2024-10-28;Standard
+CLI-0567;Supérette Vival 62;Professionnel;Libourne;33500;Bordeaux;Partenaire;2024-10-31;Lent
+CLI-0568;EHPAD Les Glycines 89;Syndic;Colomiers;31770;Toulouse;Bouche-à-oreille;2024-11-02;Lent
+CLI-0569;Gérard Millet;Particulier;Lattes;34970;Montpellier;Site web;2024-11-07;Standard
+CLI-0570;Kevin Millet;Particulier;Colomiers;31770;Toulouse;Google Ads;2024-11-10;Standard
+CLI-0571;Valérie Léger;Particulier;Béziers;34500;Montpellier;Bouche-à-oreille;2024-11-12;Bon payeur
+CLI-0572;Mairie de Lattes 90;Collectivité;Bègles;33130;Bordeaux;Google Ads;2024-11-13;Standard
+CLI-0573;Kevin Berger;Particulier;Pessac;33600;Bordeaux;Google Ads;2024-11-15;Bon payeur
+CLI-0574;Yasmine Barbier;Particulier;Colomiers;31770;Toulouse;Annuaire pro;2024-11-16;Standard
+CLI-0575;Delphine Noel;Particulier;Béziers;34500;Montpellier;Site web;2024-11-18;Bon payeur
+CLI-0576;EHPAD Les Glycines 64;Syndic;Montpellier;34000;Montpellier;Site web;2024-11-23;Bon payeur
+CLI-0577;Supérette Vival 22;Syndic;Mérignac;33700;Bordeaux;Bouche-à-oreille;2024-11-24;Standard
+CLI-0578;Hôtel Le Cardinal 93;Syndic;Montpellier;34000;Montpellier;Bouche-à-oreille;2024-11-26;Lent
+CLI-0579;Cabinet Vergne Immobilier 66;Professionnel;Balma;31130;Toulouse;Prospection;2024-11-27;Lent
+CLI-0580;Hélène Moreau;Particulier;Montpellier;34000;Montpellier;Partenaire;2024-11-28;Standard
+CLI-0581;Ulysse Berger;Particulier;Béziers;34500;Montpellier;Bouche-à-oreille;2024-11-29;Bon payeur
+CLI-0582;Olivier Dubois;Particulier;Toulouse;31000;Toulouse;Site web;2024-12-01;Bon payeur
+CLI-0583;Groupe scolaire Jean-Jaurès 28;Collectivité;Pessac;33600;Bordeaux;Annuaire pro;2024-12-02;Lent
+CLI-0584;Gaëlle Barbier;Particulier;Mérignac;33700;Bordeaux;Bouche-à-oreille;2024-12-03;Bon payeur
+CLI-0585;CCAS de Muret 88;Professionnel;Bègles;33130;Bordeaux;Google Ads;2024-12-04;Bon payeur
+CLI-0586;Salle de sport Ironfit 26;Collectivité;Bègles;33130;Bordeaux;Site web;2024-12-08;Standard
+CLI-0587;Menuiserie Lacoste 6;Syndic;Muret;31600;Toulouse;Site web;2024-12-10;Lent
+CLI-0588;Menuiserie Lacoste 23;Professionnel;Mérignac;33700;Bordeaux;Partenaire;2024-12-11;Standard
+CLI-0589;William Roussel;Particulier;Tournefeuille;31170;Toulouse;Partenaire;2024-12-13;Bon payeur
+CLI-0590;Damien Guerin;Particulier;Balma;31130;Toulouse;Site web;2024-12-17;Standard
+CLI-0591;CCAS de Muret 44;Professionnel;Béziers;34500;Montpellier;Partenaire;2024-12-18;Bon payeur
+CLI-0592;Camping Les Pins 66;Professionnel;Sète;34200;Montpellier;Google Ads;2024-12-21;Standard
+CLI-0593;Office HLM Aquitaine 3;Professionnel;Muret;31600;Toulouse;Bouche-à-oreille;2024-12-23;Lent
+CLI-0594;Foncia Occitanie 19;Professionnel;Bordeaux;33000;Bordeaux;Prospection;2024-12-27;Bon payeur
+CLI-0595;Kevin Aubert;Particulier;Blagnac;31700;Toulouse;Bouche-à-oreille;2024-12-28;Lent
+CLI-0596;William Charpentier;Particulier;Montpellier;34000;Montpellier;Prospection;2024-12-31;Standard
+CLI-0597;Yasmine Blanc;Particulier;Sète;34200;Montpellier;Bouche-à-oreille;2025-01-01;Bon payeur
+CLI-0598;Marc Gaillard;Particulier;Colomiers;31770;Toulouse;Site web;2025-01-04;Lent
+CLI-0599;Inès Guerin;Particulier;Pessac;33600;Bordeaux;Site web;2025-01-05;Lent
+CLI-0600;Inès Poirier;Particulier;Bordeaux;33000;Bordeaux;Partenaire;2025-01-06;Bon payeur
+CLI-0601;Foncia Occitanie 26;Professionnel;Pessac;33600;Bordeaux;Google Ads;2025-01-08;Standard
+CLI-0602;SARL Toitures Sud 5;Collectivité;Mérignac;33700;Bordeaux;Site web;2025-01-09;Lent
+CLI-0603;Mairie de Lattes 22;Syndic;Toulouse;31000;Toulouse;Google Ads;2025-01-10;Litigieux
+CLI-0604;Groupe scolaire Jean-Jaurès 30;Syndic;Pessac;33600;Bordeaux;Google Ads;2025-01-11;Bon payeur
+CLI-0605;Résidence Les Oliviers 43;Collectivité;Pessac;33600;Bordeaux;Bouche-à-oreille;2025-01-13;Bon payeur
+CLI-0606;Quentin Millet;Particulier;Bègles;33130;Bordeaux;Bouche-à-oreille;2025-01-14;Bon payeur
+CLI-0607;Résidence Belvédère 93;Syndic;Muret;31600;Toulouse;Google Ads;2025-01-15;Standard
+CLI-0608;Valérie Masson;Particulier;Muret;31600;Toulouse;Site web;2025-01-18;Lent
+CLI-0609;Hôtel Le Cardinal 12;Syndic;Talence;33400;Bordeaux;Site web;2025-01-20;Lent
+CLI-0610;Nathalie Poirier;Particulier;Bègles;33130;Bordeaux;Google Ads;2025-01-21;Standard
+CLI-0611;Marc Girard;Particulier;Libourne;33500;Bordeaux;Bouche-à-oreille;2025-01-23;Standard
+CLI-0612;Ulysse Colin;Particulier;Talence;33400;Bordeaux;Google Ads;2025-01-24;Standard
+CLI-0613;Boulangerie Marchetti 78;Professionnel;Tournefeuille;31170;Toulouse;Site web;2025-01-26;Standard
+CLI-0614;Ibrahim Faure;Particulier;Colomiers;31770;Toulouse;Site web;2025-01-27;Standard
+CLI-0615;Cabinet dentaire Ansel 86;Professionnel;Lunel;34400;Montpellier;Site web;2025-01-28;Bon payeur
+CLI-0616;Cédric Lemoine;Particulier;Talence;33400;Bordeaux;Site web;2025-01-30;Standard
+CLI-0617;Garage Autoplus 24;Syndic;Pessac;33600;Bordeaux;Bouche-à-oreille;2025-02-02;Bon payeur
+CLI-0618;Adrien Chevalier;Particulier;Bègles;33130;Bordeaux;Google Ads;2025-02-03;Bon payeur
+CLI-0619;Quentin Barbier;Particulier;Tournefeuille;31170;Toulouse;Site web;2025-02-05;Bon payeur
+CLI-0620;Serge Faure;Particulier;Balma;31130;Toulouse;Prospection;2025-02-10;Bon payeur
+CLI-0621;Garage Autoplus 66;Collectivité;Toulouse;31000;Toulouse;Prospection;2025-02-11;Lent
+CLI-0622;Pharmacie Centrale 27;Collectivité;Tournefeuille;31170;Toulouse;Prospection;2025-02-12;Standard
+CLI-0623;Salle de sport Ironfit 61;Syndic;Castelnau-le-Lez;34170;Montpellier;Google Ads;2025-02-13;Lent
+CLI-0624;Ibrahim Gaillard;Particulier;Toulouse;31000;Toulouse;Google Ads;2025-02-14;Bon payeur
+CLI-0625;Yasmine Millet;Particulier;Muret;31600;Toulouse;Google Ads;2025-02-15;Standard
+CLI-0626;Brasserie du Port 35;Professionnel;Muret;31600;Toulouse;Bouche-à-oreille;2025-02-18;Lent
+CLI-0627;Marc Aubert;Particulier;Pessac;33600;Bordeaux;Site web;2025-02-19;Bon payeur
+CLI-0628;Menuiserie Lacoste 87;Syndic;Mérignac;33700;Bordeaux;Google Ads;2025-02-20;Standard
+CLI-0629;Salle de sport Ironfit 11;Collectivité;Bordeaux;33000;Bordeaux;Site web;2025-02-21;Lent
+CLI-0630;Gaëlle Colin;Particulier;Lunel;34400;Montpellier;Site web;2025-02-22;Bon payeur
+CLI-0631;Menuiserie Lacoste 42;Professionnel;Montpellier;34000;Montpellier;Partenaire;2025-02-24;Standard
+CLI-0632;Garage Autoplus 64;Syndic;Sète;34200;Montpellier;Site web;2025-02-25;Standard
+CLI-0633;Elsa Millet;Particulier;Pessac;33600;Bordeaux;Annuaire pro;2025-02-27;Lent
+CLI-0634;Pauline Faure;Particulier;Libourne;33500;Bordeaux;Partenaire;2025-02-28;Lent
+CLI-0635;Résidence Les Oliviers 35;Professionnel;Balma;31130;Toulouse;Site web;2025-03-01;Bon payeur
+CLI-0636;Fanny Poirier;Particulier;Bègles;33130;Bordeaux;Google Ads;2025-03-02;Bon payeur
+CLI-0637;Hélène Robin;Particulier;Mérignac;33700;Bordeaux;Bouche-à-oreille;2025-03-03;Bon payeur
+CLI-0638;Émile Léger;Particulier;Castelnau-le-Lez;34170;Montpellier;Google Ads;2025-03-04;Bon payeur
+CLI-0639;Cédric Guerin;Particulier;Blagnac;31700;Toulouse;Partenaire;2025-03-05;Bon payeur
+CLI-0640;Ulysse Guerin;Particulier;Toulouse;31000;Toulouse;Bouche-à-oreille;2025-03-07;Lent
+CLI-0641;Auto-école Conduite Plus 86;Professionnel;Castelnau-le-Lez;34170;Montpellier;Site web;2025-03-09;Standard
+CLI-0642;Laure Lefèvre;Particulier;Libourne;33500;Bordeaux;Bouche-à-oreille;2025-03-10;Standard
+CLI-0643;Kevin Robin;Particulier;Pessac;33600;Bordeaux;Site web;2025-03-11;Bon payeur
+CLI-0644;Marc Perrin;Particulier;Bègles;33130;Bordeaux;Bouche-à-oreille;2025-03-12;Lent
+CLI-0645;Elsa Aubert;Particulier;Libourne;33500;Bordeaux;Prospection;2025-03-13;Bon payeur
+CLI-0646;Garage Autoplus 11;Collectivité;Talence;33400;Bordeaux;Bouche-à-oreille;2025-03-14;Bon payeur
+CLI-0647;Hugo Barbier;Particulier;Blagnac;31700;Toulouse;Bouche-à-oreille;2025-03-15;Bon payeur
+CLI-0648;Delphine Masson;Particulier;Bègles;33130;Bordeaux;Site web;2025-03-16;Lent
+CLI-0649;Nathalie Vidal;Particulier;Libourne;33500;Bordeaux;Google Ads;2025-03-17;Bon payeur
+CLI-0650;Ibrahim Berger;Particulier;Blagnac;31700;Toulouse;Site web;2025-03-19;Bon payeur
+CLI-0651;Pharmacie Centrale 68;Professionnel;Tournefeuille;31170;Toulouse;Bouche-à-oreille;2025-03-20;Standard
+CLI-0652;Émile Da Silva;Particulier;Colomiers;31770;Toulouse;Partenaire;2025-03-21;Bon payeur
+CLI-0653;Brasserie du Port 87;Professionnel;Toulouse;31000;Toulouse;Prospection;2025-03-22;Standard
+CLI-0654;Émile Dupuis;Particulier;Béziers;34500;Montpellier;Partenaire;2025-03-23;Standard
+CLI-0655;CCAS de Muret 2;Professionnel;Bordeaux;33000;Bordeaux;Prospection;2025-03-24;Bon payeur
+CLI-0656;Serge Rey;Particulier;Libourne;33500;Bordeaux;Annuaire pro;2025-03-29;Bon payeur
+CLI-0657;Lycée Saint-Exupéry 63;Syndic;Libourne;33500;Bordeaux;Site web;2025-03-31;Standard
+CLI-0658;Supérette Vival 58;Collectivité;Mérignac;33700;Bordeaux;Site web;2025-04-04;Lent
+CLI-0659;Yasmine Charpentier;Particulier;Blagnac;31700;Toulouse;Bouche-à-oreille;2025-04-06;Standard
+CLI-0660;Camille Moreau;Particulier;Blagnac;31700;Toulouse;Google Ads;2025-04-08;Standard
+CLI-0661;Hugo Aubert;Particulier;Lattes;34970;Montpellier;Annuaire pro;2025-04-12;Standard
+CLI-0662;Cabinet Vergne Immobilier 35;Professionnel;Balma;31130;Toulouse;Prospection;2025-04-13;Bon payeur
+CLI-0663;Mairie de Lattes 97;Collectivité;Montpellier;34000;Montpellier;Partenaire;2025-04-14;Lent
+CLI-0664;Cédric Masson;Particulier;Colomiers;31770;Toulouse;Google Ads;2025-04-15;Bon payeur
+CLI-0665;Laure Marchal;Particulier;Sète;34200;Montpellier;Bouche-à-oreille;2025-04-17;Bon payeur
+CLI-0666;Quentin Guerin;Particulier;Toulouse;31000;Toulouse;Partenaire;2025-04-19;Standard
+CLI-0667;Résidence Les Oliviers 10;Professionnel;Lattes;34970;Montpellier;Partenaire;2025-04-20;Bon payeur
+CLI-0668;Tiphaine Faure;Particulier;Muret;31600;Toulouse;Prospection;2025-04-24;Bon payeur
+CLI-0669;Fanny Perrin;Particulier;Colomiers;31770;Toulouse;Bouche-à-oreille;2025-04-26;Standard
+CLI-0670;Restaurant Le Bistrot 41;Professionnel;Sète;34200;Montpellier;Google Ads;2025-04-27;Bon payeur
+CLI-0671;Office HLM Aquitaine 8;Professionnel;Montpellier;34000;Montpellier;Google Ads;2025-04-28;Standard
+CLI-0672;Émile Lemoine;Particulier;Blagnac;31700;Toulouse;Partenaire;2025-04-29;Standard
+CLI-0673;Pauline Lemoine;Particulier;Castelnau-le-Lez;34170;Montpellier;Annuaire pro;2025-04-30;Bon payeur
+CLI-0674;Restaurant Le Bistrot 12;Syndic;Pessac;33600;Bordeaux;Annuaire pro;2025-05-01;Standard
+CLI-0675;Mairie de Lattes 1;Professionnel;Mérignac;33700;Bordeaux;Google Ads;2025-05-02;Lent
+CLI-0676;Olivier Gaillard;Particulier;Muret;31600;Toulouse;Site web;2025-05-06;Bon payeur
+CLI-0677;Gaëlle Brun;Particulier;Bègles;33130;Bordeaux;Bouche-à-oreille;2025-05-07;Bon payeur
+CLI-0678;Delphine Renard;Particulier;Bordeaux;33000;Bordeaux;Site web;2025-05-08;Litigieux
+CLI-0679;Garage Autoplus 29;Professionnel;Sète;34200;Montpellier;Site web;2025-05-10;Litigieux
+CLI-0680;Mairie de Lattes 14;Syndic;Pessac;33600;Bordeaux;Google Ads;2025-05-12;Standard
+CLI-0681;Cabinet comptable Serval 94;Syndic;Blagnac;31700;Toulouse;Site web;2025-05-13;Bon payeur
+CLI-0682;Cabinet comptable Serval 54;Syndic;Lunel;34400;Montpellier;Annuaire pro;2025-05-14;Lent
+CLI-0683;Camille Nguyen;Particulier;Pessac;33600;Bordeaux;Bouche-à-oreille;2025-05-17;Bon payeur
+CLI-0684;Laure Noel;Particulier;Tournefeuille;31170;Toulouse;Site web;2025-05-18;Bon payeur
+CLI-0685;Cabinet dentaire Ansel 61;Collectivité;Colomiers;31770;Toulouse;Site web;2025-05-19;Lent
+CLI-0686;Cabinet dentaire Ansel 44;Professionnel;Lattes;34970;Montpellier;Bouche-à-oreille;2025-05-20;Standard
+CLI-0687;Cédric Guerin;Particulier;Mérignac;33700;Bordeaux;Bouche-à-oreille;2025-05-23;Standard
+CLI-0688;Joëlle Barbier;Particulier;Toulouse;31000;Toulouse;Google Ads;2025-05-24;Bon payeur
+CLI-0689;Rachida Vidal;Particulier;Mérignac;33700;Bordeaux;Google Ads;2025-05-25;Bon payeur
+CLI-0690;Delphine Faure;Particulier;Mérignac;33700;Bordeaux;Google Ads;2025-05-27;Standard
+CLI-0691;Cabinet comptable Serval 21;Professionnel;Béziers;34500;Montpellier;Annuaire pro;2025-05-28;Bon payeur
+CLI-0692;Camping Les Pins 2;Professionnel;Balma;31130;Toulouse;Google Ads;2025-05-30;Lent
+CLI-0693;Tiphaine Girard;Particulier;Tournefeuille;31170;Toulouse;Google Ads;2025-06-01;Standard
+CLI-0694;Cabinet Vergne Immobilier 30;Collectivité;Talence;33400;Bordeaux;Bouche-à-oreille;2025-06-02;Standard
+CLI-0695;Cédric Berger;Particulier;Libourne;33500;Bordeaux;Partenaire;2025-06-03;Bon payeur
+CLI-0696;Nathalie Blanc;Particulier;Sète;34200;Montpellier;Google Ads;2025-06-04;Bon payeur
+CLI-0697;Camille Brun;Particulier;Sète;34200;Montpellier;Bouche-à-oreille;2025-06-06;Bon payeur
+CLI-0698;Boulangerie Marchetti 19;Professionnel;Mérignac;33700;Bordeaux;Partenaire;2025-06-08;Bon payeur
+CLI-0699;Mairie de Lattes 59;Syndic;Bègles;33130;Bordeaux;Site web;2025-06-09;Lent
+CLI-0700;Damien Blanc;Particulier;Talence;33400;Bordeaux;Google Ads;2025-06-10;Bon payeur
+CLI-0701;William Renard;Particulier;Toulouse;31000;Toulouse;Bouche-à-oreille;2025-06-11;Bon payeur
+CLI-0702;Boulangerie Marchetti 79;Collectivité;Bègles;33130;Bordeaux;Prospection;2025-06-12;Standard
+CLI-0703;Olivier Marchal;Particulier;Talence;33400;Bordeaux;Site web;2025-06-14;Standard
+CLI-0704;Ibrahim Noel;Particulier;Blagnac;31700;Toulouse;Partenaire;2025-06-15;Bon payeur
+CLI-0705;Kevin Aubert;Particulier;Sète;34200;Montpellier;Bouche-à-oreille;2025-06-17;Lent
+CLI-0706;Hôtel Le Cardinal 12;Syndic;Libourne;33500;Bordeaux;Bouche-à-oreille;2025-06-18;Standard
+CLI-0707;Inès Chevalier;Particulier;Castelnau-le-Lez;34170;Montpellier;Partenaire;2025-06-20;Bon payeur
+CLI-0708;Cabinet comptable Serval 57;Professionnel;Balma;31130;Toulouse;Site web;2025-06-22;Bon payeur
+CLI-0709;Cabinet vétérinaire Dorel 54;Professionnel;Castelnau-le-Lez;34170;Montpellier;Google Ads;2025-06-23;Lent
+CLI-0710;Hôtel Le Cardinal 25;Syndic;Lattes;34970;Montpellier;Partenaire;2025-06-24;Bon payeur
+CLI-0711;Alain Rey;Particulier;Bordeaux;33000;Bordeaux;Prospection;2025-06-25;Standard
+CLI-0712;Brasserie du Port 41;Professionnel;Balma;31130;Toulouse;Bouche-à-oreille;2025-06-26;Standard
+CLI-0713;Hugo Guerin;Particulier;Bègles;33130;Bordeaux;Bouche-à-oreille;2025-06-29;Standard
+CLI-0714;Hôtel Le Cardinal 65;Professionnel;Bordeaux;33000;Bordeaux;Annuaire pro;2025-06-30;Lent
+CLI-0715;Joëlle Dupuis;Particulier;Bordeaux;33000;Bordeaux;Google Ads;2025-07-01;Standard
+CLI-0716;Quentin Faure;Particulier;Talence;33400;Bordeaux;Bouche-à-oreille;2025-07-02;Bon payeur
+CLI-0717;EHPAD Les Glycines 22;Syndic;Bègles;33130;Bordeaux;Prospection;2025-07-05;Bon payeur
+CLI-0718;Camille Léger;Particulier;Toulouse;31000;Toulouse;Google Ads;2025-07-07;Bon payeur
+CLI-0719;William Vidal;Particulier;Pessac;33600;Bordeaux;Bouche-à-oreille;2025-07-08;Standard
+CLI-0720;Cédric Rey;Particulier;Tournefeuille;31170;Toulouse;Bouche-à-oreille;2025-07-10;Standard
+CLI-0721;Yasmine Moreau;Particulier;Mérignac;33700;Bordeaux;Site web;2025-07-11;Bon payeur
+CLI-0722;Pharmacie Centrale 13;Professionnel;Bègles;33130;Bordeaux;Annuaire pro;2025-07-12;Lent
+CLI-0723;Office HLM Aquitaine 7;Professionnel;Lunel;34400;Montpellier;Bouche-à-oreille;2025-07-13;Bon payeur
+CLI-0724;William Lefèvre;Particulier;Bordeaux;33000;Bordeaux;Bouche-à-oreille;2025-07-14;Standard
+CLI-0725;Cabinet vétérinaire Dorel 59;Professionnel;Colomiers;31770;Toulouse;Bouche-à-oreille;2025-07-15;Lent
+CLI-0726;Cabinet comptable Serval 63;Professionnel;Bègles;33130;Bordeaux;Prospection;2025-07-16;Lent
+CLI-0727;Pauline Masson;Particulier;Talence;33400;Bordeaux;Google Ads;2025-07-17;Bon payeur
+CLI-0728;Émile Noel;Particulier;Bègles;33130;Bordeaux;Google Ads;2025-07-18;Standard
+CLI-0729;Olivier Colin;Particulier;Lunel;34400;Montpellier;Partenaire;2025-07-20;Bon payeur
+CLI-0730;Nathalie Robin;Particulier;Blagnac;31700;Toulouse;Bouche-à-oreille;2025-07-21;Bon payeur
+CLI-0731;Adrien Barbier;Particulier;Pessac;33600;Bordeaux;Bouche-à-oreille;2025-07-22;Standard
+CLI-0732;Kevin Vidal;Particulier;Mérignac;33700;Bordeaux;Bouche-à-oreille;2025-07-26;Standard
+CLI-0733;Adrien Robin;Particulier;Bordeaux;33000;Bordeaux;Partenaire;2025-07-27;Standard
+CLI-0734;Hôtel Le Cardinal 40;Syndic;Lunel;34400;Montpellier;Bouche-à-oreille;2025-07-28;Bon payeur
+CLI-0735;Salle de sport Ironfit 52;Professionnel;Talence;33400;Bordeaux;Google Ads;2025-07-29;Litigieux
+CLI-0736;Ulysse Marchal;Particulier;Libourne;33500;Bordeaux;Bouche-à-oreille;2025-07-31;Bon payeur
+CLI-0737;Émile Rey;Particulier;Blagnac;31700;Toulouse;Bouche-à-oreille;2025-08-01;Bon payeur
+CLI-0738;Damien Léger;Particulier;Lunel;34400;Montpellier;Site web;2025-08-02;Bon payeur
+CLI-0739;Hugo Blanc;Particulier;Toulouse;31000;Toulouse;Site web;2025-08-03;Standard
+CLI-0740;Inès Bonnet;Particulier;Muret;31600;Toulouse;Partenaire;2025-08-05;Bon payeur
+CLI-0741;Inès Poirier;Particulier;Libourne;33500;Bordeaux;Partenaire;2025-08-06;Standard
+CLI-0742;Clinique du Parc 35;Professionnel;Pessac;33600;Bordeaux;Google Ads;2025-08-07;Standard
+CLI-0743;Gaëlle Bonnet;Particulier;Tournefeuille;31170;Toulouse;Partenaire;2025-08-09;Bon payeur
+CLI-0744;Kevin Millet;Particulier;Tournefeuille;31170;Toulouse;Bouche-à-oreille;2025-08-10;Standard
+CLI-0745;Pauline Rey;Particulier;Castelnau-le-Lez;34170;Montpellier;Bouche-à-oreille;2025-08-11;Lent
+CLI-0746;Foncia Occitanie 83;Professionnel;Mérignac;33700;Bordeaux;Bouche-à-oreille;2025-08-12;Standard
+CLI-0747;Cabinet vétérinaire Dorel 56;Syndic;Mérignac;33700;Bordeaux;Google Ads;2025-08-13;Standard
+CLI-0748;EHPAD Les Glycines 66;Professionnel;Toulouse;31000;Toulouse;Bouche-à-oreille;2025-08-14;Bon payeur
+CLI-0749;Résidence Les Oliviers 37;Professionnel;Montpellier;34000;Montpellier;Google Ads;2025-08-15;Bon payeur
+CLI-0750;Valérie Marchal;Particulier;Montpellier;34000;Montpellier;Site web;2025-08-16;Standard
+CLI-0751;Serge Aubert;Particulier;Bordeaux;33000;Bordeaux;Site web;2025-08-18;Bon payeur
+CLI-0752;Résidence Belvédère 73;Professionnel;Bordeaux;33000;Bordeaux;Bouche-à-oreille;2025-08-20;Standard
+CLI-0753;Valérie Poirier;Particulier;Bordeaux;33000;Bordeaux;Site web;2025-08-21;Bon payeur
+CLI-0754;Groupe scolaire Jean-Jaurès 8;Professionnel;Pessac;33600;Bordeaux;Site web;2025-08-22;Standard
+CLI-0755;Rachida Barbier;Particulier;Lunel;34400;Montpellier;Bouche-à-oreille;2025-08-24;Bon payeur
+CLI-0756;Marc Robin;Particulier;Muret;31600;Toulouse;Bouche-à-oreille;2025-08-25;Litigieux
+CLI-0757;Syndic Gestion Aquitaine 95;Professionnel;Muret;31600;Toulouse;Site web;2025-08-27;Bon payeur
+CLI-0758;Marc Brun;Particulier;Bordeaux;33000;Bordeaux;Bouche-à-oreille;2025-08-28;Bon payeur
+CLI-0759;Valérie Poirier;Particulier;Mérignac;33700;Bordeaux;Bouche-à-oreille;2025-08-29;Standard
+CLI-0760;Pharmacie Centrale 38;Syndic;Montpellier;34000;Montpellier;Site web;2025-08-30;Lent
+CLI-0761;Kevin Charpentier;Particulier;Pessac;33600;Bordeaux;Annuaire pro;2025-08-31;Bon payeur
+CLI-0762;Yasmine Guerin;Particulier;Colomiers;31770;Toulouse;Site web;2025-09-01;Lent
+CLI-0763;Garage Autoplus 92;Syndic;Bègles;33130;Bordeaux;Bouche-à-oreille;2025-09-02;Lent
+CLI-0764;Pharmacie Centrale 80;Collectivité;Muret;31600;Toulouse;Partenaire;2025-09-03;Bon payeur
+CLI-0765;Olivier Nguyen;Particulier;Sète;34200;Montpellier;Site web;2025-09-05;Bon payeur
+CLI-0766;Résidence Les Oliviers 90;Syndic;Bègles;33130;Bordeaux;Prospection;2025-09-06;Bon payeur
+CLI-0767;Pharmacie Centrale 38;Collectivité;Bègles;33130;Bordeaux;Site web;2025-09-08;Lent
+CLI-0768;Delphine Nguyen;Particulier;Bègles;33130;Bordeaux;Partenaire;2025-09-09;Bon payeur
+CLI-0769;Serge Barbier;Particulier;Lattes;34970;Montpellier;Google Ads;2025-09-10;Standard
+CLI-0770;Garage Autoplus 19;Professionnel;Muret;31600;Toulouse;Bouche-à-oreille;2025-09-11;Standard
+CLI-0771;Camille Noel;Particulier;Pessac;33600;Bordeaux;Site web;2025-09-14;Bon payeur
+CLI-0772;Gérard Masson;Particulier;Mérignac;33700;Bordeaux;Bouche-à-oreille;2025-09-16;Bon payeur
+CLI-0773;Salle de sport Ironfit 27;Professionnel;Toulouse;31000;Toulouse;Bouche-à-oreille;2025-09-17;Standard
+CLI-0774;Gaëlle Lefèvre;Particulier;Balma;31130;Toulouse;Bouche-à-oreille;2025-09-18;Bon payeur
+CLI-0775;Ibrahim Vidal;Particulier;Sète;34200;Montpellier;Google Ads;2025-09-19;Standard
+CLI-0776;SARL Toitures Sud 65;Collectivité;Bègles;33130;Bordeaux;Partenaire;2025-09-21;Standard
+CLI-0777;Valérie Moreau;Particulier;Mérignac;33700;Bordeaux;Site web;2025-09-24;Standard
+CLI-0778;Clinique du Parc 7;Professionnel;Talence;33400;Bordeaux;Bouche-à-oreille;2025-09-25;Bon payeur
+CLI-0779;Franck Aubert;Particulier;Mérignac;33700;Bordeaux;Partenaire;2025-09-26;Bon payeur
+CLI-0780;Hélène Marchal;Particulier;Béziers;34500;Montpellier;Partenaire;2025-09-29;Standard
+CLI-0781;CCAS de Muret 90;Professionnel;Bordeaux;33000;Bordeaux;Bouche-à-oreille;2025-09-30;Standard
+CLI-0782;Hélène Vidal;Particulier;Muret;31600;Toulouse;Bouche-à-oreille;2025-10-01;Bon payeur
+CLI-0783;Pharmacie Centrale 15;Professionnel;Libourne;33500;Bordeaux;Google Ads;2025-10-03;Lent
+CLI-0784;Brasserie du Port 72;Professionnel;Bègles;33130;Bordeaux;Bouche-à-oreille;2025-10-05;Standard
+CLI-0785;Foncia Occitanie 18;Syndic;Balma;31130;Toulouse;Google Ads;2025-10-06;Standard
+CLI-0786;Gaëlle Perrin;Particulier;Talence;33400;Bordeaux;Site web;2025-10-07;Litigieux
+CLI-0787;Yasmine Millet;Particulier;Blagnac;31700;Toulouse;Site web;2025-10-08;Standard
+CLI-0788;Adrien Rey;Particulier;Libourne;33500;Bordeaux;Site web;2025-10-09;Bon payeur
+CLI-0789;Cabinet Vergne Immobilier 33;Professionnel;Blagnac;31700;Toulouse;Site web;2025-10-10;Bon payeur
+CLI-0790;Gaëlle Girard;Particulier;Sète;34200;Montpellier;Google Ads;2025-10-11;Standard
+CLI-0791;Rachida Brun;Particulier;Mérignac;33700;Bordeaux;Bouche-à-oreille;2025-10-13;Standard
+CLI-0792;Damien Barbier;Particulier;Libourne;33500;Bordeaux;Google Ads;2025-10-15;Bon payeur
+CLI-0793;Mairie de Lattes 9;Collectivité;Tournefeuille;31170;Toulouse;Partenaire;2025-10-16;Lent
+CLI-0794;Émile Guerin;Particulier;Montpellier;34000;Montpellier;Bouche-à-oreille;2025-10-17;Lent
+CLI-0795;Damien Lefèvre;Particulier;Lattes;34970;Montpellier;Site web;2025-10-20;Bon payeur
+CLI-0796;Fanny Berger;Particulier;Tournefeuille;31170;Toulouse;Prospection;2025-10-21;Standard
+CLI-0797;Supérette Vival 15;Collectivité;Pessac;33600;Bordeaux;Site web;2025-10-22;Lent
+CLI-0798;Elsa Aubert;Particulier;Blagnac;31700;Toulouse;Partenaire;2025-10-24;Standard
+CLI-0799;Marc Gaillard;Particulier;Béziers;34500;Montpellier;Site web;2025-10-25;Litigieux
+CLI-0800;Pauline Charpentier;Particulier;Pessac;33600;Bordeaux;Bouche-à-oreille;2025-10-26;Bon payeur
+CLI-0801;Pharmacie Centrale 65;Syndic;Talence;33400;Bordeaux;Prospection;2025-10-31;Lent
+CLI-0802;Groupe scolaire Jean-Jaurès 10;Collectivité;Talence;33400;Bordeaux;Bouche-à-oreille;2025-11-01;Bon payeur
+CLI-0803;Laure Da Silva;Particulier;Libourne;33500;Bordeaux;Partenaire;2025-11-02;Standard
+CLI-0804;Gaëlle Moreau;Particulier;Talence;33400;Bordeaux;Site web;2025-11-03;Standard
+CLI-0805;Office HLM Aquitaine 4;Professionnel;Talence;33400;Bordeaux;Site web;2025-11-04;Standard
+CLI-0806;Menuiserie Lacoste 76;Professionnel;Muret;31600;Toulouse;Bouche-à-oreille;2025-11-06;Standard
+CLI-0807;Tiphaine Brun;Particulier;Libourne;33500;Bordeaux;Site web;2025-11-07;Bon payeur
+CLI-0808;Adrien Marchal;Particulier;Blagnac;31700;Toulouse;Site web;2025-11-09;Standard
+CLI-0809;Serge Dubois;Particulier;Mérignac;33700;Bordeaux;Bouche-à-oreille;2025-11-11;Standard
+CLI-0810;Valérie Roussel;Particulier;Castelnau-le-Lez;34170;Montpellier;Site web;2025-11-12;Bon payeur
+CLI-0811;Lycée Saint-Exupéry 69;Collectivité;Mérignac;33700;Bordeaux;Bouche-à-oreille;2025-11-14;Lent
+CLI-0812;Restaurant Le Bistrot 14;Syndic;Talence;33400;Bordeaux;Prospection;2025-11-15;Standard
+CLI-0813;Nathalie Rey;Particulier;Bordeaux;33000;Bordeaux;Site web;2025-11-16;Lent
+CLI-0814;Garage Autoplus 27;Syndic;Lunel;34400;Montpellier;Bouche-à-oreille;2025-11-17;Standard
+CLI-0815;William Nguyen;Particulier;Béziers;34500;Montpellier;Site web;2025-11-20;Lent
+CLI-0816;Pharmacie Centrale 30;Syndic;Mérignac;33700;Bordeaux;Annuaire pro;2025-11-22;Lent
+CLI-0817;Cabinet dentaire Ansel 91;Professionnel;Pessac;33600;Bordeaux;Google Ads;2025-11-24;Standard
+CLI-0818;Elsa Nguyen;Particulier;Blagnac;31700;Toulouse;Partenaire;2025-11-26;Standard
+CLI-0819;Cabinet comptable Serval 71;Professionnel;Talence;33400;Bordeaux;Site web;2025-11-27;Bon payeur
+CLI-0820;Syndic Gestion Aquitaine 23;Professionnel;Talence;33400;Bordeaux;Site web;2025-11-28;Standard
+CLI-0821;Garage Autoplus 81;Syndic;Mérignac;33700;Bordeaux;Site web;2025-11-29;Bon payeur
+CLI-0822;Pharmacie Centrale 94;Professionnel;Balma;31130;Toulouse;Site web;2025-11-30;Standard
+CLI-0823;Groupe scolaire Jean-Jaurès 7;Syndic;Béziers;34500;Montpellier;Prospection;2025-12-02;Lent
+CLI-0824;Office HLM Aquitaine 97;Syndic;Lattes;34970;Montpellier;Bouche-à-oreille;2025-12-05;Standard
+CLI-0825;Serge Robin;Particulier;Sète;34200;Montpellier;Site web;2025-12-06;Standard
+CLI-0826;Alain Nguyen;Particulier;Pessac;33600;Bordeaux;Site web;2025-12-07;Standard
+CLI-0827;Gérard Renard;Particulier;Talence;33400;Bordeaux;Site web;2025-12-08;Bon payeur
+CLI-0828;Pauline Chevalier;Particulier;Toulouse;31000;Toulouse;Google Ads;2025-12-11;Bon payeur
+CLI-0829;Foncia Occitanie 82;Syndic;Castelnau-le-Lez;34170;Montpellier;Partenaire;2025-12-13;Lent
+CLI-0830;Cabinet dentaire Ansel 81;Professionnel;Mérignac;33700;Bordeaux;Bouche-à-oreille;2025-12-14;Standard
+CLI-0831;Menuiserie Lacoste 16;Professionnel;Blagnac;31700;Toulouse;Google Ads;2025-12-17;Bon payeur
+CLI-0832;CCAS de Muret 70;Collectivité;Sète;34200;Montpellier;Bouche-à-oreille;2025-12-18;Standard
+CLI-0833;Supérette Vival 63;Syndic;Sète;34200;Montpellier;Partenaire;2025-12-19;Standard
+CLI-0834;Valérie Nguyen;Particulier;Castelnau-le-Lez;34170;Montpellier;Site web;2025-12-21;Standard
+CLI-0835;Cabinet comptable Serval 40;Syndic;Montpellier;34000;Montpellier;Bouche-à-oreille;2025-12-23;Lent
+CLI-0836;Groupe scolaire Jean-Jaurès 23;Collectivité;Lattes;34970;Montpellier;Bouche-à-oreille;2025-12-24;Bon payeur
+CLI-0837;Gérard Millet;Particulier;Toulouse;31000;Toulouse;Prospection;2025-12-25;Bon payeur
+CLI-0838;Boulangerie Marchetti 80;Collectivité;Colomiers;31770;Toulouse;Prospection;2025-12-27;Standard
+CLI-0839;Supérette Vival 73;Syndic;Tournefeuille;31170;Toulouse;Partenaire;2025-12-28;Lent
+CLI-0840;Résidence Belvédère 62;Professionnel;Bordeaux;33000;Bordeaux;Google Ads;2025-12-29;Standard
+CLI-0841;SCI Les Tilleuls 69;Collectivité;Colomiers;31770;Toulouse;Bouche-à-oreille;2025-12-31;Standard
+CLI-0842;Yasmine Guerin;Particulier;Sète;34200;Montpellier;Prospection;2026-01-01;Standard
+CLI-0843;Pharmacie Centrale 6;Professionnel;Muret;31600;Toulouse;Site web;2026-01-05;Standard
+CLI-0844;Boulangerie Marchetti 69;Syndic;Colomiers;31770;Toulouse;Site web;2026-01-06;Bon payeur
+CLI-0845;Syndic Gestion Aquitaine 69;Syndic;Montpellier;34000;Montpellier;Partenaire;2026-01-07;Standard
+CLI-0846;Foncia Occitanie 48;Syndic;Bordeaux;33000;Bordeaux;Prospection;2026-01-08;Standard
+CLI-0847;Auto-école Conduite Plus 80;Professionnel;Blagnac;31700;Toulouse;Partenaire;2026-01-12;Standard
+CLI-0848;Garage Autoplus 74;Professionnel;Bordeaux;33000;Bordeaux;Bouche-à-oreille;2026-01-13;Bon payeur
+CLI-0849;SCI Les Tilleuls 25;Collectivité;Libourne;33500;Bordeaux;Bouche-à-oreille;2026-01-14;Standard
+CLI-0850;Camille Nguyen;Particulier;Bordeaux;33000;Bordeaux;Partenaire;2026-01-18;Standard
+CLI-0851;Laure Chevalier;Particulier;Sète;34200;Montpellier;Site web;2026-01-19;Standard
+CLI-0852;Gérard Barbier;Particulier;Bègles;33130;Bordeaux;Google Ads;2026-01-20;Standard
+CLI-0853;CCAS de Muret 62;Professionnel;Castelnau-le-Lez;34170;Montpellier;Site web;2026-01-22;Bon payeur
+CLI-0854;Hugo Léger;Particulier;Blagnac;31700;Toulouse;Partenaire;2026-01-23;Bon payeur
+CLI-0855;Serge Dubois;Particulier;Montpellier;34000;Montpellier;Site web;2026-01-24;Standard
+CLI-0856;Groupe scolaire Jean-Jaurès 92;Syndic;Mérignac;33700;Bordeaux;Prospection;2026-01-25;Bon payeur
+CLI-0857;Hélène Masson;Particulier;Libourne;33500;Bordeaux;Site web;2026-01-27;Lent
+CLI-0858;Garage Autoplus 4;Syndic;Balma;31130;Toulouse;Prospection;2026-01-28;Litigieux
+CLI-0859;Kevin Brun;Particulier;Bordeaux;33000;Bordeaux;Google Ads;2026-01-29;Lent
+CLI-0860;William Nguyen;Particulier;Tournefeuille;31170;Toulouse;Site web;2026-01-30;Bon payeur
+CLI-0861;Damien Dupuis;Particulier;Pessac;33600;Bordeaux;Google Ads;2026-01-31;Lent
+CLI-0862;Damien Faure;Particulier;Toulouse;31000;Toulouse;Prospection;2026-02-01;Lent
+CLI-0863;Supérette Vival 77;Professionnel;Montpellier;34000;Montpellier;Google Ads;2026-02-02;Bon payeur
+CLI-0864;SARL Toitures Sud 31;Professionnel;Talence;33400;Bordeaux;Google Ads;2026-02-04;Standard
+CLI-0865;Cabinet dentaire Ansel 95;Collectivité;Pessac;33600;Bordeaux;Bouche-à-oreille;2026-02-07;Lent
+CLI-0866;Cédric Rey;Particulier;Libourne;33500;Bordeaux;Prospection;2026-02-08;Bon payeur
+CLI-0867;Pauline Guerin;Particulier;Mérignac;33700;Bordeaux;Google Ads;2026-02-09;Standard
+CLI-0868;Boulangerie Marchetti 26;Collectivité;Montpellier;34000;Montpellier;Site web;2026-02-11;Lent
+CLI-0869;Émile Berger;Particulier;Pessac;33600;Bordeaux;Bouche-à-oreille;2026-02-12;Standard
+CLI-0870;Mairie de Lattes 85;Professionnel;Pessac;33600;Bordeaux;Partenaire;2026-02-13;Bon payeur
+CLI-0871;Résidence Les Oliviers 15;Professionnel;Lattes;34970;Montpellier;Partenaire;2026-02-15;Standard
+CLI-0872;Salle de sport Ironfit 55;Professionnel;Bordeaux;33000;Bordeaux;Site web;2026-02-16;Standard
+CLI-0873;Hélène Millet;Particulier;Bègles;33130;Bordeaux;Prospection;2026-02-17;Standard
+CLI-0874;Clinique du Parc 29;Collectivité;Montpellier;34000;Montpellier;Bouche-à-oreille;2026-02-18;Standard
+CLI-0875;Cabinet vétérinaire Dorel 60;Professionnel;Talence;33400;Bordeaux;Annuaire pro;2026-02-19;Standard
+CLI-0876;SCI Les Tilleuls 58;Collectivité;Talence;33400;Bordeaux;Bouche-à-oreille;2026-02-20;Bon payeur
+CLI-0877;Cabinet comptable Serval 4;Professionnel;Talence;33400;Bordeaux;Partenaire;2026-02-21;Standard
+CLI-0878;Brasserie du Port 30;Professionnel;Montpellier;34000;Montpellier;Prospection;2026-02-22;Lent
+CLI-0879;Cabinet dentaire Ansel 65;Professionnel;Sète;34200;Montpellier;Bouche-à-oreille;2026-02-23;Standard
+CLI-0880;William Marchal;Particulier;Bègles;33130;Bordeaux;Prospection;2026-02-24;Standard
+CLI-0881;SARL Toitures Sud 70;Syndic;Montpellier;34000;Montpellier;Annuaire pro;2026-02-26;Lent
+CLI-0882;Marc Blanc;Particulier;Bordeaux;33000;Bordeaux;Bouche-à-oreille;2026-02-27;Bon payeur
+CLI-0883;Cabinet Vergne Immobilier 24;Professionnel;Sète;34200;Montpellier;Google Ads;2026-02-28;Lent
+CLI-0884;Tiphaine Lefèvre;Particulier;Balma;31130;Toulouse;Site web;2026-03-01;Lent
+CLI-0885;SARL Toitures Sud 63;Professionnel;Libourne;33500;Bordeaux;Annuaire pro;2026-03-02;Standard
+CLI-0886;Marc Girard;Particulier;Mérignac;33700;Bordeaux;Annuaire pro;2026-03-03;Bon payeur
+CLI-0887;Gaëlle Lefèvre;Particulier;Montpellier;34000;Montpellier;Site web;2026-03-07;Bon payeur
+CLI-0888;Ulysse Rey;Particulier;Talence;33400;Bordeaux;Site web;2026-03-08;Bon payeur
+CLI-0889;Franck Da Silva;Particulier;Toulouse;31000;Toulouse;Google Ads;2026-03-09;Bon payeur
+CLI-0890;Cabinet vétérinaire Dorel 22;Collectivité;Bordeaux;33000;Bordeaux;Partenaire;2026-03-11;Standard
+CLI-0891;Hugo Poirier;Particulier;Colomiers;31770;Toulouse;Google Ads;2026-03-12;Standard
+CLI-0892;Cabinet Vergne Immobilier 22;Professionnel;Talence;33400;Bordeaux;Bouche-à-oreille;2026-03-13;Lent
+CLI-0893;Fanny Rey;Particulier;Bordeaux;33000;Bordeaux;Google Ads;2026-03-14;Bon payeur
+CLI-0894;Brasserie du Port 51;Syndic;Montpellier;34000;Montpellier;Site web;2026-03-15;Litigieux
+CLI-0895;Fanny Renard;Particulier;Tournefeuille;31170;Toulouse;Prospection;2026-03-18;Lent
+CLI-0896;Tiphaine Nguyen;Particulier;Béziers;34500;Montpellier;Google Ads;2026-03-19;Bon payeur
+CLI-0897;Nathalie Da Silva;Particulier;Colomiers;31770;Toulouse;Bouche-à-oreille;2026-03-20;Standard
+CLI-0898;Menuiserie Lacoste 29;Professionnel;Mérignac;33700;Bordeaux;Bouche-à-oreille;2026-03-22;Lent
+CLI-0899;Joëlle Roussel;Particulier;Toulouse;31000;Toulouse;Bouche-à-oreille;2026-03-24;Standard
+CLI-0900;Béatrice Dubois;Particulier;Sète;34200;Montpellier;Bouche-à-oreille;2026-03-26;Bon payeur
+CLI-0901;CCAS de Muret 38;Syndic;Lattes;34970;Montpellier;Prospection;2026-03-27;Bon payeur
+CLI-0902;Résidence Belvédère 62;Professionnel;Bordeaux;33000;Bordeaux;Site web;2026-03-31;Standard
+CLI-0903;Franck Rey;Particulier;Libourne;33500;Bordeaux;Annuaire pro;2026-04-01;Standard
+CLI-0904;Tiphaine Da Silva;Particulier;Tournefeuille;31170;Toulouse;Bouche-à-oreille;2026-04-02;Lent
+CLI-0905;Cabinet vétérinaire Dorel 20;Professionnel;Montpellier;34000;Montpellier;Bouche-à-oreille;2026-04-03;Standard
+CLI-0906;Cabinet vétérinaire Dorel 14;Professionnel;Bordeaux;33000;Bordeaux;Bouche-à-oreille;2026-04-06;Standard
+CLI-0907;Résidence Les Oliviers 50;Professionnel;Balma;31130;Toulouse;Bouche-à-oreille;2026-04-07;Standard
+CLI-0908;Adrien Berger;Particulier;Toulouse;31000;Toulouse;Bouche-à-oreille;2026-04-08;Standard
+CLI-0909;Damien Bonnet;Particulier;Colomiers;31770;Toulouse;Bouche-à-oreille;2026-04-09;Bon payeur
+CLI-0910;CCAS de Muret 52;Professionnel;Bègles;33130;Bordeaux;Site web;2026-04-11;Standard
+CLI-0911;Auto-école Conduite Plus 20;Collectivité;Mérignac;33700;Bordeaux;Bouche-à-oreille;2026-04-12;Lent
+CLI-0912;Mairie de Lattes 88;Syndic;Mérignac;33700;Bordeaux;Bouche-à-oreille;2026-04-14;Bon payeur
+CLI-0913;Syndic Gestion Aquitaine 99;Professionnel;Muret;31600;Toulouse;Google Ads;2026-04-15;Bon payeur
+CLI-0914;Olivier Millet;Particulier;Libourne;33500;Bordeaux;Bouche-à-oreille;2026-04-16;Bon payeur
+CLI-0915;Béatrice Vidal;Particulier;Bègles;33130;Bordeaux;Site web;2026-04-18;Lent
+CLI-0916;William Perrin;Particulier;Toulouse;31000;Toulouse;Annuaire pro;2026-04-19;Standard
+CLI-0917;Cabinet dentaire Ansel 82;Professionnel;Lunel;34400;Montpellier;Partenaire;2026-04-20;Bon payeur
+CLI-0918;EHPAD Les Glycines 34;Professionnel;Toulouse;31000;Toulouse;Prospection;2026-04-22;Lent
+CLI-0919;Résidence Les Oliviers 58;Syndic;Pessac;33600;Bordeaux;Prospection;2026-04-24;Standard
+CLI-0920;EHPAD Les Glycines 50;Collectivité;Colomiers;31770;Toulouse;Prospection;2026-04-25;Standard
+CLI-0921;Fanny Gaillard;Particulier;Libourne;33500;Bordeaux;Prospection;2026-04-26;Bon payeur
+CLI-0922;Groupe scolaire Jean-Jaurès 70;Collectivité;Toulouse;31000;Toulouse;Bouche-à-oreille;2026-04-27;Standard
+CLI-0923;Quentin Lefèvre;Particulier;Blagnac;31700;Toulouse;Google Ads;2026-04-28;Bon payeur
+CLI-0924;Joëlle Da Silva;Particulier;Talence;33400;Bordeaux;Partenaire;2026-04-29;Standard
+CLI-0925;Olivier Renard;Particulier;Lattes;34970;Montpellier;Bouche-à-oreille;2026-04-30;Bon payeur
+CLI-0926;Restaurant Le Bistrot 19;Syndic;Castelnau-le-Lez;34170;Montpellier;Bouche-à-oreille;2026-05-01;Standard
+CLI-0927;Émile Noel;Particulier;Tournefeuille;31170;Toulouse;Site web;2026-05-03;Standard
+CLI-0928;Supérette Vival 60;Syndic;Pessac;33600;Bordeaux;Partenaire;2026-05-07;Standard
+CLI-0929;Clinique du Parc 40;Professionnel;Tournefeuille;31170;Toulouse;Google Ads;2026-05-08;Standard
+CLI-0930;Franck Noel;Particulier;Libourne;33500;Bordeaux;Bouche-à-oreille;2026-05-09;Standard
+CLI-0931;Cabinet comptable Serval 82;Professionnel;Castelnau-le-Lez;34170;Montpellier;Site web;2026-05-10;Standard
+CLI-0932;Damien Charpentier;Particulier;Blagnac;31700;Toulouse;Bouche-à-oreille;2026-05-12;Standard
+CLI-0933;Damien Millet;Particulier;Montpellier;34000;Montpellier;Google Ads;2026-05-15;Standard
+CLI-0934;Camille Girard;Particulier;Castelnau-le-Lez;34170;Montpellier;Site web;2026-05-16;Bon payeur
+CLI-0935;Résidence Les Oliviers 74;Professionnel;Mérignac;33700;Bordeaux;Google Ads;2026-05-17;Bon payeur
+CLI-0936;Rachida Chevalier;Particulier;Muret;31600;Toulouse;Annuaire pro;2026-05-19;Bon payeur
+CLI-0937;Office HLM Aquitaine 37;Professionnel;Sète;34200;Montpellier;Annuaire pro;2026-05-20;Standard
+CLI-0938;Cabinet vétérinaire Dorel 65;Collectivité;Castelnau-le-Lez;34170;Montpellier;Prospection;2026-05-21;Standard
+CLI-0939;Camping Les Pins 18;Syndic;Lunel;34400;Montpellier;Partenaire;2026-05-22;Standard
+CLI-0940;CCAS de Muret 78;Professionnel;Muret;31600;Toulouse;Site web;2026-05-24;Standard
+CLI-0941;Rachida Millet;Particulier;Balma;31130;Toulouse;Prospection;2026-05-25;Bon payeur
+CLI-0942;Marc Roussel;Particulier;Mérignac;33700;Bordeaux;Annuaire pro;2026-05-26;Bon payeur
+CLI-0943;Gaëlle Barbier;Particulier;Lattes;34970;Montpellier;Site web;2026-05-27;Standard
+CLI-0944;Elsa Barbier;Particulier;Bordeaux;33000;Bordeaux;Google Ads;2026-05-28;Standard
+CLI-0945;Yasmine Barbier;Particulier;Libourne;33500;Bordeaux;Annuaire pro;2026-05-30;Bon payeur
+CLI-0946;Béatrice Lefèvre;Particulier;Pessac;33600;Bordeaux;Annuaire pro;2026-05-31;Standard
+CLI-0947;Lycée Saint-Exupéry 21;Professionnel;Lattes;34970;Montpellier;Site web;2026-06-01;Standard
+CLI-0948;Pharmacie Centrale 87;Syndic;Bordeaux;33000;Bordeaux;Google Ads;2026-06-02;Bon payeur
+CLI-0949;Salle de sport Ironfit 87;Syndic;Castelnau-le-Lez;34170;Montpellier;Partenaire;2026-06-03;Lent
+CLI-0950;Résidence Les Oliviers 13;Syndic;Libourne;33500;Bordeaux;Site web;2026-06-05;Litigieux
+CLI-0951;Pharmacie Centrale 46;Professionnel;Talence;33400;Bordeaux;Google Ads;2026-06-06;Standard
+CLI-0952;Camping Les Pins 37;Professionnel;Blagnac;31700;Toulouse;Bouche-à-oreille;2026-06-07;Standard
+CLI-0953;Olivier Moreau;Particulier;Bordeaux;33000;Bordeaux;Partenaire;2026-06-08;Bon payeur
+CLI-0954;Béatrice Renard;Particulier;Libourne;33500;Bordeaux;Site web;2026-06-09;Bon payeur
+CLI-0955;Boulangerie Marchetti 66;Professionnel;Libourne;33500;Bordeaux;Partenaire;2026-06-10;Lent
+CLI-0956;Mairie de Lattes 17;Collectivité;Pessac;33600;Bordeaux;Partenaire;2026-06-11;Lent
+CLI-0957;Cabinet Vergne Immobilier 36;Professionnel;Muret;31600;Toulouse;Site web;2026-06-12;Bon payeur
+CLI-0958;Nathalie Dubois;Particulier;Talence;33400;Bordeaux;Prospection;2026-06-13;Standard
+CLI-0959;Supérette Vival 60;Syndic;Mérignac;33700;Bordeaux;Site web;2026-06-14;Standard
+CLI-0960;Garage Autoplus 62;Professionnel;Bègles;33130;Bordeaux;Site web;2026-06-15;Lent
+CLI-0961;Serge Da Silva;Particulier;Sète;34200;Montpellier;Partenaire;2026-06-16;Lent
+CLI-0962;Résidence Les Oliviers 72;Professionnel;Bègles;33130;Bordeaux;Partenaire;2026-06-17;Standard
+CLI-0963;EHPAD Les Glycines 91;Syndic;Bègles;33130;Bordeaux;Bouche-à-oreille;2026-06-18;Lent
+CLI-0964;Cabinet comptable Serval 6;Syndic;Castelnau-le-Lez;34170;Montpellier;Partenaire;2026-06-19;Lent
+CLI-0965;Auto-école Conduite Plus 85;Professionnel;Béziers;34500;Montpellier;Partenaire;2026-06-20;Lent
+CLI-0966;Résidence Belvédère 67;Collectivité;Muret;31600;Toulouse;Prospection;2026-06-21;Lent
+CLI-0967;Marc Lemoine;Particulier;Tournefeuille;31170;Toulouse;Google Ads;2026-06-22;Bon payeur
+CLI-0968;Garage Autoplus 63;Professionnel;Bordeaux;33000;Bordeaux;Prospection;2026-06-23;Bon payeur
+CLI-0969;Olivier Gaillard;Particulier;Béziers;34500;Montpellier;Site web;2026-06-24;Standard
+CLI-0970;CCAS de Muret 41;Syndic;Colomiers;31770;Toulouse;Site web;2026-06-25;Lent
+CLI-0971;Fanny Perrin;Particulier;Libourne;33500;Bordeaux;Prospection;2026-06-26;Bon payeur
+CLI-0972;Salle de sport Ironfit 96;Syndic;Toulouse;31000;Toulouse;Google Ads;2026-06-28;Litigieux
+CLI-0973;Brasserie du Port 63;Syndic;Castelnau-le-Lez;34170;Montpellier;Partenaire;2026-06-29;Lent
+CLI-0974;Rachida Rey;Particulier;Béziers;34500;Montpellier;Google Ads;2026-06-30;Bon payeur

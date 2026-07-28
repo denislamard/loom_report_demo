@@ -1,0 +1,35 @@
+[project]
+name = "loom-report-demo"
+version = "1.0.0"
+description = "A small demo using the loom-ia package that make Excel report from data"
+readme = "README.md"
+
+authors = [{ name = "Denis Lamard", email = "lamard.denis@gmail.com" }]
+
+requires-python = ">=3.14"
+dependencies = ["loom-ia", "openpyxl>=3.1", "pandas>=2.3.3"]
+
+[project.scripts]
+app = "loom_report_demo:run"
+
+[tool.uv.sources]
+loom-ia = { git = "https://github.com/denislamard/loom" }
+
+[dependency-groups]
+dev = ["pytest>=8", "pytest-asyncio>=0.24", "ruff>=0.8", "pyright>=1.1.390"]
+
+[build-system]
+requires = ["uv_build>=0.11,<0.12"]
+build-backend = "uv_build"
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "ASYNC", "RUF"]
+
+[tool.pyright]
+typeCheckingMode = "strict"
+venvPath = "."
+venv = ".venv"

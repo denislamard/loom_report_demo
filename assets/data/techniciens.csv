@@ -1,0 +1,13 @@
+technicien_id;nom_technicien;agence;specialite;cout_horaire;taux_facturation_horaire;date_embauche
+TEC-01;Marc Delaunay;Bordeaux;Plomberie;32.0;68.0;2016-03-01
+TEC-02;Ahmed Zahiri;Bordeaux;Chauffage;35.0;72.0;2018-09-01
+TEC-03;Fabien Ortiz;Bordeaux;Électricité;33.0;70.0;2019-01-15
+TEC-04;Lucas Bertin;Bordeaux;Plomberie;27.0;68.0;2023-09-04
+TEC-05;Sonia Mercier;Bordeaux;Salle de bain;31.0;66.0;2021-04-01
+TEC-06;Pierre Vasseur;Toulouse;Chauffage;36.0;74.0;2015-02-01
+TEC-07;Yannick Dubreuil;Toulouse;Plomberie;30.0;68.0;2020-10-01
+TEC-08;Elodie Ravel;Toulouse;Électricité;32.0;70.0;2022-03-01
+TEC-09;Mehdi Ouali;Toulouse;Dépannage;28.0;64.0;2023-11-06
+TEC-10;Bruno Castel;Montpellier;Plomberie;31.0;66.0;2024-09-01
+TEC-11;Damien Roche;Montpellier;Chauffage;34.0;70.0;2024-09-01
+TEC-12;Inès Bonnaud;Montpellier;Électricité;29.0;66.0;2025-03-03

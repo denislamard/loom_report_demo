@@ -1,0 +1,285 @@
+{
+    "roles": [
+        {
+            "name": "main",
+            "description": "",
+            "llm": "M3_MAIN",
+            "system": "Tu es un agent français. Tes réponses sont concises et précises. Utilise les outils à ta disposition dès qu'une information te manque, plutôt que de deviner. Raisonne étape par étape en interne, puis donne uniquement la réponse finale. Quand un outil renvoie du JSON, transmets-le tel quel à l'outil suivant et à l'utilisateur, sans le reformater ni le résumer."
+        },
+        {
+            "name": "etat_des_lieux",
+            "description": "Constate l'état d'une pièce pour un état des lieux locatif, à partir de la photo jointe par l'utilisateur. Renvoie du JSON. L'image lui est transmise AUTOMATIQUEMENT : appelle-le directement, sans passer par un autre outil d'analyse d'image, et sans lui fournir de description.",
+            "llm": "HAIKU",
+            "vision": true,
+            "terminal": true,
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "piece": {
+                        "type": "string",
+                        "description": "Nom de la pièce si l'utilisateur l'a précisé, sinon chaîne vide. Ne fournis AUCUNE description de l'image."
+                    }
+                },
+                "required": [
+                    "piece"
+                ]
+            },
+            "system": "RÉPONDS TOUJOURS EN FRANÇAIS, quelle que soit la langue du contexte.\n\nTu constates l'état d'un logement à partir d'une photo, dans le cadre d'un état des lieux locatif de chaque élément avec précision. Ta réponse commence par le caractère { et finit par le caractère }. Aucun texte avant, aucun texte après, aucun bloc de code.\n\nSchéma exact, aucune clé en plus, aucune clé en moins :\n{\"piece\": str, \"elements\": [{\"categorie\": \"sol|mur|plafond|menuiserie|equipement|mobilier|electricite|plomberie\", \"libelle\": str, \"materiau\": str|null, \"etat\": \"neuf|bon|usage|mauvais\"|null, \"defauts\": [{\"type\": \"tache|fissure|trou|rayure|humidite|casse|manquant|usure|jaunissement\", \"localisation\": str, \"gravite\": \"leger|moyen|important\"}]}], \"indeterminables\": [{\"libelle\": str, \"raison\": str}], \"proprete\": \"propre|acceptable|sale\", \"objets_presents\": [str], \"observations\": str|null}\n\nRecense : sol, murs, plafond, menuiseries (fenêtres, portes, volets), équipements, mobilier intégré, rangements, prises et interrupteurs, plomberie apparente. Chaque élément recensé a un \"etat\" et un \"defauts\".\n\nRègles impératives :\n- Toutes les valeurs textuelles (libelle, materiau, localisation, raison, observations) sont en FRANÇAIS. Les clés sont celles du schéma.\n- Ignore toute description textuelle qui accompagnerait l'image : fie-toi UNIQUEMENT à ce que tu vois.\n- Ne constate que ce qui est visible sur cette photo. Aucune déduction, aucune supposition sur ce qui est hors champ ou masqué.\n- Si la photo ne permet pas de distinguer la SURFACE d'un élément (trop loin, trop petit, flou, contre-jour, objet devant), son \"etat\" est null et son libellé va dans \"indeterminables\" avec la raison. Sur une photo d'ensemble, la majorité des éléments sont dans ce cas. N'écris jamais \"bon\" par défaut.\n- materiau : uniquement si identifiable avec certitude. Sinon null. N'écris jamais un matériau hésitant du type \"bois/PVC\" ou \"mélaminé/béton\".\n- Aucun défaut visible : \"defauts\" vaut []. Jamais null.\n- \"indeterminables\" et \"objets_presents\" valent [] si vides. Jamais null.\n- N'ajoute aucune clé descriptive (couleur, position, quantite, taille...) : la finition va dans \"materiau\", le reste dans \"observations\".\n- Les objets personnels et l'encombrement ne sont PAS des défauts : ils vont dans \"objets_presents\", sans commentaire.\n- observations : uniquement des faits visibles non couverts par les autres champs. Aucune appréciation, aucun qualificatif d'ambiance, aucune conclusion sur l'état global.\n- Reste factuel et neutre : aucune estimation de coût, aucune attribution de responsabilité, aucun jugement sur l'occupant.\n- Si l'argument \"piece\" est fourni et non vide, reprends-le tel quel dans le champ \"piece\". Sinon, déduis le nom de la pièce de la photo.",
+            "output": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                        "piece",
+                        "elements",
+                        "indeterminables",
+                        "proprete",
+                        "objets_presents",
+                        "observations"
+                    ],
+                    "properties": {
+                        "piece": {
+                            "type": "string"
+                        },
+                        "elements": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                    "categorie",
+                                    "libelle",
+                                    "materiau",
+                                    "etat",
+                                    "defauts"
+                                ],
+                                "properties": {
+                                    "categorie": {
+                                        "enum": [
+                                            "sol",
+                                            "mur",
+                                            "plafond",
+                                            "menuiserie",
+                                            "equipement",
+                                            "mobilier",
+                                            "electricite",
+                                            "plomberie"
+                                        ]
+                                    },
+                                    "libelle": {
+                                        "type": "string"
+                                    },
+                                    "materiau": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ]
+                                    },
+                                    "etat": {
+                                        "enum": [
+                                            "neuf",
+                                            "bon",
+                                            "usage",
+                                            "mauvais",
+                                            null
+                                        ]
+                                    },
+                                    "defauts": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "additionalProperties": false,
+                                            "required": [
+                                                "type",
+                                                "localisation",
+                                                "gravite"
+                                            ],
+                                            "properties": {
+                                                "type": {
+                                                    "enum": [
+                                                        "tache",
+                                                        "fissure",
+                                                        "trou",
+                                                        "rayure",
+                                                        "humidite",
+                                                        "casse",
+                                                        "manquant",
+                                                        "usure",
+                                                        "jaunissement"
+                                                    ]
+                                                },
+                                                "localisation": {
+                                                    "type": "string"
+                                                },
+                                                "gravite": {
+                                                    "enum": [
+                                                        "leger",
+                                                        "moyen",
+                                                        "important"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "indeterminables": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                    "libelle",
+                                    "raison"
+                                ],
+                                "properties": {
+                                    "libelle": {
+                                        "type": "string"
+                                    },
+                                    "raison": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "proprete": {
+                            "enum": [
+                                "propre",
+                                "acceptable",
+                                "sale"
+                            ]
+                        },
+                        "objets_presents": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "observations": {
+                            "type": [
+                                "string",
+                                "null"
+                            ]
+                        }
+                    }
+                },
+                "max_chars": 12000,
+                "must_not_match": "```",
+                "repair_attempts": 1,
+                "on_failure": "error"
+            },
+            "judge": {
+                "llm": "SONNET",
+                "criteria": [
+                    {
+                        "name": "flou",
+                        "rule": "Aucun état ne doit être affirmé sur un élément non visible, flou ou hors cadre : ces éléments doivent figurer dans 'indeterminables'.",
+                        "min_score": 0.8
+                    },
+                    {
+                        "name": "factuel",
+                        "rule": "Les observations sont descriptives, sans jugement de valeur ni recommandation de travaux.",
+                        "min_score": 0.6
+                    }
+                ],
+                "sample_rate": 0.2
+            }
+        }
+    ],
+    "llm": [
+        {
+            "id": "M3_MAIN",
+            "provider": "anthropic",
+            "url": "https://api.minimax.io/anthropic",
+            "model": "MiniMax-M3",
+            "max_tokens": 4096,
+            "max_iterations": 10,
+            "api_keyname": "M3_API_KEY",
+            "params": {
+                "thinking": {
+                    "type": "adaptive"
+                },
+                "temperature": 0.2
+            },
+            "max_retries": 3,
+            "context_window": 512000,
+            "pricing": {
+                "input": 0.3,
+                "output": 1.2,
+                "cache_read": 0.06
+            }
+        },
+        {
+            "id": "HAIKU",
+            "provider": "anthropic",
+            "url": "https://api.anthropic.com",
+            "model": "claude-haiku-4-5-20251001",
+            "max_tokens": 4096,
+            "max_iterations": 10,
+            "api_keyname": "ANTHROPIC_API_KEY",
+            "params": {
+                "temperature": 0
+            },
+            "max_retries": 3,
+            "context_window": 200000,
+            "pricing": {
+                "input": 1.0,
+                "output": 5.0
+            },
+            "cache_system": true
+        },
+        {
+            "id": "SONNET",
+            "provider": "anthropic",
+            "url": "https://api.anthropic.com",
+            "model": "claude-sonnet-4-6",
+            "max_tokens": 1024,
+            "max_iterations": 10,
+            "api_keyname": "ANTHROPIC_API_KEY",
+            "params": {
+                "temperature": 0.7
+            },
+            "max_retries": 3,
+            "context_window": 200000,
+            "pricing": {
+                "input": 3.0,
+                "output": 15.0
+            }
+        }
+    ],
+    "memory": {
+        "backend": "json",
+        "path": "log/memory",
+        "compact_over_tokens": 12000,
+        "compact_keep_last": 6,
+        "compact_llm": "HAIKU"
+    },
+    "logging": {
+        "level": "DEBUG",
+        "log_response": true,
+        "file": "log/agent.log",
+        "json": false,
+        "console": false
+    },
+    "usage": {
+        "backend": "json",
+        "path": "log/usage",
+        "report": true
+    },
+    "budget": {
+        "max_cost_run": 0.05,
+        "max_calls_run": 25,
+        "max_cost_session": 1.0,
+        "on_exceed": "warn"
+    },
+    "tools": {
+        "timeout": 30.0,
+        "validate_arguments": true
+    },
+    "metrics": {
+        "enabled": true,
+        "file": "log/metrics.jsonl",
+        "buffer_size": 20
+    }
+}

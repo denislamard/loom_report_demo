@@ -1,0 +1,21 @@
+code_prestation;libelle;categorie;prix_unitaire_ht;marge_cible_pct;heures_standard
+PR-001;Remplacement chauffe-eau 200 L;Plomberie;1180;0.34;4.5
+PR-002;Recherche de fuite + réparation;Plomberie;420;0.46;2.0
+PR-003;Réfection réseau eau appartement;Plomberie;2950;0.3;14.0
+PR-004;Remplacement colonne d'évacuation;Plomberie;5400;0.26;26.0
+CH-001;Installation chaudière gaz condensation;Chauffage;4650;0.28;12.0
+CH-002;Entretien annuel chaudière;Chauffage;145;0.58;1.0
+CH-003;Installation pompe à chaleur air/eau;Chauffage;12800;0.24;28.0
+CH-004;Remplacement radiateurs (lot de 5);Chauffage;2380;0.32;9.0
+CH-005;Désembouage circuit chauffage;Chauffage;680;0.49;3.5
+EL-001;Mise aux normes tableau électrique;Électricité;1650;0.38;7.0
+EL-002;Installation borne de recharge VE;Électricité;1420;0.35;5.0
+EL-003;Rénovation électrique complète;Électricité;8900;0.27;40.0
+EL-004;Éclairage LED locaux professionnels;Électricité;3200;0.36;15.0
+SB-001;Rénovation salle de bain complète;Salle de bain;9200;0.25;45.0
+SB-002;Remplacement baignoire par douche;Salle de bain;3450;0.31;16.0
+SB-003;Pose meuble vasque + robinetterie;Salle de bain;1150;0.37;5.5
+DP-001;Dépannage plomberie urgence;Dépannage;260;0.52;1.5
+DP-002;Débouchage canalisation;Dépannage;340;0.55;2.0
+DP-003;Dépannage électrique urgence;Dépannage;290;0.51;1.5
+DP-004;Remise en service chaudière;Dépannage;220;0.56;1.0
