@@ -14,8 +14,9 @@ importera `reporting`. C'est la raison de l'import différé dans `__init__.py`.
 from __future__ import annotations
 
 import sys
-from collections.abc import Callable
-from typing import Any
+from collections.abc import Awaitable, Callable
+from pathlib import Path
+from typing import TYPE_CHECKING, Any
 
 from loom_report_demo import paths
 from loom_report_demo.niveaux import (
@@ -23,11 +24,18 @@ from loom_report_demo.niveaux import (
     ORDRE_MENU,
     DefinitionNiveau,
     Livrable,
+    Niveau,
     par_rang,
 )
+from loom_report_demo.workbook.selection import Selection
+
+if TYPE_CHECKING:
+    from loom_report_demo.reporting import Exploration
 
 Saisie = Callable[[str], str]
 Ecriture = Callable[..., Any]
+#: Injectable pour les tests : l'exploration réelle demande une clé d'API.
+Explorateur = Callable[[Niveau], "Awaitable[Exploration]"]
 
 _LARGEUR = 74
 _TITRE = "Bâti-Sud — rapport de pilotage"
@@ -98,7 +106,78 @@ def lire_choix(saisir: Saisie) -> DefinitionNiveau | None:
         print(f"  Choix non reconnu : {brut!r}. Attendu 1, 2, 3 ou q.")
 
 
-async def executer(saisir: Saisie | None = None, sortie: Ecriture | None = None) -> int:
+def trace(exploration: Exploration, ecrire: Ecriture) -> None:
+    """Affiche ce que l'agent a fait, hypothèse par hypothèse.
+
+    L'exploration dure une minute. En console c'est du temps mort, sauf si l'on
+    montre le raisonnement au fil de l'eau. Le prospect regarde l'agent réfléchir
+    et se tromper ; le classeur, il le regarde dix secondes.
+    """
+    ecrire("")
+    ecrire(_regle())
+    ecrire(f"  Exploration — {exploration.registre.sondages} sondages")
+    ecrire("")
+    for appel in exploration.registre.appels:
+        if appel.outil == "noter_hypothese":
+            ecrire(f"  ○ {appel.resume}")
+        else:
+            ecrire(f"    ├ {appel.outil:<18} {appel.duree_ms:>5} ms   {appel.resume}")
+    ecrire("")
+
+
+def tableau_selection(selection: Selection, ecrire: Ecriture) -> None:
+    """La sélection soumise à l'arbitrage, avant toute génération."""
+    ecrire(_regle())
+    ecrire(f"  {selection.message_direction}")
+    ecrire("")
+    ecrire("  Indicateurs retenus")
+    for rang, indicateur in enumerate(selection.variables, start=1):
+        ecrire(f"   {rang}  {indicateur.mesure} par {indicateur.dimension or '—'}")
+        ecrire(f"      {indicateur.decision_attendue}")
+    if selection.ecartees:
+        ecrire("")
+        ecrire("  Hypothèses écartées")
+        for hypothese in selection.ecartees:
+            ecrire(f"      {hypothese.identifiant}  {hypothese.enonce}")
+            ecrire(f"          {hypothese.motif}")
+    ecrire(_regle())
+
+
+def arbitrer(selection: Selection, saisir: Saisie, ecrire: Ecriture) -> Selection | None:
+    """Laisse l'humain retirer un indicateur avant génération.
+
+    Trois raisons d'être. C'est la seule barrière avant qu'une bêtise n'atteigne
+    le livrable. C'est ce qui transforme la démonstration en un outil dont on
+    garde la main. Et c'est le moment où le client comprend qu'il décide encore.
+    """
+    while True:
+        borne = len(selection.variables)
+        try:
+            reponse = saisir(
+                f"  [Entrée] générer · [1-{borne}] retirer un indicateur · [q] annuler : "
+            ).strip().lower()
+        except (EOFError, KeyboardInterrupt):
+            return None
+        if reponse in ("q", "quitter", "annuler"):
+            return None
+        if reponse == "":
+            return selection
+        if reponse.isdigit() and 1 <= int(reponse) <= borne:
+            selection = selection.sans(int(reponse) - 1)
+            if not selection.variables:
+                ecrire("  Plus aucun indicateur retenu. Génération annulée.")
+                return None
+            ecrire("")
+            tableau_selection(selection, ecrire)
+            continue
+        ecrire(f"  Choix non reconnu : {reponse!r}.")
+
+
+async def executer(
+    saisir: Saisie | None = None,
+    sortie: Ecriture | None = None,
+    explorateur: Explorateur | None = None,
+) -> int:
     """Déroule le flux et rend le code de sortie du processus.
 
     Asynchrone dès maintenant : au jalon 6, la sélection des indicateurs sera
@@ -131,11 +210,53 @@ async def executer(saisir: Saisie | None = None, sortie: Ecriture | None = None)
         return 0
 
     ecrire(resume(choix))
-    ecrire(
-        "\n  [jalon 0] L'exploration par l'agent et la génération du classeur\n"
-        "            arrivent au jalon 6. L'installation est valide.\n"
-    )
+
+    if explorateur is None:
+        if paths.cles_absentes():
+            ecrire(
+                "\n  Aucune clé d'API : l'exploration est impossible.\n"
+                "  Copiez files/.env.example vers files/.env, ou produisez un rapport\n"
+                "  à partir d'une sélection existante :\n"
+                "      uv run rapport --selection tests/fixtures/gestion.json\n"
+            )
+            return 1
+        explorateur = _explorateur_reel()
+
+    ecrire("\n  L'agent explore. Une minute environ, quelques centimes.\n")
+    try:
+        exploration = await explorateur(choix.niveau)
+    except Exception as erreur:  # noqa: BLE001 - la cause exacte importe peu ici
+        ecrire(f"\n  L'exploration a échoué : {erreur}\n", file=sys.stderr)
+        return 1
+
+    trace(exploration, ecrire)
+    tableau_selection(exploration.selection, ecrire)
+
+    retenue = arbitrer(exploration.selection, lire, ecrire)
+    if retenue is None:
+        ecrire("\n  Génération annulée.\n")
+        return 0
+
+    chemin = _construire(retenue)
+    ecrire(f"\n  Classeur     {chemin}\n")
     return 0
+
+
+def _explorateur_reel() -> Explorateur:
+    """Import différé : `reporting` tire `loom_ia`, que le reste n'utilise pas."""
+    from loom_report_demo.reporting import explorer
+
+    async def _explorer(niveau: Niveau) -> Exploration:
+        return await explorer(niveau)
+
+    return _explorer
+
+
+def _construire(selection: Selection) -> Path:
+    from loom_report_demo.workbook import construire
+
+    destination = paths.rapports() / f"Bati-Sud_{selection.niveau.value}.xlsx"
+    return construire(selection, destination, strict=False)
 
 
 async def entry() -> None:

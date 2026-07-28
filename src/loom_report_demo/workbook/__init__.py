@@ -81,9 +81,15 @@ def construire(
     destination: Path,
     source: Donnees | None = None,
     dossier_donnees: Path | None = None,
+    strict: bool = True,
 ) -> Path:
-    """Produit le classeur et rend son chemin."""
-    selection.valider()
+    """Produit le classeur et rend son chemin.
+
+    `strict` vaut faux quand l'humain a retiré un indicateur après arbitrage : la
+    sélection compte alors moins de variables que le niveau n'en prévoit, ce qui
+    est légitime — jamais plus.
+    """
+    selection.valider(strict=strict)
     jeu = source if source is not None else charger_donnees(dossier_donnees)
     schemas = construire_schemas(COLONNES_CALCULEES, dossier_donnees)
     borne = fenetre(selection.cadrage, jeu.situation, jeu.debut)

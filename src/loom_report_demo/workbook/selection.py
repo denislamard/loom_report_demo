@@ -73,11 +73,34 @@ class Selection:
     def cadrage_comparaison(self) -> Cadrage:
         return COMPARAISON[self.cadrage]
 
-    def valider(self) -> None:
-        """Refuse une sélection que le catalogue ne sait pas tenir."""
+    def sans(self, indice: int) -> Selection:
+        """Sélection privée d'un indicateur, après arbitrage humain.
+
+        L'humain a le dernier mot : c'est la seule barrière entre une bêtise du
+        modèle et le livrable, et c'est ce qui transforme la démonstration d'un
+        tour de magie en un outil dont on garde la main.
+        """
+        if not 0 <= indice < len(self.variables):
+            raise IndexError(f"Indicateur inexistant : {indice + 1}")
+        restants = tuple(x for k, x in enumerate(self.variables) if k != indice)
+        return Selection(
+            niveau=self.niveau,
+            variables=restants,
+            ecartees=self.ecartees,
+            message_direction=self.message_direction,
+        )
+
+    def valider(self, strict: bool = True) -> None:
+        """Refuse une sélection que le catalogue ne sait pas tenir.
+
+        `strict` vaut faux après un retrait manuel : on accepte alors moins
+        d'indicateurs que prévu, jamais plus.
+        """
         definition = NIVEAUX[self.niveau]
         attendus = definition.nb_variables
-        if len(self.variables) != attendus:
+        if not strict and len(self.variables) <= attendus:
+            pass
+        elif len(self.variables) != attendus:
             raise ValueError(
                 f"Le niveau {self.niveau.value} attend {attendus} indicateurs choisis, "
                 f"{len(self.variables)} fournis."
