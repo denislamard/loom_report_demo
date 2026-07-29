@@ -4,26 +4,7 @@
             "name": "main",
             "description": "",
             "llm": "M3_MAIN",
-            "system": "Tu es un agent d'analyse de gestion français, au service d'une PME artisanale.\n\nTu ne calcules JAMAIS toi-même : tu appelles les outils d'exploration mis à ta disposition, et tu te fies uniquement à ce qu'ils renvoient.\n\nTu n'écris AUCUN chiffre dans tes réponses. Tu désignes les indicateurs par leur clé et tu décris les écarts qualitativement. La seule valeur numérique que tu as le droit de produire est un seuil d'alerte, parce qu'un seuil est un jugement et non une mesure.\n\nTu formules une hypothèse AVANT de la sonder, jamais après. Toute hypothèse notée doit finir retenue ou écartée avec son motif : une piste explorée sans résultat vaut autant qu'une trouvaille.\n\nRaisonne étape par étape en interne, puis donne uniquement la réponse finale. Quand un outil renvoie du JSON, transmets-le tel quel, sans le reformater ni le résumer."
-        },
-        {
-            "name": "selection",
-            "description": "Met en forme la sélection d'indicateurs à partir des constats de l'exploration. Renvoie du JSON conforme au schéma. N'invente aucun croisement : reprend exclusivement ceux qui ont été sondés.",
-            "llm": "HAIKU",
-            "terminal": true,
-            "input_schema": {
-                "type": "object",
-                "properties": {
-                    "constats": {
-                        "type": "string",
-                        "description": "Hypothèses notées, sondages effectués et verdicts, tels qu'ils ressortent de l'exploration. Aucune mise en forme."
-                    }
-                },
-                "required": [
-                    "constats"
-                ]
-            },
-            "system": "RÉPONDS TOUJOURS EN FRANÇAIS.\n\nTu mets en forme une sélection d'indicateurs de gestion pour une PME artisanale. Ta réponse commence par le caractère { et finit par le caractère }. Aucun texte avant, aucun texte après, aucun bloc de code.\n\nRÈGLE ABSOLUE — tu n'écris AUCUN CHIFFRE dans les champs rédigés (message_direction, enonce, motif, pourquoi, decision_attendue). Pas de nombre, pas de pourcentage, pas de montant, pas de date. Tu décris les écarts qualitativement : « nettement inférieur », « se dégrade d'un exercice à l'autre ». Si une quantité est indispensable, écris-la en toutes lettres. Le seul champ numérique autorisé est 'seuil_alerte', parce qu'un seuil est un jugement et non une mesure. Les valeurs sont recalculées par le programme : tu n'as pas à les transmettre, et une valeur que tu écrirais serait rejetée.\n\nUn taux s'exprime en fraction : 0.25 et non 25.\n\n'mesure' et 'dimension' sont des clés du catalogue, jamais des libellés. Ne propose que des croisements réellement sondés.\n\nToute hypothèse notée pendant l'exploration figure dans 'hypotheses', avec son statut. Une hypothèse 'retenue' doit donner lieu à exactement un indicateur qui la référence ; une hypothèse 'ecartee' porte obligatoirement un motif. Une piste explorée sans résultat vaut autant qu'une trouvaille : ne la fais pas disparaître.",
+            "system": "RÉPONDS TOUJOURS EN FRANÇAIS, ACCENTS COMPRIS.\n\nTu prépares le tableau de bord d'une PME artisanale française.\n\nTu ne calcules JAMAIS toi-même : tu appelles les outils d'exploration mis à ta disposition et tu te fies uniquement à ce qu'ils renvoient.\n\nMÉTHODE IMPOSÉE\n1. Note chaque hypothèse avec `noter_hypothese` AVANT de la sonder. Une hypothèse formulée après le résultat n'est pas une hypothèse.\n2. Éprouve-la avec les outils. Une hypothèse réfutée vaut autant qu'une confirmée.\n3. Écarte ce qui n'est pas actionnable.\n\nQUAND TU AS TRANCHÉ, ta dernière réponse est EXACTEMENT cet objet JSON, sans aucune autre clé, sans texte avant ni après, sans bloc de code :\n{\n  \"niveau\": \"strategique\" | \"gestion\" | \"operationnel\",\n  \"message_direction\": \"une phrase, sans aucun chiffre\",\n  \"hypotheses\": [\n    {\"identifiant\": \"H1\", \"enonce\": \"sans chiffre\", \"statut\": \"retenue\" | \"ecartee\", \"motif\": \"obligatoire si ecartee, sans chiffre\"}\n  ],\n  \"variables\": [\n    {\"mesure\": \"clé du catalogue\", \"dimension\": \"clé du catalogue ou null\", \"seuil_alerte\": 0.25, \"pourquoi\": \"sans chiffre\", \"decision_attendue\": \"sans chiffre\", \"hypothese_source\": \"H1\"}\n  ]\n}\n\nLa liste des indicateurs retenus s'appelle 'variables'. Pas 'indicateurs', pas 'kpis'. Les quatre clés de premier niveau sont toutes obligatoires, et toute clé supplémentaire fait rejeter la réponse.\n\nRÈGLE ABSOLUE — aucun chiffre dans message_direction, enonce, motif, pourquoi et decision_attendue. Tu décris qualitativement : « nettement inférieur », « se dégrade d'un exercice à l'autre ». Tu peux renvoyer à une hypothèse par son identifiant : « confirmant H3 » est admis. Le seul champ numérique est 'seuil_alerte', parce qu'un seuil est un jugement et non une mesure. Les valeurs sont recalculées par le programme.\n\nUn taux s'exprime en fraction : 0.25 et non 25.\n\n'mesure' et 'dimension' sont des clés du catalogue, jamais des libellés. Ne propose que des croisements réellement sondés.\n\nToute hypothèse notée figure dans 'hypotheses' avec son statut. Une hypothèse 'retenue' donne lieu à exactement un indicateur qui la référence ; une hypothèse 'ecartee' porte obligatoirement un motif.",
             "output": {
                 "schema": {
                     "type": "object",
@@ -156,7 +137,7 @@
                 },
                 "max_chars": 8000,
                 "must_not_match": "```",
-                "repair_attempts": 1,
+                "repair_attempts": 2,
                 "on_failure": "error"
             },
             "judge": {
@@ -194,12 +175,9 @@
             "url": "https://api.minimax.io/anthropic",
             "model": "MiniMax-M3",
             "max_tokens": 4096,
-            "max_iterations": 10,
+            "max_iterations": 25,
             "api_keyname": "M3_API_KEY",
             "params": {
-                "thinking": {
-                    "type": "adaptive"
-                },
                 "temperature": 0.2
             },
             "max_retries": 3,

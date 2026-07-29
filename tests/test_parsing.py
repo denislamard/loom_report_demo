@@ -368,9 +368,14 @@ def _configuration() -> dict[str, Any]:
 
 
 def _role_selection() -> dict[str, Any]:
+    """Le rôle qui porte le contrat de sortie.
+
+    Depuis la calibration, c'est l'orchestrateur lui-même : celui qui juge est
+    celui qui rédige, et le contrat est vérifié là où le jugement se forme.
+    """
     roles = {r["name"]: r for r in _configuration()["roles"]}
-    assert "selection" in roles, "le rôle 'selection' doit exister"
-    return roles["selection"]
+    assert "main" in roles, "le rôle 'main' doit exister"
+    return roles["main"]
 
 
 def test_le_role_selection_declare_un_schema_de_sortie() -> None:
@@ -394,7 +399,10 @@ def test_le_schema_de_sortie_enumere_les_dimensions_du_catalogue() -> None:
 
 
 def test_le_role_selection_na_pas_de_thinking() -> None:
-    """Un rôle à `output.schema` est incompatible avec le raisonnement étendu."""
+    """Un rôle à `output.schema` est incompatible avec le raisonnement étendu.
+
+    C'est le prix de la fusion orchestrateur / rédacteur, et il est assumé.
+    """
     modeles = {m["id"]: m for m in _configuration()["llm"]}
     porteur = modeles[_role_selection()["llm"]]
     assert "thinking" not in porteur.get("params", {})
@@ -422,3 +430,67 @@ def test_la_longueur_maximale_du_schema_suit_celle_du_parsing() -> None:
     schema = _role_selection()["output"]["schema"]
     borne = schema["properties"]["variables"]["items"]["properties"]["pourquoi"]["maxLength"]
     assert borne == LONGUEUR_MAX_TEXTE
+
+
+# ------------------------------------------- renvois entre hypothèses
+# Cas rapporté par la première exécution réelle : le modèle écrit « …confirmant
+# H3 », un renvoi à une hypothèse et non une valeur. La garde le refusait, ce qui
+# revenait à lui interdire de raisonner d'une piste à l'autre.
+def test_un_renvoi_a_une_hypothese_declaree_est_admis() -> None:
+    charge = valide()
+    charge["hypotheses"][-1]["motif"] = "Réfutée : l'écart va dans l'autre sens, confirmant H1."
+    assert analyser(charge).ecartees[-1].motif.endswith("confirmant H1.")
+
+
+def test_un_renvoi_dans_le_message_de_direction_est_admis() -> None:
+    charge = valide()
+    charge["message_direction"] = "Le premier levier est celui de l'hypothèse H1."
+    assert analyser(charge).message_direction.endswith("H1.")
+
+
+def test_un_renvoi_dans_un_pourquoi_est_admis() -> None:
+    charge = valide()
+    charge["variables"][0]["pourquoi"] = "La piste H1 se confirme sur toute la période."
+    assert analyser(charge).variables[0].pourquoi.startswith("La piste H1")
+
+
+def test_un_renvoi_a_une_hypothese_inexistante_reste_refuse() -> None:
+    """Sinon la garde deviendrait un trou : « H9 » ferait passer n'importe quoi."""
+    charge = valide()
+    charge["hypotheses"][-1]["motif"] = "Réfutée, confirmant H9."
+    with pytest.raises(ErreurSortie, match="chiffre"):
+        analyser(charge)
+
+
+def test_une_quantite_reste_refusee_malgre_les_renvois() -> None:
+    with pytest.raises(ErreurSortie, match="chiffre"):
+        garde_zero_chiffre("La marge recule de 8 points.", "motif", "test", {"H1", "H8"})
+
+
+def test_les_identifiants_les_plus_longs_sont_retires_en_premier() -> None:
+    """Sans tri par longueur, retirer « H1 » de « H12 » y laisserait un « 2 »."""
+    garde_zero_chiffre("Confirmé par H12.", "motif", "test", {"H1", "H12"})
+
+
+# ------------------------------------ l'enveloppe attendue par le rôle
+# Le modèle avait écrit 'indicateurs' au lieu de 'variables', et omis deux clés.
+# En relisant la consigne, elle décrivait les règles sans jamais montrer la forme.
+def test_la_consigne_montre_lenveloppe_complete() -> None:
+    consigne = _role_selection()["system"]
+    for cle in ("niveau", "message_direction", "hypotheses", "variables"):
+        assert f'"{cle}"' in consigne, f"la consigne ne nomme pas {cle!r}"
+
+
+def test_la_consigne_ecarte_les_noms_voisins() -> None:
+    """« indicateurs », « kpis » : les noms qu'un modèle invente naturellement."""
+    consigne = _role_selection()["system"].lower()
+    assert "pas 'indicateurs'" in consigne
+
+
+def test_la_consigne_autorise_les_renvois_entre_hypotheses() -> None:
+    assert "confirmant H3" in _role_selection()["system"]
+
+
+def test_le_role_repare_plus_dune_fois() -> None:
+    """Une seule tentative suffit rarement sur une erreur de forme."""
+    assert _role_selection()["output"]["repair_attempts"] >= 2

@@ -30,6 +30,7 @@ from __future__ import annotations
 
 import json
 import re
+from collections.abc import Collection
 from pathlib import Path
 from typing import Literal, NotRequired, TypedDict, cast
 
@@ -173,19 +174,31 @@ def _texte(objet: dict[str, object], champ: str, contexte: str, maximum: int) ->
 
 
 # ------------------------------------------------------------------ la prose
-def garde_zero_chiffre(texte: str, champ: str, contexte: str) -> None:
-    """Refuse tout chiffre dans un texte rédigé.
+def garde_zero_chiffre(
+    texte: str, champ: str, contexte: str, identifiants: Collection[str] = ()
+) -> None:
+    """Refuse tout chiffre dans un texte rédigé, hors renvoi à une hypothèse.
 
     Règle dure, et volontairement. Une liste blanche des valeurs présentes dans
     les données serait plus permissive, mais elle rendrait la garde impossible à
-    expliquer en rendez-vous et difficile à tester. Ici, la promesse tient en une
+    expliquer en rendez-vous et difficile à tester. La promesse tient en une
     phrase : le modèle n'écrit aucun chiffre, donc il ne peut pas se tromper sur
     un chiffre.
+
+    Une seule exception, découverte à la première exécution réelle : le modèle
+    renvoie d'une hypothèse à l'autre — « l'écart va dans l'autre sens,
+    confirmant H3 ». C'est précisément ce qui donne leur valeur aux réfutations,
+    et le refuser revenait à interdire de raisonner. Les identifiants réellement
+    déclarés dans CETTE sortie sont donc retirés du texte avant l'examen : « H3 »
+    passe si et seulement si H3 existe, tandis que « trois points » reste refusé.
     """
-    trouve = _CHIFFRE.search(texte)
+    nettoye = texte
+    for identifiant in sorted(identifiants, key=len, reverse=True):
+        nettoye = nettoye.replace(identifiant, " ")
+    trouve = _CHIFFRE.search(nettoye)
     if trouve is None:
         return
-    extrait = texte[max(0, trouve.start() - 30) : trouve.start() + 30]
+    extrait = nettoye[max(0, trouve.start() - 30) : trouve.start() + 30]
     raise ErreurSortie(
         f"{contexte} : le champ {champ!r} contient le chiffre {trouve.group()!r}. "
         f"Les textes rédigés ne portent aucune valeur — écrivez-la en toutes lettres, "
@@ -223,9 +236,16 @@ def _seuil(objet: dict[str, object], mesure: cat.Mesure, contexte: str) -> float
 
 # -------------------------------------------------------------- les invariants
 def _valider_hypotheses(brutes: object) -> dict[str, HypotheseBrute]:
+    """Valide en deux passes.
+
+    La première recense les identifiants : sans eux, la garde zéro-chiffre
+    refuserait un renvoi entre hypothèses. La seconde examine les textes, une
+    fois l'ensemble des renvois légitimes connu.
+    """
     liste = _liste(brutes, "'hypotheses'")
     if not liste:
         raise ErreurSortie("'hypotheses' doit être une liste non vide.")
+
     connues: dict[str, HypotheseBrute] = {}
     for rang, valeur in enumerate(liste, start=1):
         contexte = f"hypothèse #{rang}"
@@ -239,12 +259,17 @@ def _valider_hypotheses(brutes: object) -> dict[str, HypotheseBrute]:
             raise ErreurSortie(
                 f"{contexte} : statut {statut!r} inconnu. Attendu 'retenue' ou 'ecartee'."
             )
-        enonce = _texte(brute, "enonce", contexte, LONGUEUR_MAX_TEXTE)
-        garde_zero_chiffre(enonce, "enonce", contexte)
-        if statut == "ecartee":
-            motif = _texte(brute, "motif", contexte, LONGUEUR_MAX_TEXTE)
-            garde_zero_chiffre(motif, "motif", contexte)
         connues[identifiant] = cast(HypotheseBrute, brute)
+
+    renvois = set(connues)
+    for rang, (identifiant, brute) in enumerate(connues.items(), start=1):
+        contexte = f"hypothèse #{rang} ({identifiant})"
+        objet = cast(dict[str, object], brute)
+        enonce = _texte(objet, "enonce", contexte, LONGUEUR_MAX_TEXTE)
+        garde_zero_chiffre(enonce, "enonce", contexte, renvois)
+        if brute["statut"] == "ecartee":
+            motif = _texte(objet, "motif", contexte, LONGUEUR_MAX_TEXTE)
+            garde_zero_chiffre(motif, "motif", contexte, renvois)
     return connues
 
 
@@ -294,10 +319,13 @@ def analyser(charge: dict[str, object]) -> Selection:
             f"Niveau inconnu : {nom_niveau!r}. Attendu {', '.join(n.value for n in Niveau)}."
         ) from None
 
-    message = _texte(charge, "message_direction", "sortie", LONGUEUR_MAX_MESSAGE)
-    garde_zero_chiffre(message, "message_direction", "sortie")
-
+    # Les hypothèses sont lues d'abord : leurs identifiants sont les seuls
+    # renvois chiffrés admis dans les textes qui suivent.
     hypotheses = _valider_hypotheses(charge["hypotheses"])
+    renvois = set(hypotheses)
+
+    message = _texte(charge, "message_direction", "sortie", LONGUEUR_MAX_MESSAGE)
+    garde_zero_chiffre(message, "message_direction", "sortie", renvois)
 
     brutes = _liste(charge["variables"], "'variables'")
     attendus = NIVEAUX[niveau].nb_variables
@@ -322,8 +350,8 @@ def analyser(charge: dict[str, object]) -> Selection:
 
         pourquoi = _texte(brute, "pourquoi", contexte, LONGUEUR_MAX_TEXTE)
         decision = _texte(brute, "decision_attendue", contexte, LONGUEUR_MAX_TEXTE)
-        garde_zero_chiffre(pourquoi, "pourquoi", contexte)
-        garde_zero_chiffre(decision, "decision_attendue", contexte)
+        garde_zero_chiffre(pourquoi, "pourquoi", contexte, renvois)
+        garde_zero_chiffre(decision, "decision_attendue", contexte, renvois)
 
         indicateurs.append(
             Indicateur(

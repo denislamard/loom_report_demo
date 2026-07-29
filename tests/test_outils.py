@@ -19,7 +19,7 @@ from functools import cache
 from pathlib import Path
 import pytest
 
-from loom_report_demo import app
+from loom_report_demo import app, console
 from loom_report_demo.analysis import catalogue as cat
 from loom_report_demo.analysis.chargement import Donnees, charger
 from loom_report_demo.analysis.criblage import EFFECTIF_MINIMAL, cribler
@@ -296,7 +296,7 @@ def test_linvite_interdit_les_chiffres_redigee() -> None:
 
 
 # ------------------------------------------------------------ le flux console
-def _saisies(*reponses: str) -> app.Saisie:
+def _saisies(*reponses: str) -> console.Saisie:
     flux: Iterator[str] = iter(reponses)
 
     def _saisir(_invite: str) -> str:
@@ -343,31 +343,54 @@ def test_un_retrait_hors_bornes_est_refuse() -> None:
         charger_selection(FIXTURE).sans(9)
 
 
-def test_arbitrer_accepte_la_selection_sur_entree_vide() -> None:
-    selection = charger_selection(FIXTURE)
-    retenue = app.arbitrer(selection, _saisies(""), lambda *a, **k: None)
+def test_arbitrer_genere_sur_la_touche_dediee() -> None:
+    """« g » plutôt qu'Entrée : après un menu numéroté, l'utilisateur tape un chiffre."""
+    retenue = console.arbitrer(charger_selection(FIXTURE), _saisies("g"), lambda *a, **k: None)
+    assert retenue is not None and len(retenue.variables) == 4
+
+
+def test_arbitrer_accepte_encore_entree() -> None:
+    retenue = console.arbitrer(charger_selection(FIXTURE), _saisies(""), lambda *a, **k: None)
     assert retenue is not None and len(retenue.variables) == 4
 
 
 def test_arbitrer_retire_puis_genere() -> None:
-    selection = charger_selection(FIXTURE)
-    retenue = app.arbitrer(selection, _saisies("2", ""), lambda *a, **k: None)
+    retenue = console.arbitrer(
+        charger_selection(FIXTURE), _saisies("2", "g"), lambda *a, **k: None
+    )
     assert retenue is not None and len(retenue.variables) == 3
 
 
+def test_arbitrer_ne_vide_jamais_la_selection() -> None:
+    """Le piège rencontré en exécution réelle : retirer jusqu'au dernier annulait tout."""
+    retenue = console.arbitrer(
+        charger_selection(FIXTURE), _saisies("1", "1", "1", "1", "g"), lambda *a, **k: None
+    )
+    assert retenue is not None and len(retenue.variables) == 1
+
+
+def test_arbitrer_explique_pourquoi_le_dernier_ne_part_pas(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    console.arbitrer(charger_selection(FIXTURE), _saisies("1", "1", "1", "1", "g"), print)
+    assert "au moins un indicateur" in capsys.readouterr().out
+
+
 def test_arbitrer_annule_sur_q() -> None:
-    assert app.arbitrer(charger_selection(FIXTURE), _saisies("q"), lambda *a, **k: None) is None
+    assert console.arbitrer(charger_selection(FIXTURE), _saisies("q"), lambda *a, **k: None) is None
 
 
 def test_arbitrer_redemande_apres_une_saisie_invalide() -> None:
-    retenue = app.arbitrer(charger_selection(FIXTURE), _saisies("z", ""), lambda *a, **k: None)
+    retenue = console.arbitrer(
+        charger_selection(FIXTURE), _saisies("z", "g"), lambda *a, **k: None
+    )
     assert retenue is not None
 
 
 def test_la_trace_montre_les_hypotheses_et_les_sondages(
     capsys: pytest.CaptureFixture[str],
 ) -> None:
-    app.trace(_exploration(), print)
+    console.trace(_exploration(), print)
     rendu = capsys.readouterr().out
     assert "La transformation dépend du délai de relance" in rendu
     assert "ventilation" in rendu
@@ -377,7 +400,7 @@ def test_le_tableau_montre_les_hypotheses_ecartees(
     capsys: pytest.CaptureFixture[str],
 ) -> None:
     """Elles portent la moitié de la valeur du rapport."""
-    app.tableau_selection(charger_selection(FIXTURE), print)
+    console.tableau_selection(charger_selection(FIXTURE), print)
     rendu = capsys.readouterr().out
     assert "Hypothèses écartées" in rendu
     assert "Montpellier" in rendu
@@ -385,7 +408,7 @@ def test_le_tableau_montre_les_hypotheses_ecartees(
 
 def test_le_flux_complet_produit_un_classeur(capsys: pytest.CaptureFixture[str]) -> None:
     code = asyncio.run(
-        app.executer(saisir=_saisies("2", ""), explorateur=_faux_explorateur)
+        console.executer(saisir=_saisies("2", "g"), explorateur=_faux_explorateur)
     )
     assert code == 0
     assert "Classeur" in capsys.readouterr().out
@@ -395,7 +418,7 @@ def test_le_flux_sarrete_proprement_si_lhumain_annule(
     capsys: pytest.CaptureFixture[str],
 ) -> None:
     code = asyncio.run(
-        app.executer(saisir=_saisies("2", "q"), explorateur=_faux_explorateur)
+        console.executer(saisir=_saisies("2", "q"), explorateur=_faux_explorateur)
     )
     assert code == 0
     assert "annulée" in capsys.readouterr().out
@@ -405,7 +428,7 @@ def test_une_exploration_en_echec_ne_plante_pas(capsys: pytest.CaptureFixture[st
     async def _echec(_niveau: Niveau) -> Exploration:
         raise RuntimeError("budget dépassé")
 
-    code = asyncio.run(app.executer(saisir=_saisies("2"), explorateur=_echec))
+    code = asyncio.run(console.executer(saisir=_saisies("2"), explorateur=_echec))
     assert code == 1
     assert "budget dépassé" in capsys.readouterr().err
 
@@ -416,6 +439,6 @@ def test_le_flux_refuse_dexplorer_sans_cle(
     """Mieux vaut renvoyer vers la fixture que d'échouer au premier appel d'API."""
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
     monkeypatch.delenv("M3_API_KEY", raising=False)
-    code = asyncio.run(app.executer(saisir=_saisies("2")))
+    code = asyncio.run(console.executer(saisir=_saisies("2")))
     assert code == 1
     assert "uv run rapport" in capsys.readouterr().out

@@ -6,26 +6,20 @@ les câbler. C'est délibéré — il est le seul à ne pas pouvoir être testé
 d'API, et il faut donc qu'il tienne dans une page qu'on relit d'un coup d'œil.
 
 Le partage des rôles mérite d'être explicité, car il n'est pas évident.
-L'orchestrateur `main` raisonne et sonde : c'est lui qui note ses hypothèses,
-appelle les outils et forme un jugement. Le rôle terminal `selection` ne fait que
-mettre en forme, sous contrainte de schéma. Cette répartition est imposée par
-`loom-ia` : un rôle porté par un `LLMTool` est une feuille, il ne peut pas
-appeler d'outils lui-même, et un rôle à `output.schema` est incompatible avec le
-raisonnement étendu que porte `main`.
+**Un seul modèle, un seul contrat.** L'orchestrateur explore, juge et rédige la
+sortie structurée. Il n'y a plus de rôle de transcription.
 
-Elle a un coût : le jugement transite par une transcription. Si la calibration
-montre que l'information se perd au passage, l'alternative est de retirer
-`thinking` de l'orchestrateur et de lui donner directement le bloc `output`.
-C'est le premier point à trancher en exécution réelle.
+La première version en comptait un : `main` raisonnait, un rôle terminal portait
+le schéma. La calibration a montré pourquoi c'était fragile — le transcripteur
+recevait les constats en texte libre et devait reconstruire une enveloppe qu'il
+n'avait jamais vue. Il a inventé une clé, en a omis deux, et quand la réparation
+a échoué l'orchestrateur a répondu à sa place, avec une sortie que le parsing ne
+pouvait qu'écarter.
 
-**Écart assumé au routage par coût.** `DefinitionNiveau.modele` annonce SONNET
-pour le stratégique et HAIKU ailleurs, au motif qu'une décision gelée douze mois
-mérite un modèle plus cher. Le rôle `selection` est pourtant unique et porté par
-HAIKU : le distinguer par niveau demanderait soit deux rôles — que
-l'orchestrateur verrait tous les deux dans sa liste d'outils, au risque qu'il
-choisisse le mauvais — soit une surcharge `llm_config` par rôle. Trancher sans
-exécuter aurait été un pari ; le critère de non-manipulabilité, lui, s'applique
-désormais à tous les niveaux, ce qui couvre le risque principal.
+Le prix de la fusion est le raisonnement étendu : `thinking` est incompatible
+avec un schéma de sortie sur Anthropic, il a donc été retiré de l'orchestrateur.
+Celui qui juge est celui qui rédige, et le contrat est vérifié là où le jugement
+se forme.
 """
 
 from __future__ import annotations
@@ -36,13 +30,12 @@ from datetime import date
 from typing import Any
 
 from loom_report_demo import paths
-from loom_report_demo.analysis.chargement import Donnees
-from loom_report_demo.analysis.chargement import donnees as charger_donnees
+from loom_report_demo.analysis.chargement import Donnees, donnees as charger_donnees
 from loom_report_demo.analysis.criblage import Criblage, cribler
 from loom_report_demo.analysis.outils import Registre, SpecOutil, construire_outils
 from loom_report_demo.analysis.profil import profil
 from loom_report_demo.niveaux import NIVEAUX, Niveau
-from loom_report_demo.parsing import parse_selection
+from loom_report_demo.parsing import ErreurSortie, parse_selection
 from loom_report_demo.workbook.selection import Selection
 
 #: Nombre de candidats du criblage soumis à l'agent. Au-delà, on paie des jetons
@@ -112,9 +105,9 @@ def construire_invite(niveau: Niveau, carte: dict[str, Any], resultat: Criblage)
             "4. Écarte ce qui n'est pas actionnable. Un écart réel sur un levier que le",
             "   dirigeant ne contrôle pas n'a rien à faire dans un tableau de bord.",
             "",
-            "Quand tu as tranché, appelle l'outil `selection` en lui transmettant tes",
-            "hypothèses, tes sondages et tes verdicts. N'écris aucun chiffre dans les",
-            "textes rédigés : le programme recalcule toutes les valeurs.",
+            "Quand tu as tranché, rends l'objet JSON décrit dans ta consigne : niveau,",
+            "message_direction, hypotheses, variables. N'écris aucun chiffre dans les",
+            "textes rédigés — le programme recalcule toutes les valeurs.",
         )
     )
 
@@ -162,8 +155,27 @@ async def explorer(
             session_id=session_id or _identifiant_session(niveau, jeu.situation),
         )
 
+    # La sortie brute est conservée avant toute validation : quand le rôle
+    # terminal échoue, l'orchestrateur produit sa propre réponse, et le message
+    # de parsing seul — « clés manquantes » — ne dit pas d'où vient le problème.
+    trace = paths.journaux() / "derniere_sortie.txt"
+    trace.parent.mkdir(parents=True, exist_ok=True)
+    trace.write_text(brut, encoding="utf-8")
+
+    try:
+        selection = parse_selection(brut)
+    except ErreurSortie as erreur:
+        raise ErreurSortie(
+            f"{erreur}\n"
+            f"  La réponse finale de l'agent n'est pas une sélection exploitable.\n"
+            f"  Cause la plus fréquente : le rôle 'selection' a échoué et "
+            f"l'orchestrateur a répondu à sa place.\n"
+            f"  Sortie brute : {trace}\n"
+            f"  Journal détaillé : {paths.journaux() / 'agent.log'}"
+        ) from None
+
     return Exploration(
-        selection=parse_selection(brut),
+        selection=selection,
         registre=registre,
         criblage=resultat,
         brut=brut,

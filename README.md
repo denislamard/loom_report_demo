@@ -129,9 +129,13 @@ rapports/Bati-Sud_<niveau>.xlsx
 tirerait `loom_ia` dès qu'on importe le moindre sous-module, y compris ceux qui
 doivent rester testables sans clé d'API.
 
-`app.py` porte le menu console, l'affichage de la sélection et le flux.
-`entry()` est asynchrone dès maintenant, pour ne plus changer de signature quand
-l'agent arrivera.
+`app.py` ne porte que le contrat de la couche d'interaction — les trois alias
+qui décrivent les coutures injectables — et `entry()`. Une quarantaine de lignes,
+lisibles d'un coup d'œil.
+
+`console.py` porte le déroulé : menu, trace de l'exploration, tableau de
+sélection, arbitrage humain, génération. La saisie et l'écriture y sont
+injectées, ce qui rend tout le flux testable sans terminal.
 
 `niveaux.py` porte le type de domaine qui commute tout le reste : cadrage,
 socle, nombre d'indicateurs variables, modèle, durée de vie, nature du livrable.
