@@ -70,7 +70,13 @@ _LARGEURS = {
 }
 
 
-def _convertir(valeur: str, champ: str) -> object:
+def _convertir(valeur: str, champ: str) -> theme.ValeurCellule:
+    """Convertit un champ CSV vers ce qu'une cellule accepte réellement.
+
+    Le type de retour n'est pas `object` : openpyxl refuse d'écrire n'importe
+    quoi dans une cellule, et un `object` ici ferait remonter l'erreur à
+    l'appelant plutôt qu'ici, où elle se corrige.
+    """
     if valeur == "":
         return None
     if champ.startswith(_DATES):

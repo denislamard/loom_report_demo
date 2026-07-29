@@ -17,7 +17,9 @@ une mesure.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from collections.abc import Mapping
+from dataclasses import dataclass
+from typing import ClassVar
 
 from loom_report_demo.analysis import catalogue as cat
 from loom_report_demo.analysis.cadrages import COMPARAISON, PRINCIPAL, Cadrage
@@ -57,7 +59,7 @@ class HypothesePerdue:
 class Selection:
     niveau: Niveau
     variables: tuple[Indicateur, ...]
-    ecartees: tuple[HypothesePerdue, ...] = field(default_factory=tuple)
+    ecartees: tuple[HypothesePerdue, ...] = ()
     message_direction: str = ""
 
     @property
@@ -72,6 +74,34 @@ class Selection:
     @property
     def cadrage_comparaison(self) -> Cadrage:
         return COMPARAISON[self.cadrage]
+
+    #: Correspondance entre une mesure et la file qu'elle pilote.
+    #:
+    #: Seules les mesures dont l'unité est celle du seuil de la file y figurent.
+    #: `respect_delai_relance` mesure une PART de devis relancés à temps : son
+    #: seuil est un pourcentage, pas un nombre de jours, et il ne peut donc pas
+    #: piloter une file qui trie par ancienneté. La garde du parsing l'a signalé
+    #: avant que l'erreur n'atteigne le classeur.
+    FILES_PAR_MESURE: ClassVar[Mapping[str, str]] = {
+        "age_moyen_file_recouvrement": "creances",
+        "delai_1ere_relance": "devis",
+        "taux_derive_horaire": "derive",
+    }
+
+    def seuils(self) -> dict[str, float]:
+        """Seuils de tri retenus par l'agent, par file de travail.
+
+        C'est tout ce qu'il choisit au niveau opérationnel : les files sont
+        dictées par les processus, pas par lui. Un seuil est un jugement — à
+        partir de quand une créance passe en recouvrement — et c'est exactement
+        le genre de décision qu'on lui délègue.
+        """
+        retenus: dict[str, float] = {}
+        for indicateur in self.variables:
+            file = self.FILES_PAR_MESURE.get(indicateur.mesure)
+            if file is not None and indicateur.seuil_alerte is not None:
+                retenus[file] = indicateur.seuil_alerte
+        return retenus
 
     def sans(self, indice: int) -> Selection:
         """Sélection privée d'un indicateur, après arbitrage humain.

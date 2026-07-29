@@ -3047,7 +3047,7 @@ DEV-03045;2026-06-29;2026-06;2025-2026;CLI-0668;Particulier;Toulouse;Julien Fabr
 DEV-03046;2026-06-29;2026-06;2025-2026;CLI-0386;Collectivité;Bordeaux;Karim Belkacem;Salle de bain;SB-001;Rénovation salle de bain complète;1;23599.91;En cours;;;0
 DEV-03047;2026-06-29;2026-06;2025-2026;CLI-0977;Particulier;Montpellier;Thomas Rey;Électricité;EL-002;Installation borne de recharge VE;1;1745.89;En cours;;;0
 DEV-03048;2026-06-29;2026-06;2025-2026;CLI-0556;Professionnel;Montpellier;Thomas Rey;Plomberie;PR-003;Réfection réseau eau appartement;1;5642.01;En cours;;;0
-DEV-03049;2026-06-30;2026-06;2025-2026;CLI-0031;Professionnel;Bordeaux;Sophie Marchand;Salle de bain;SB-001;Rénovation salle de bain complète;1;20019.51;Sans réponse;2026-06-29;9;0
+DEV-03049;2026-06-30;2026-06;2025-2026;CLI-0031;Professionnel;Bordeaux;Sophie Marchand;Salle de bain;SB-001;Rénovation salle de bain complète;1;20019.51;Sans réponse;2026-06-30;9;0
 DEV-03050;2026-06-30;2026-06;2025-2026;CLI-0192;Particulier;Toulouse;Nadia Cherif;Électricité;EL-003;Rénovation électrique complète;1;8708.87;En cours;;2;0
-DEV-03051;2026-06-30;2026-06;2025-2026;CLI-0194;Syndic;Toulouse;Nadia Cherif;Électricité;EL-003;Rénovation électrique complète;1;21278.59;Sans réponse;2026-06-29;11;0
-DEV-03052;2026-06-30;2026-06;2025-2026;CLI-0810;Particulier;Montpellier;Thomas Rey;Plomberie;PR-004;Remplacement colonne d'évacuation;1;6227.32;Refusé;2026-06-29;;0
+DEV-03051;2026-06-30;2026-06;2025-2026;CLI-0194;Syndic;Toulouse;Nadia Cherif;Électricité;EL-003;Rénovation électrique complète;1;21278.59;Sans réponse;2026-06-30;11;0
+DEV-03052;2026-06-30;2026-06;2025-2026;CLI-0810;Particulier;Montpellier;Thomas Rey;Plomberie;PR-004;Remplacement colonne d'évacuation;1;6227.32;Refusé;2026-06-30;;0

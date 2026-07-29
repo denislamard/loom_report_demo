@@ -78,8 +78,8 @@ class Registre:
     la feuille « Ce qui a été regardé ».
     """
 
-    hypotheses: dict[str, Hypothese] = field(default_factory=dict)
-    appels: list[Appel] = field(default_factory=list)
+    hypotheses: dict[str, Hypothese] = field(default_factory=dict[str, Hypothese])
+    appels: list[Appel] = field(default_factory=list[Appel])
 
     @property
     def sondages(self) -> int:
@@ -253,7 +253,7 @@ def _croiser(
     m2 = _modalites_admises(d2, donnees, objet.base)
     if len(m1) * len(m2) > MAX_CELLULES_CROISEMENT:
         raise ErreurOutil(
-            f"Croisement trop large : {len(m1)} × {len(m2)} cellules, maximum "
+            f"Croisement trop large : {len(m1)} x {len(m2)} cellules, maximum "
             f"{MAX_CELLULES_CROISEMENT}. Choisissez des dimensions moins fines, ou "
             f"filtrez d'abord avec `ventilation`."
         )
@@ -288,7 +288,10 @@ def _croiser(
 def _concentration(
     donnees: Donnees, niveau: Niveau, registre: Registre, mesure: str, dimension: str
 ) -> dict[str, Any]:
-    objet = _verifier(mesure, dimension, niveau)
+    # Appel pour son seul effet : refuser un couple hors catalogue. La
+    # concentration ne travaille que sur des poids, elle n'a pas besoin de
+    # l'unité de la mesure.
+    _verifier(mesure, dimension, niveau)
     resultat = ventiler(donnees, mesure, dimension, PRINCIPAL[niveau])
     poids = sorted(
         ((m.libelle, m.poids) for m in resultat.modalites if m.poids > 0),
@@ -487,7 +490,10 @@ def _resumer(outil: str, arguments: dict[str, Any], resultat: dict[str, Any]) ->
     if outil == "ventilation":
         modalites = resultat.get("modalites", [])
         if not modalites:
-            return f"{arguments['mesure']} par {arguments['dimension']} — aucune modalité retenue"
+            return (
+            f"{arguments['mesure']} par {arguments['dimension']} — "
+            "aucune modalité retenue"
+        )
         pire = modalites[0]
         return (
             f"{arguments['mesure']} par {arguments['dimension']} — "
@@ -504,7 +510,7 @@ def _resumer(outil: str, arguments: dict[str, Any], resultat: dict[str, Any]) ->
         )
     if outil == "croiser":
         return (
-            f"{arguments['mesure']} par {arguments['dimension_1']} × "
+            f"{arguments['mesure']} par {arguments['dimension_1']} x "
             f"{arguments['dimension_2']} — {len(resultat['cellules'])} cellules exploitables"
         )
     return (

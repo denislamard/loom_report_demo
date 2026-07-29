@@ -11,8 +11,9 @@ d'historique, sept fichiers CSV, et une question posée en console : *où va mon
 entreprise*, *qu'est-ce que je corrige ce mois-ci*, ou *qu'est-ce que je traite
 cette semaine*. Le programme rend un classeur Excel.
 
-> **État : jalon 0 sur 8.** Squelette, configuration et menu console. Le classeur
-> arrive au jalon 4, l'agent au jalon 6. Voir [ROADMAP.md](ROADMAP.md).
+> **État : jalon 4 sur 8.** Le classeur est produit, complet et vérifié, à partir
+> d'une sélection d'indicateurs. L'agent qui la choisira arrive au jalon 6.
+> Voir [ROADMAP.md](ROADMAP.md).
 
 ---
 
@@ -37,11 +38,16 @@ jugement, pas une mesure.
 **Le pré-criblage est du ressort du code.** Énumérer l'espace des candidats à une
 dimension est trivial pour Python et coûteux pour un modèle. Chaque candidat est
 scoré sur cinq critères — effectif, dispersion, monotonie, stabilité, et surtout
-**matérialité en euros** : *combien rapporterait d'amener la pire modalité à la
-médiane*. Ce dernier score convertit une anomalie statistique en argent, et
-empêche le modèle de retenir un écart spectaculaire mais sans enjeu. L'agent
-n'intervient que sur l'espace à deux dimensions et conditionnel, qui est
-combinatoire — c'est là qu'il gagne sa place.
+**matérialité en euros** : *combien rapporterait d'amener la modalité la plus
+défavorable au niveau des autres*. Ce dernier score convertit une anomalie
+statistique en argent, et empêche le modèle de retenir un écart spectaculaire
+mais sans enjeu. L'agent n'intervient que sur l'espace à deux dimensions et
+conditionnel, qui est combinatoire — c'est là qu'il gagne sa place.
+
+Le catalogue déclare aussi les croisements **tautologiques**, où la dimension est
+dérivée de la grandeur mesurée. « Le panier moyen croît avec la tranche de
+montant » est vrai par construction : les cinq scores le notent au maximum, un
+humain le voit d'un coup d'œil, et un modèle le retiendrait avec assurance.
 
 **Les hypothèses réfutées sont livrées avec les trouvailles.** L'agent note ses
 hypothèses *avant* de sonder, ce qui l'empêche de rationaliser après coup. Toute
@@ -130,15 +136,30 @@ l'agent arrivera.
 `niveaux.py` porte le type de domaine qui commute tout le reste : cadrage,
 socle, nombre d'indicateurs variables, modèle, durée de vie, nature du livrable.
 
+`dataset/` génère le jeu fictif. `lignes.py` porte le contrat de données,
+`parametres.py` les constantes métier et la trajectoire, `generateur.py` la
+production. Bibliothèque standard uniquement.
+
+`fingerprint.py` calcule les empreintes. `hashlib` uniquement.
+
 `paths.py` résout les chemins indépendamment du répertoire courant. Sans aucune
 dépendance.
 
+`parsing.py` est la frontière : tout ce qui vient du modèle y passe. Décodage,
+garde zéro-chiffre, validation contre le catalogue, invariant des hypothèses.
+Bibliothèque standard uniquement.
+
 `reporting.py` sera le **seul** module à importer `loom_ia`.
 
-`analysis/` contiendra le catalogue de mesures, le profil, le criblage et les
-outils d'exploration. Pandas uniquement, pas de réseau.
+`analysis/` porte le catalogue de mesures, les cadrages, le moteur de calcul, le
+criblage et le profil. `catalogue.py` est purement déclaratif — c'est de lui que seront tirés
+les `enum` fermés des outils d'exploration. `chargement.py` est le seul module
+qui fait des jointures ; le moteur ne connaît que des colonnes plates. Pandas
+uniquement, pas de réseau.
 
-`workbook/` produira le classeur. `openpyxl` uniquement.
+`workbook/` produit le classeur. `openpyxl` uniquement. `schema.py` résout les
+colonnes par nom de champ, `formules.py` traduit l'algèbre du catalogue en
+`SUMIFS`, `selection.py` porte le contrat que l'agent remplira au jalon 6.
 
 Tout sauf `reporting.py` se teste sans clé d'API et sans dépenser un centime.
 
@@ -189,15 +210,26 @@ agences et sept techniciens à l'origine, deux embauches en 2023, ouverture de
 Montpellier en septembre 2024, douze techniciens à la fin. Le nombre de devis
 double, le chiffre d'affaires progresse de 60 %, la marge perd 7,6 points.
 
-`uv run seed` les régénérera à l'identique — le générateur est à graine fixe
-(jalon 1).
+`uv run seed` les régénère à l'identique : le générateur est déterministe, donc
+un `git status` propre après régénération prouve que les données du dépôt
+correspondent au code qui les produit. C'est le contrôle le plus simple, et il
+tient en une commande.
+
+Chaque exécution affiche l'empreinte SHA-256 du jeu, qui figurera dans le
+classeur : elle établit que le rapport se rapporte à ces fichiers exacts, non
+modifiés depuis. Elle n'établit en revanche aucune antériorité — cela
+demanderait un horodatage RFC 3161 par un tiers de confiance.
 
 ---
 
 ## Utilisation
 
 ```bash
-uv run app
+uv run app        # le rapport
+uv run seed       # régénérer le jeu de données
+uv run profil     # la carte du terrain remise à l'agent
+uv run candidats  # ce que le criblage trouve seul, sans IA
+uv run rapport --selection tests/fixtures/gestion.json
 ```
 
 ```
@@ -250,9 +282,19 @@ uv run ruff format .
 uv run pyright
 ```
 
-Le jalon 0 apporte 52 cas sur la résolution des chemins, les définitions de
-niveau et le flux console. La saisie est injectée plutôt que lue directement, ce
-qui rend le menu testable sans terminal.
+331 cas au jalon 4, tous sans clé d'API, en une dizaine de secondes. Les tests du
+classeur portent sur les **chaînes de formule**, jamais sur des valeurs : c'est
+ce qui permet de s'en tenir à `openpyxl`, sans LibreOffice, en intégration
+continue. La saisie est
+injectée plutôt que lue directement, ce qui rend le menu testable sans terminal.
+
+Les tests du jeu de données se répartissent en deux familles. La
+**reproductibilité** protège la démonstration : une empreinte de référence est
+figée, et toute évolution du générateur doit être un geste explicite. Les
+**invariants** protègent la crédibilité : pas de facture sans devis, pas
+d'intervention avant l'embauche du technicien, une décision jamais antérieure à
+son émission — et la trajectoire d'entreprise elle-même, car si un réglage la
+casse, la démonstration meurt en silence.
 
 ---
 
@@ -261,10 +303,16 @@ qui rend le menu testable sans terminal.
 **Ce n'est pas un outil de comptabilité.** Le jeu de données est fictif et la
 marge calculée est une marge sur coûts directs, hors frais de structure.
 
-**Le classeur ne portera pas de valeurs en cache.** `openpyxl` écrit des
-formules ; Excel et LibreOffice les calculent à l'ouverture, mais
-`pandas.read_excel` sur le fichier produit renverra des cellules vides. Un
-`--recalc` optionnel est prévu.
+**Le classeur ne porte pas de valeurs en cache.** `openpyxl` écrit des formules ;
+Excel et LibreOffice les calculent à l'ouverture, mais `pandas.read_excel` sur le
+fichier produit renverra des cellules vides. Un `--recalc` optionnel est prévu.
+
+**Les colonnes calculées existent deux fois**, en pandas pour l'analyse et en
+formules pour le classeur. C'est une duplication assumée : le rapport doit rester
+vivant, et aucune abstraction ne traduit honnêtement pandas en Excel. Les seuils
+sont importés d'un seul module, un test vérifie que les deux jeux portent les
+mêmes noms, et la concordance des valeurs est contrôlée par un recalcul complet
+hors CI.
 
 **La sélection de l'agent varie d'une exécution à l'autre.** `--rejouer`
 rechargera la dernière sélection depuis `files/log/selection/`, ce qui est

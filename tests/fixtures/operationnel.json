@@ -1,0 +1,40 @@
+{
+  "niveau": "operationnel",
+  "message_direction": "Les créances anciennes concentrent l'essentiel de l'encours, et une poignée de devis récents n'a jamais été relancée.",
+  "hypotheses": [
+    {
+      "identifiant": "O1",
+      "enonce": "Les devis récents restent sans relance au-delà du délai qui les transforme",
+      "statut": "retenue"
+    },
+    {
+      "identifiant": "O2",
+      "enonce": "La dérive des heures se concentre sur les techniciens les moins anciens",
+      "statut": "retenue"
+    },
+    {
+      "identifiant": "O3",
+      "enonce": "Les retards de règlement viennent surtout des particuliers",
+      "statut": "ecartee",
+      "motif": "Réfutée : les créances les plus lourdes sont portées par des professionnels et des collectivités."
+    }
+  ],
+  "variables": [
+    {
+      "mesure": "delai_1ere_relance",
+      "dimension": "agence",
+      "seuil_alerte": 5.0,
+      "pourquoi": "Un devis relancé tôt se transforme nettement mieux, et le respect du délai s'effrite quand le volume monte.",
+      "decision_attendue": "Appeler cette semaine les devis ouverts qui dépassent le délai, en commençant par les montants les plus lourds.",
+      "hypothese_source": "O1"
+    },
+    {
+      "mesure": "taux_derive_horaire",
+      "dimension": "technicien",
+      "seuil_alerte": 0.15,
+      "pourquoi": "Une dérive installée sur un technicien signale un chiffrage inadapté plutôt qu'un incident isolé.",
+      "decision_attendue": "Revoir avec le chef d'atelier les interventions dont l'écart dépasse le seuil, avant de re-deviser des prestations semblables.",
+      "hypothese_source": "O2"
+    }
+  ]
+}

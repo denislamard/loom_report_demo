@@ -12,9 +12,13 @@ sait immédiatement ce qu'il peut modifier sans rien casser.
 
 from __future__ import annotations
 
+from collections.abc import Sequence
+from datetime import date
+
 from openpyxl.formatting.rule import CellIsRule, DataBarRule
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.utils import get_column_letter
+from openpyxl.worksheet.properties import PageSetupProperties
 from openpyxl.worksheet.worksheet import Worksheet
 
 ANTHRACITE = "1B2733"
@@ -34,15 +38,15 @@ JAUNE = "FFF3C4"
 
 POLICE = "Arial"
 
-EUR = '#,##0 " €";-#,##0 " €";"–"'
-EUR2 = '#,##0.00 " €";-#,##0.00 " €";"–"'
+EUR = '#,##0 " €";-#,##0 " €";"-"'
+EUR2 = '#,##0.00 " €";-#,##0.00 " €";"-"'
 PCT = "0.0%"
-NB = '#,##0;-#,##0;"–"'
-NB1 = '#,##0.0;-#,##0.0;"–"'
-JOURS = '#,##0 " j";-#,##0 " j";"–"'
+NB = '#,##0;-#,##0;"-"'
+NB1 = '#,##0.0;-#,##0.0;"-"'
+JOURS = '#,##0 " j";-#,##0 " j";"-"'
 DATE = "DD/MM/YYYY"
 VARIATION = '+0.0%;-0.0%;"stable"'
-POINTS = '+0.0" pt";-0.0" pt";"–"'
+POINTS = '+0.0" pt";-0.0" pt";"-"'
 
 #: Format de nombre associé à chaque unité du catalogue.
 FORMAT_UNITE: dict[str, str] = {"€": EUR, "%": PCT, "j": JOURS, "h": NB1, "": NB}
@@ -54,6 +58,11 @@ _SOUS_TITRE = Side(style="medium", color=ANTHRACITE)
 LARGEUR_BANDEAU = 74
 
 
+#: Ce qu'une cellule accepte réellement. `object` était trop large : openpyxl
+#: refuse d'y écrire n'importe quoi, et le disait sans qu'on l'entende.
+ValeurCellule = str | float | int | date | None
+
+
 def preparer(ws: Worksheet, largeur_b: int = 20, colonnes: int = 12, largeur: int = 14) -> None:
     ws.sheet_view.showGridLines = False
     ws.column_dimensions["A"].width = 2.2
@@ -62,11 +71,10 @@ def preparer(ws: Worksheet, largeur_b: int = 20, colonnes: int = 12, largeur: in
         ws.column_dimensions[get_column_letter(indice)].width = largeur
     ws.page_setup.orientation = "landscape"
     ws.page_setup.fitToWidth = 1
+    if ws.sheet_properties.pageSetUpPr is None:
+        ws.sheet_properties.pageSetUpPr = PageSetupProperties()
     ws.sheet_properties.pageSetUpPr.fitToPage = True
 
-
-def _regle(caractere: str = "─") -> str:
-    return caractere * LARGEUR_BANDEAU
 
 
 def bandeau(ws: Worksheet, titre: str, sous_titre: str, mention: str, colonnes: int = 13) -> None:
@@ -157,7 +165,7 @@ def ligne(
     ws: Worksheet,
     row: int,
     col: int,
-    valeurs: list[object],
+    valeurs: Sequence[ValeurCellule],
     formats: list[str | None],
     gras: bool = False,
     fond: str | None = None,
@@ -215,7 +223,9 @@ def feux(ws: Worksheet, plage: str, seuil: float, plus_haut_mieux: bool = True) 
     )
 
 
-def saisie(ws: Worksheet, row: int, col: int, valeur: object, format_nombre: str) -> None:
+def saisie(
+    ws: Worksheet, row: int, col: int, valeur: ValeurCellule, format_nombre: str
+) -> None:
     """Cellule modifiable : bleu sur fond jaune, comme dans un modèle financier."""
     cellule = ws.cell(row=row, column=col, value=valeur)
     cellule.font = Font(name=POLICE, size=10, bold=True, color="0000FF")

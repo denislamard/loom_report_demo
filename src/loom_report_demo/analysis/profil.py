@@ -42,7 +42,7 @@ def _modalites(source: Donnees, dimension: cat.Dimension) -> dict[str, Any]:
         "libelle": dimension.libelle,
         "ordonnee": dimension.ordonnee,
         "bases": sorted(b.value for b in dimension.bases),
-        "nb_modalites": int(len(comptes)),
+        "nb_modalites": len(comptes),
         "effectif_min": int(comptes.min()) if len(comptes) else 0,
         "effectif_median": int(comptes.median()) if len(comptes) else 0,
         "description": dimension.description,

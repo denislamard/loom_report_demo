@@ -1,0 +1,619 @@
+{
+ "debut": "2022-07-01",
+ "series": {
+  "ca_facture_ht": {
+   "dernier": [
+    "2026-06",
+    134126.21
+   ],
+   "nb_points": 47,
+   "premier": [
+    "2022-08",
+    20581.22
+   ]
+  },
+  "taux_marge_brute": {
+   "dernier": [
+    "2026-06",
+    0.285581
+   ],
+   "nb_points": 47,
+   "premier": [
+    "2022-08",
+    0.422385
+   ]
+  },
+  "taux_transformation": {
+   "dernier": [
+    "2026-06",
+    0.19096
+   ],
+   "nb_points": 48,
+   "premier": [
+    "2022-07",
+    0.159317
+   ]
+  }
+ },
+ "situation": "2026-06-30",
+ "valeurs": {
+  "age_moyen_file_recouvrement|12_mois_glissants": {
+   "denominateur": 203739.53,
+   "effectif": 318,
+   "numerateur": 9232445.64,
+   "valeur": 45.314945
+  },
+  "age_moyen_file_recouvrement|exercice_courant": {
+   "denominateur": 203739.53,
+   "effectif": 318,
+   "numerateur": 9232445.64,
+   "valeur": 45.314945
+  },
+  "age_moyen_file_recouvrement|periode_totale": {
+   "denominateur": 221261.28,
+   "effectif": 1084,
+   "numerateur": 19759077.21,
+   "valeur": 89.302011
+  },
+  "ca_devise_ht|12_mois_glissants": {
+   "denominateur": null,
+   "effectif": 1039,
+   "numerateur": 5145423.63,
+   "valeur": 5145423.63
+  },
+  "ca_devise_ht|exercice_courant": {
+   "denominateur": null,
+   "effectif": 1039,
+   "numerateur": 5145423.63,
+   "valeur": 5145423.63
+  },
+  "ca_devise_ht|periode_totale": {
+   "denominateur": null,
+   "effectif": 3052,
+   "numerateur": 14091036.23,
+   "valeur": 14091036.23
+  },
+  "ca_facture_ht|12_mois_glissants": {
+   "denominateur": null,
+   "effectif": 318,
+   "numerateur": 1216395.65,
+   "valeur": 1216395.65
+  },
+  "ca_facture_ht|exercice_courant": {
+   "denominateur": null,
+   "effectif": 318,
+   "numerateur": 1216395.65,
+   "valeur": 1216395.65
+  },
+  "ca_facture_ht|periode_totale": {
+   "denominateur": null,
+   "effectif": 1084,
+   "numerateur": 4023804.48,
+   "valeur": 4023804.48
+  },
+  "ca_par_technicien|12_mois_glissants": {
+   "denominateur": 12.0,
+   "effectif": 334,
+   "numerateur": 1268365.22,
+   "valeur": 105697.101667
+  },
+  "ca_par_technicien|exercice_courant": {
+   "denominateur": 12.0,
+   "effectif": 334,
+   "numerateur": 1268365.22,
+   "valeur": 105697.101667
+  },
+  "ca_par_technicien|periode_totale": {
+   "denominateur": 12.0,
+   "effectif": 1105,
+   "numerateur": 4095689.76,
+   "valeur": 341307.48
+  },
+  "concentration_client|12_mois_glissants": {
+   "denominateur": 1216395.65,
+   "effectif": 318,
+   "numerateur": 455440.79,
+   "valeur": 0.374418
+  },
+  "concentration_client|exercice_courant": {
+   "denominateur": 1216395.65,
+   "effectif": 318,
+   "numerateur": 455440.79,
+   "valeur": 0.374418
+  },
+  "concentration_client|periode_totale": {
+   "denominateur": 4023804.48,
+   "effectif": 1084,
+   "numerateur": 1425585.07,
+   "valeur": 0.354288
+  },
+  "delai_1ere_relance|12_mois_glissants": {
+   "denominateur": 687.0,
+   "effectif": 1039,
+   "numerateur": 6502.0,
+   "valeur": 9.464338
+  },
+  "delai_1ere_relance|exercice_courant": {
+   "denominateur": 687.0,
+   "effectif": 1039,
+   "numerateur": 6502.0,
+   "valeur": 9.464338
+  },
+  "delai_1ere_relance|periode_totale": {
+   "denominateur": 2270.0,
+   "effectif": 3052,
+   "numerateur": 16649.0,
+   "valeur": 7.334361
+  },
+  "delai_reglement|12_mois_glissants": {
+   "denominateur": 282.0,
+   "effectif": 318,
+   "numerateur": 7861.0,
+   "valeur": 27.875887
+  },
+  "delai_reglement|exercice_courant": {
+   "denominateur": 282.0,
+   "effectif": 318,
+   "numerateur": 7861.0,
+   "valeur": 27.875887
+  },
+  "delai_reglement|periode_totale": {
+   "denominateur": 1039.0,
+   "effectif": 1084,
+   "numerateur": 31092.0,
+   "valeur": 29.924928
+  },
+  "dso|12_mois_glissants": {
+   "denominateur": 1419285.68,
+   "effectif": 318,
+   "numerateur": 203739.53,
+   "valeur": 52.396025
+  },
+  "dso|exercice_courant": {
+   "denominateur": 1419285.68,
+   "effectif": 318,
+   "numerateur": 203739.53,
+   "valeur": 52.396025
+  },
+  "dso|periode_totale": {
+   "denominateur": 4668012.11,
+   "effectif": 1084,
+   "numerateur": 221261.28,
+   "valeur": 17.300805
+  },
+  "encours_client|12_mois_glissants": {
+   "denominateur": null,
+   "effectif": 318,
+   "numerateur": 203739.53,
+   "valeur": 203739.53
+  },
+  "encours_client|exercice_courant": {
+   "denominateur": null,
+   "effectif": 318,
+   "numerateur": 203739.53,
+   "valeur": 203739.53
+  },
+  "encours_client|periode_totale": {
+   "denominateur": null,
+   "effectif": 1084,
+   "numerateur": 221261.28,
+   "valeur": 221261.28
+  },
+  "exceptions_ouvertes|12_mois_glissants": {
+   "denominateur": null,
+   "effectif": 318,
+   "numerateur": 3.0,
+   "valeur": 3.0
+  },
+  "exceptions_ouvertes|exercice_courant": {
+   "denominateur": null,
+   "effectif": 318,
+   "numerateur": 3.0,
+   "valeur": 3.0
+  },
+  "exceptions_ouvertes|periode_totale": {
+   "denominateur": null,
+   "effectif": 1084,
+   "numerateur": 12.0,
+   "valeur": 12.0
+  },
+  "marge_brute|12_mois_glissants": {
+   "denominateur": null,
+   "effectif": 318,
+   "numerateur": 362928.18,
+   "valeur": 362928.18
+  },
+  "marge_brute|exercice_courant": {
+   "denominateur": null,
+   "effectif": 318,
+   "numerateur": 362928.18,
+   "valeur": 362928.18
+  },
+  "marge_brute|periode_totale": {
+   "denominateur": null,
+   "effectif": 1084,
+   "numerateur": 1341114.85,
+   "valeur": 1341114.85
+  },
+  "marge_production|12_mois_glissants": {
+   "denominateur": null,
+   "effectif": 334,
+   "numerateur": 378104.59,
+   "valeur": 378104.59
+  },
+  "marge_production|exercice_courant": {
+   "denominateur": null,
+   "effectif": 334,
+   "numerateur": 378104.59,
+   "valeur": 378104.59
+  },
+  "marge_production|periode_totale": {
+   "denominateur": null,
+   "effectif": 1105,
+   "numerateur": 1363375.18,
+   "valeur": 1363375.18
+  },
+  "panier_moyen_gagne|12_mois_glissants": {
+   "denominateur": 301.0,
+   "effectif": 1039,
+   "numerateur": 1122157.62,
+   "valeur": 3728.098405
+  },
+  "panier_moyen_gagne|exercice_courant": {
+   "denominateur": 301.0,
+   "effectif": 1039,
+   "numerateur": 1122157.62,
+   "valeur": 3728.098405
+  },
+  "panier_moyen_gagne|periode_totale": {
+   "denominateur": 1105.0,
+   "effectif": 3052,
+   "numerateur": 4095689.76,
+   "valeur": 3706.50657
+  },
+  "respect_delai_relance|12_mois_glissants": {
+   "denominateur": 1039.0,
+   "effectif": 1039,
+   "numerateur": 56.0,
+   "valeur": 0.053898
+  },
+  "respect_delai_relance|exercice_courant": {
+   "denominateur": 1039.0,
+   "effectif": 1039,
+   "numerateur": 56.0,
+   "valeur": 0.053898
+  },
+  "respect_delai_relance|periode_totale": {
+   "denominateur": 3052.0,
+   "effectif": 3052,
+   "numerateur": 470.0,
+   "valeur": 0.153997
+  },
+  "taux_derive_horaire|12_mois_glissants": {
+   "denominateur": 3980.9,
+   "effectif": 334,
+   "numerateur": 4068.0,
+   "valeur": 0.021879
+  },
+  "taux_derive_horaire|exercice_courant": {
+   "denominateur": 3980.9,
+   "effectif": 334,
+   "numerateur": 4068.0,
+   "valeur": 0.021879
+  },
+  "taux_derive_horaire|periode_totale": {
+   "denominateur": 12965.8,
+   "effectif": 1105,
+   "numerateur": 13178.2,
+   "valeur": 0.016382
+  },
+  "taux_devis_relances|12_mois_glissants": {
+   "denominateur": 1039.0,
+   "effectif": 1039,
+   "numerateur": 687.0,
+   "valeur": 0.661213
+  },
+  "taux_devis_relances|exercice_courant": {
+   "denominateur": 1039.0,
+   "effectif": 1039,
+   "numerateur": 687.0,
+   "valeur": 0.661213
+  },
+  "taux_devis_relances|periode_totale": {
+   "denominateur": 3052.0,
+   "effectif": 3052,
+   "numerateur": 2270.0,
+   "valeur": 0.743775
+  },
+  "taux_marge_brute|12_mois_glissants": {
+   "denominateur": 1216395.65,
+   "effectif": 318,
+   "numerateur": 362928.18,
+   "valeur": 0.298364
+  },
+  "taux_marge_brute|exercice_courant": {
+   "denominateur": 1216395.65,
+   "effectif": 318,
+   "numerateur": 362928.18,
+   "valeur": 0.298364
+  },
+  "taux_marge_brute|periode_totale": {
+   "denominateur": 4023804.48,
+   "effectif": 1084,
+   "numerateur": 1341114.85,
+   "valeur": 0.333295
+  },
+  "taux_retard_paiement|12_mois_glissants": {
+   "denominateur": 318.0,
+   "effectif": 318,
+   "numerateur": 12.0,
+   "valeur": 0.037736
+  },
+  "taux_retard_paiement|exercice_courant": {
+   "denominateur": 318.0,
+   "effectif": 318,
+   "numerateur": 12.0,
+   "valeur": 0.037736
+  },
+  "taux_retard_paiement|periode_totale": {
+   "denominateur": 1084.0,
+   "effectif": 1084,
+   "numerateur": 21.0,
+   "valeur": 0.019373
+  },
+  "taux_transformation|12_mois_glissants": {
+   "denominateur": 4955569.19,
+   "effectif": 1039,
+   "numerateur": 1122157.62,
+   "valeur": 0.226444
+  },
+  "taux_transformation|exercice_courant": {
+   "denominateur": 4955569.19,
+   "effectif": 1039,
+   "numerateur": 1122157.62,
+   "valeur": 0.226444
+  },
+  "taux_transformation|periode_totale": {
+   "denominateur": 13901181.79,
+   "effectif": 3052,
+   "numerateur": 4095689.76,
+   "valeur": 0.294629
+  }
+ },
+ "ventilations": {
+  "ca_facture_ht|type_client": {
+   "ensemble": 1216395.65,
+   "modalites": {
+    "Collectivité": {
+     "effectif": 12,
+     "poids": 0.058699,
+     "valeur": 71401.35
+    },
+    "Particulier": {
+     "effectif": 213,
+     "poids": 0.56753,
+     "valeur": 690341.24
+    },
+    "Professionnel": {
+     "effectif": 74,
+     "poids": 0.267254,
+     "valeur": 325086.67
+    },
+    "Syndic": {
+     "effectif": 19,
+     "poids": 0.106517,
+     "valeur": 129566.39
+    }
+   }
+  },
+  "encours_client|tranche_age_creance": {
+   "ensemble": 203739.53,
+   "modalites": {
+    "1-30 j": {
+     "effectif": 6,
+     "poids": 0.074472,
+     "valeur": 15172.96
+    },
+    "31-60 j": {
+     "effectif": 1,
+     "poids": 0.010649,
+     "valeur": 2169.67
+    },
+    "61-90 j": {
+     "effectif": 2,
+     "poids": 0.019514,
+     "valeur": 3975.75
+    },
+    "Non échu": {
+     "effectif": 24,
+     "poids": 0.747583,
+     "valeur": 152312.17
+    },
+    "Plus de 90 j": {
+     "effectif": 3,
+     "poids": 0.147782,
+     "valeur": 30108.98
+    },
+    "Réglée": {
+     "effectif": 282,
+     "poids": 0.0,
+     "valeur": 0.0
+    }
+   }
+  },
+  "panier_moyen_gagne|canal_acquisition": {
+   "ensemble": 3728.098405,
+   "modalites": {
+    "Annuaire pro": {
+     "effectif": 106,
+     "poids": 0.096845,
+     "valeur": 3396.09375
+    },
+    "Bouche-à-oreille": {
+     "effectif": 366,
+     "poids": 0.37185,
+     "valeur": 3660.303684
+    },
+    "Google Ads": {
+     "effectif": 141,
+     "poids": 0.132716,
+     "valeur": 3309.524222
+    },
+    "Partenaire": {
+     "effectif": 131,
+     "poids": 0.089734,
+     "valeur": 3472.275517
+    },
+    "Prospection": {
+     "effectif": 87,
+     "poids": 0.098561,
+     "valeur": 4808.745217
+    },
+    "Site web": {
+     "effectif": 208,
+     "poids": 0.210293,
+     "valeur": 4068.66
+    }
+   }
+  },
+  "taux_derive_horaire|anciennete_technicien": {
+   "ensemble": 0.021879,
+   "modalites": {
+    "1 à 2 ans": {
+     "effectif": 49,
+     "poids": 0.111996,
+     "valeur": 0.166709
+    },
+    "Moins d'un an": {
+     "effectif": 5,
+     "poids": 0.013422,
+     "valeur": 0.28169
+    },
+    "Plus de 2 ans": {
+     "effectif": 280,
+     "poids": 0.874582,
+     "valeur": 0.002819
+    }
+   }
+  },
+  "taux_marge_brute|agence": {
+   "ensemble": 0.298364,
+   "modalites": {
+    "Bordeaux": {
+     "effectif": 176,
+     "poids": 0.624647,
+     "valeur": 0.287976
+    },
+    "Montpellier": {
+     "effectif": 30,
+     "poids": 0.102566,
+     "valeur": 0.334277
+    },
+    "Toulouse": {
+     "effectif": 112,
+     "poids": 0.272788,
+     "valeur": 0.311509
+    }
+   }
+  },
+  "taux_marge_brute|metier": {
+   "ensemble": 0.298364,
+   "modalites": {
+    "Chauffage": {
+     "effectif": 44,
+     "poids": 0.198399,
+     "valeur": 0.332179
+    },
+    "Dépannage": {
+     "effectif": 96,
+     "poids": 0.05899,
+     "valeur": 0.476995
+    },
+    "Plomberie": {
+     "effectif": 49,
+     "poids": 0.148902,
+     "valeur": 0.265153
+    },
+    "Salle de bain": {
+     "effectif": 50,
+     "poids": 0.2408,
+     "valeur": 0.263765
+    },
+    "Électricité": {
+     "effectif": 79,
+     "poids": 0.352908,
+     "valeur": 0.305238
+    }
+   }
+  },
+  "taux_transformation|commercial": {
+   "ensemble": 0.226444,
+   "modalites": {
+    "Julien Fabre": {
+     "effectif": 185,
+     "poids": 0.172606,
+     "valeur": 0.217042
+    },
+    "Karim Belkacem": {
+     "effectif": 237,
+     "poids": 0.402856,
+     "valeur": 0.373981
+    },
+    "Nadia Cherif": {
+     "effectif": 183,
+     "poids": 0.098376,
+     "valeur": 0.14071
+    },
+    "Sophie Marchand": {
+     "effectif": 242,
+     "poids": 0.233352,
+     "valeur": 0.214672
+    },
+    "Thomas Rey": {
+     "effectif": 192,
+     "poids": 0.09281,
+     "valeur": 0.122526
+    }
+   }
+  },
+  "taux_transformation|tranche_relance": {
+   "ensemble": 0.226444,
+   "modalites": {
+    "0-3 j": {
+     "effectif": 56,
+     "poids": 0.11813,
+     "valeur": 0.474431
+    },
+    "4-7 j": {
+     "effectif": 179,
+     "poids": 0.27791,
+     "valeur": 0.398467
+    },
+    "8-15 j": {
+     "effectif": 399,
+     "poids": 0.37396,
+     "valeur": 0.238553
+    },
+    "Jamais relancé": {
+     "effectif": 352,
+     "poids": 0.183489,
+     "valeur": 0.10908
+    },
+    "Plus de 15 j": {
+     "effectif": 53,
+     "poids": 0.04651,
+     "valeur": 0.211516
+    }
+   }
+  }
+ },
+ "volumes": {
+  "catalogue": 20,
+  "clients": 1019,
+  "devis": 3052,
+  "factures": 1084,
+  "interventions": 1105,
+  "relances": 3167,
+  "techniciens": 12
+ }
+}

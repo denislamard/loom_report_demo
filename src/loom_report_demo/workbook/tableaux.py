@@ -23,8 +23,9 @@ from openpyxl.worksheet.worksheet import Worksheet
 
 from loom_report_demo.analysis import catalogue as cat
 from loom_report_demo.analysis.cadrages import Fenetre
-from loom_report_demo.analysis.chargement import COLONNE_DATE, Donnees
+from loom_report_demo.analysis.chargement import COLONNE_DATE
 from loom_report_demo.analysis.criblage import Criblage
+from loom_report_demo.analysis.files import File
 from loom_report_demo.fingerprint import EmpreinteJeu, grouper
 from loom_report_demo.workbook import formules as f
 from loom_report_demo.workbook import theme
@@ -67,7 +68,7 @@ def parametres(
     )
 
     theme.titre_section(ws, 7, 2, "Paramètres de calcul", 3)
-    lignes: list[tuple[str, object, str, str]] = [
+    lignes: list[tuple[str, theme.ValeurCellule, str, str]] = [
         ("Date de situation", situation, theme.DATE,
          "Référence de tous les calculs d'âge et de retard. La modifier recalcule le rapport."),
         ("Début de la fenêtre", "=$C$8-364", theme.DATE, "Douze mois glissants."),
@@ -266,12 +267,12 @@ def _carte_mesure(
     accent: str,
 ) -> None:
     schema, colonne_date = _schema_de(mesure, schemas)
-    valeur = f.formule_mesure(mesure, schema, colonne_date)
+    valeur = f.formule_mesure(mesure, schema, colonne_date, schemas=schemas)
     lettre = chr(ord("A") + col - 1)
     if mesure.comparable_entre_periodes:
         passee = f.formule_mesure(
             mesure, schema, colonne_date, f.DEBUT_COMPARAISON, f.FIN_COMPARAISON
-        )
+        , schemas=schemas)
         sous_texte = f'=IFERROR(({valeur[1:]})/({passee[1:]})-1,"")'
         format_sous = theme.VARIATION
     else:
@@ -356,9 +357,13 @@ def synthese(
     graphique.y_axis.crosses = "autoZero"
     graphique += courbe
     graphique.height = 8.5
-    graphique.width = 26.0
+    graphique.width = 26
     graphique.title = None
-    graphique.legend.position = "b"
+    # `legend` est nullable sur un graphique openpyxl — ailleurs dans ce module,
+    # on l'annule volontairement. La garde évite un accès à None si la valeur
+    # par défaut venait à changer, et rend la nullabilité visible.
+    if graphique.legend is not None:
+        graphique.legend.position = "b"
     ws.add_chart(graphique, "B17")
 
     ligne_pont = _decomposition(ws, schemas, metiers, 35)
@@ -615,7 +620,7 @@ def _bloc_indicateur(
                 2,
                 [
                     etiquette,
-                    f.formule_mesure(mesure, schema, colonne_date, debut, fin),
+                    f.formule_mesure(mesure, schema, colonne_date, debut, fin, schemas=schemas),
                     f.formule_effectif(schema, colonne_date, debut, fin),
                 ],
                 [None, f.format_unite(mesure), theme.NB],
@@ -634,10 +639,12 @@ def _bloc_indicateur(
     for decalage, modalite in enumerate(liste):
         row = entete + 1 + decalage
         critere = (dimension.colonne, f'"{modalite}"')
-        actuelle = f.formule_mesure(mesure, schema, colonne_date, dimension=critere)
+        actuelle = f.formule_mesure(
+            mesure, schema, colonne_date, dimension=critere, schemas=schemas
+        )
         passee = f.formule_mesure(
             mesure, schema, colonne_date, f.DEBUT_COMPARAISON, f.FIN_COMPARAISON, critere
-        )
+        , schemas=schemas)
         ecart = (
             f.formule_variation(f"$C{row}", f"$E{row}")
             if mesure.comparable_entre_periodes
@@ -683,9 +690,16 @@ def _bloc_indicateur(
         2,
         [
             "Ensemble",
-            f.formule_mesure(mesure, schema, colonne_date),
+            f.formule_mesure(mesure, schema, colonne_date, schemas=schemas),
             f.formule_effectif(schema, colonne_date),
-            f.formule_mesure(mesure, schema, colonne_date, f.DEBUT_COMPARAISON, f.FIN_COMPARAISON),
+            f.formule_mesure(
+                mesure,
+                schema,
+                colonne_date,
+                f.DEBUT_COMPARAISON,
+                f.FIN_COMPARAISON,
+                schemas=schemas,
+            ),
             f.formule_variation(f"$C{fin + 1}", f"$E{fin + 1}")
             if mesure.comparable_entre_periodes
             else '="état"',
@@ -711,7 +725,7 @@ def _bloc_indicateur(
     graphique.series[0].graphicalProperties.solidFill = theme.BLEU
     graphique.gapWidth = 55
     graphique.height = HAUTEUR_BARRE_CM * len(liste) + HAUTEUR_SOCLE_CM
-    graphique.width = 13.0
+    graphique.width = 13
     graphique.title = None
     graphique.legend = None
     ws.add_chart(graphique, f"I{entete}")
@@ -810,4 +824,79 @@ def criblage(classeur: Workbook, resultat: Criblage, selection: Selection) -> Wo
                 [None, None],
                 alterne=decalage % 2 == 1,
             )
+    return ws
+
+
+# ------------------------------------------------------- Files de travail
+def files_de_travail(
+    classeur: Workbook,
+    files: tuple[File, ...],
+    situation: date,
+    empreinte: EmpreinteJeu,
+) -> Worksheet:
+    """Le livrable du niveau opérationnel : des listes à traiter, pas des cartes.
+
+    Valeurs figées et non des formules, contrairement au reste du classeur. Une
+    file de travail constate un état à un instant : la recalculer trois semaines
+    plus tard changerait les priorités sous les yeux de qui la traite, et ferait
+    rappeler des clients déjà réglés. C'est le seul endroit du classeur où le
+    figement est la bonne réponse.
+    """
+    ws = classeur.create_sheet("Files de travail")
+    theme.preparer(ws, largeur_b=16, colonnes=9, largeur=15)
+    theme.bandeau(
+        ws,
+        "Files de travail",
+        f"Situation au {situation:%d/%m/%Y} · listes triées par priorité, "
+        "à traiter dans l'ordre",
+        "Opérationnel",
+        colonnes=9,
+    )
+
+    ligne_courante = 7
+    for file in files:
+        theme.titre_section(ws, ligne_courante, 2, file.titre, 8)
+        theme.note(
+            ws,
+            ligne_courante + 1,
+            2,
+            f"{file.total_candidats} à traiter, {len(file.taches)} affichées · "
+            f"{file.seuil_libelle} · total affiché {file.montant_total:,.0f} "
+            f"{file.unite_montant}".replace(",", " "),
+            8,
+        )
+        entete = ligne_courante + 2
+        theme.entetes(
+            ws,
+            entete,
+            2,
+            ["Référence", "Objet", f"Montant ({file.unite_montant})", "Ancienneté", "Motif"],
+        )
+        for decalage, tache in enumerate(file.taches):
+            theme.ligne(
+                ws,
+                entete + 1 + decalage,
+                2,
+                [
+                    tache.reference,
+                    tache.libelle,
+                    round(tache.montant, 2),
+                    tache.anciennete_jours,
+                    tache.motif,
+                ],
+                [None, None, theme.EUR, theme.NB, None],
+                alterne=decalage % 2 == 1,
+            )
+        ligne_courante = entete + len(file.taches) + 3
+
+    theme.note(
+        ws,
+        ligne_courante,
+        2,
+        "Ces listes sont figées à la date de situation. Les réexporter en JSON "
+        "permet de les pousser dans la file d'un agent de relance : "
+        f"empreinte du jeu {grouper(empreinte.globale)[:39]}…",
+        8,
+    )
+    ws.print_area = f"A1:J{ligne_courante}"
     return ws

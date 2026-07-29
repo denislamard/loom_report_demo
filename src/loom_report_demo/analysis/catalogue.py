@@ -13,7 +13,7 @@ Trois notions structurent le catalogue.
 mesure : demander la marge par commercial n'a pas de sens, la marge se constate
 sur une facture et un commercial ne facture pas.
 
-**L'agrégat** est une algèbre volontairement pauvre — `facteur × num / den +
+**L'agrégat** est une algèbre volontairement pauvre — `facteur x num / den +
 décalage` — mais suffisante pour dix-sept mesures sur dix-neuf. On somme les
 numérateurs et les dénominateurs *avant* de diviser, jamais l'inverse : la
 moyenne d'un taux n'est pas le taux moyen, et c'est la faute la plus répandue
@@ -28,7 +28,7 @@ gestion agrégé.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import StrEnum
 
 from loom_report_demo.niveaux import Niveau
@@ -98,7 +98,7 @@ class Sens(StrEnum):
 
 @dataclass(frozen=True, slots=True)
 class Agregat:
-    """`facteur × (numerateur / dénominateur) + décalage`.
+    """`facteur x (numerateur / dénominateur) + décalage`.
 
     Sans dénominateur, la mesure est une simple somme. `distinct` remplace la
     somme du dénominateur par un décompte de valeurs distinctes — le seul cas est
@@ -148,6 +148,25 @@ class Mesure:
         return self.nature is Nature.FLUX
 
     @property
+    def ventilable(self) -> bool:
+        """Cette mesure se décompose-t-elle selon une dimension ?
+
+        Un rapport per capita dont le dénominateur est un décompte de valeurs
+        distinctes ne se décompose pas additivement : le chiffre d'affaires par
+        technicien d'un métier n'a pas de sens, puisqu'un technicien intervient
+        sur plusieurs métiers et serait compté dans chacun. Un indice de
+        concentration ne se ventile pas davantage — il décrit déjà une
+        distribution.
+
+        Ce n'est pas une limite de l'implémentation Excel, c'est une propriété
+        de la mesure. La déclarer ici l'écarte du catalogue des croisements, donc
+        des outils remis à l'agent.
+        """
+        if self.special is not None:
+            return False
+        return self.agregat is None or self.agregat.distinct is None
+
+    @property
     def materialisable(self) -> bool:
         """Un écart sur cette mesure se chiffre-t-il en euros ?"""
         return self.conversion is not Conversion.AUCUNE
@@ -164,13 +183,13 @@ class Dimension:
     #: lit dans l'ordre, une agence non.
     ordonnee: bool = False
     #: Ordre imposé des modalités, pour les dimensions ordonnées.
-    modalites: tuple[str, ...] = field(default_factory=tuple)
+    modalites: tuple[str, ...] = ()
     #: Mesures avec lesquelles le croisement est TAUTOLOGIQUE : la dimension est
     #: dérivée de la grandeur mesurée, le résultat est vrai par construction.
     #: « Le panier moyen croît avec la tranche de montant » n'est pas un constat,
     #: c'est une définition. Un humain le voit d'un coup d'œil ; aucun des cinq
     #: scores ne le détecte, et un modèle le retiendrait avec assurance.
-    tautologiques: frozenset[str] = field(default_factory=frozenset)
+    tautologiques: frozenset[str] = frozenset()
     description: str = ""
 
     def concerne(self, niveau: Niveau) -> bool:
@@ -456,7 +475,12 @@ _DIMENSIONS: tuple[Dimension, ...] = (
         bases=frozenset({Base.FACTURES}),
         niveaux=_GESTION_OPE,
         tautologiques=frozenset(
-            {"delai_reglement", "taux_retard_paiement", "age_moyen_file_recouvrement", "dso"}
+            {
+                "delai_reglement",
+                "taux_retard_paiement",
+                "age_moyen_file_recouvrement",
+                "dso",
+            }
         ),
         ordonnee=True,
         modalites=("Bon payeur", "Standard", "Lent", "Litigieux"),
@@ -486,9 +510,9 @@ _DIMENSIONS: tuple[Dimension, ...] = (
         niveaux=_GESTION_OPE,
         tautologiques=frozenset(
             {
-            "delai_1ere_relance",
-            "taux_devis_relances",
-            "respect_delai_relance",
+                "delai_1ere_relance",
+                "taux_devis_relances",
+                "respect_delai_relance",
             }
         ),
         ordonnee=True,
@@ -502,16 +526,19 @@ _DIMENSIONS: tuple[Dimension, ...] = (
         niveaux=_GESTION_OPE,
         tautologiques=frozenset(
             {
-            "age_moyen_file_recouvrement",
-            "taux_retard_paiement",
-            "exceptions_ouvertes",
-            "encours_client",
-            "delai_reglement",
-            "dso",
+                "age_moyen_file_recouvrement",
+                "taux_retard_paiement",
+                "exceptions_ouvertes",
+                "delai_reglement",
+                "dso",
             }
         ),
         ordonnee=True,
         modalites=("Réglée", "Non échu", "1-30 j", "31-60 j", "61-90 j", "Plus de 90 j"),
+        # `encours_client` n'y figure pas volontairement : la balance âgée est le
+        # tableau de trésorerie classique. Seule la case « Réglée » est
+        # définitionnelle — elle vaut zéro par construction — et le reste porte
+        # l'information qui décide d'engager ou non un recouvrement.
     ),
     Dimension(
         cle="prestation",
@@ -530,11 +557,11 @@ _DIMENSIONS: tuple[Dimension, ...] = (
         niveaux=_GESTION_OPE,
         tautologiques=frozenset(
             {
-            "ca_facture_ht",
-            "ca_devise_ht",
-            "panier_moyen_gagne",
-            "marge_brute",
-            "marge_production",
+                "ca_facture_ht",
+                "ca_devise_ht",
+                "panier_moyen_gagne",
+                "marge_brute",
+                "marge_production",
             }
         ),
         ordonnee=True,
@@ -582,7 +609,7 @@ def croisements_valides(niveau: Niveau) -> tuple[tuple[str, str], ...]:
         (m.cle, d.cle)
         for m in mesures_du_niveau(niveau)
         for d in dimensions_du_niveau(niveau)
-        if d.disponible_sur(m.base) and m.cle not in d.tautologiques
+        if m.ventilable and d.disponible_sur(m.base) and m.cle not in d.tautologiques
     )
 
 
@@ -596,6 +623,11 @@ def valider(cle_mesure: str, cle_dimension: str | None, niveau: Niveau) -> None:
         )
     if cle_dimension is None:
         return
+    if not m.ventilable:
+        raise ValueError(
+            f"{cle_mesure!r} ne se ventile pas : son dénominateur n'est pas additif. "
+            f"Elle ne se calcule que globalement."
+        )
     d = dimension(cle_dimension)
     if not d.concerne(niveau):
         raise ValueError(

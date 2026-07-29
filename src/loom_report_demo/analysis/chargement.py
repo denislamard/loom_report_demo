@@ -33,19 +33,22 @@ SEUIL_EXCEPTION_JOURS = 90
 #: Seuil de réactivité au-delà duquel la transformation chute nettement.
 SEUIL_RELANCE_RAPIDE_JOURS = 3
 
-_TRANCHES_MONTANT = ((1_000, "Moins de 1 k€"), (5_000, "1 à 5 k€"), (15_000, "5 à 15 k€"))
-_TRANCHE_MONTANT_HAUTE = "Plus de 15 k€"
+# Seuils de tranches : publics, parce que le classeur les reproduit en formules
+# Excel. Une seule source de vérité, sinon les deux définitions divergent au
+# premier ajustement.
+TRANCHES_MONTANT = ((1_000, "Moins de 1 k€"), (5_000, "1 à 5 k€"), (15_000, "5 à 15 k€"))
+TRANCHE_MONTANT_HAUTE = "Plus de 15 k€"
 
-_TRANCHES_RELANCE = ((3, "0-3 j"), (7, "4-7 j"), (15, "8-15 j"))
-_TRANCHE_RELANCE_HAUTE = "Plus de 15 j"
-_JAMAIS_RELANCE = "Jamais relancé"
+TRANCHES_RELANCE = ((3, "0-3 j"), (7, "4-7 j"), (15, "8-15 j"))
+TRANCHE_RELANCE_HAUTE = "Plus de 15 j"
+JAMAIS_RELANCE = "Jamais relancé"
 
-_TRANCHES_AGE = ((0, "Non échu"), (30, "1-30 j"), (60, "31-60 j"), (90, "61-90 j"))
-_TRANCHE_AGE_HAUTE = "Plus de 90 j"
-_REGLEE = "Réglée"
+TRANCHES_AGE = ((0, "Non échu"), (30, "1-30 j"), (60, "31-60 j"), (90, "61-90 j"))
+TRANCHE_AGE_HAUTE = "Plus de 90 j"
+REGLEE = "Réglée"
 
-_TRANCHES_ANCIENNETE = ((365, "Moins d'un an"), (730, "1 à 2 ans"))
-_ANCIENNETE_HAUTE = "Plus de 2 ans"
+TRANCHES_ANCIENNETE = ((365, "Moins d'un an"), (730, "1 à 2 ans"))
+ANCIENNETE_HAUTE = "Plus de 2 ans"
 
 #: Colonne portant la date qui sert au découpage temporel, par table de faits.
 COLONNE_DATE: dict[Base, str] = {
@@ -140,11 +143,11 @@ def charger(dossier: Path | None = None, situation: date | None = None) -> Donne
         devis["delai_1ere_relance_j"].fillna(9_999) <= SEUIL_RELANCE_RAPIDE_JOURS
     ).astype(int)
     devis["tranche_relance"] = [
-        _JAMAIS_RELANCE if pd.isna(d) else _tranche(d, _TRANCHES_RELANCE, _TRANCHE_RELANCE_HAUTE)
+        JAMAIS_RELANCE if pd.isna(d) else _tranche(d, TRANCHES_RELANCE, TRANCHE_RELANCE_HAUTE)
         for d in devis["delai_1ere_relance_j"]
     ]
     devis["tranche_montant"] = [
-        _tranche(m, _TRANCHES_MONTANT, _TRANCHE_MONTANT_HAUTE) for m in devis["montant_ht"]
+        _tranche(m, TRANCHES_MONTANT, TRANCHE_MONTANT_HAUTE) for m in devis["montant_ht"]
     ]
 
     # ------------------------------------------------------ interventions
@@ -165,7 +168,7 @@ def charger(dossier: Path | None = None, situation: date | None = None) -> Donne
     ).dt.days
     interventions["anciennete_jours"] = anciennete
     interventions["anciennete_technicien"] = [
-        _tranche(a, _TRANCHES_ANCIENNETE, _ANCIENNETE_HAUTE) for a in anciennete
+        _tranche(a, TRANCHES_ANCIENNETE, ANCIENNETE_HAUTE) for a in anciennete
     ]
 
     # ---------------------------------------------------------- factures
@@ -210,11 +213,17 @@ def charger(dossier: Path | None = None, situation: date | None = None) -> Donne
         (factures["est_payee"] == 0) & (factures["retard"] > SEUIL_EXCEPTION_JOURS)
     ).astype(int)
     factures["tranche_age_creance"] = [
-        _REGLEE if payee else _tranche(r, _TRANCHES_AGE, _TRANCHE_AGE_HAUTE)
+        REGLEE if payee else _tranche(r, TRANCHES_AGE, TRANCHE_AGE_HAUTE)
         for payee, r in zip(factures["est_payee"] == 1, factures["retard"], strict=True)
     ]
+    # Mois d'encaissement : sert la série des règlements, qui ne suit pas le
+    # calendrier de facturation. Sans elle, le classeur porterait une colonne que
+    # le moteur d'analyse ne saurait pas recalculer.
+    factures["mois_encaissement"] = [
+        "" if pd.isna(d) else f"{d.year}-{d.month:02d}" for d in factures["date_paiement"]
+    ]
     factures["tranche_montant"] = [
-        _tranche(m, _TRANCHES_MONTANT, _TRANCHE_MONTANT_HAUTE) for m in factures["montant_ht"]
+        _tranche(m, TRANCHES_MONTANT, TRANCHE_MONTANT_HAUTE) for m in factures["montant_ht"]
     ]
 
     return Donnees(

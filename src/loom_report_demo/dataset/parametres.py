@@ -34,7 +34,13 @@ from __future__ import annotations
 
 from datetime import date
 
-from loom_report_demo.dataset.lignes import Categorie, ProfilPaiement, TypeClient
+from loom_report_demo.dataset.lignes import (
+    CanalRelance,
+    Categorie,
+    IssueRelance,
+    ProfilPaiement,
+    TypeClient,
+)
 
 #: Graine du générateur. La changer produit un autre jeu de données cohérent.
 GRAINE = 20260630
@@ -196,10 +202,10 @@ CANAUX_ACQUISITION: tuple[str, ...] = (
 ACQ_DEBUT: tuple[float, ...] = (0.44, 0.18, 0.08, 0.12, 0.11, 0.07)
 ACQ_FIN: tuple[float, ...] = (0.26, 0.24, 0.20, 0.13, 0.06, 0.11)
 
-CANAUX_RELANCE: tuple[str, ...] = ("Email", "Téléphone", "SMS")
+CANAUX_RELANCE: tuple[CanalRelance, ...] = ("Email", "Téléphone", "SMS")
 POIDS_CANAUX_RELANCE: tuple[float, ...] = (0.52, 0.36, 0.12)
 
-ISSUES_NEUTRES: tuple[str, ...] = (
+ISSUES_NEUTRES: tuple[IssueRelance, ...] = (
     "Sans réponse",
     "Rappel demandé",
     "Négociation en cours",

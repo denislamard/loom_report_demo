@@ -12,8 +12,8 @@ import sys
 from pathlib import Path
 
 from loom_report_demo import paths
-from loom_report_demo.workbook import construire
 from loom_report_demo.parsing import charger
+from loom_report_demo.workbook import construire
 
 
 def executer(argv: list[str] | None = None) -> int:

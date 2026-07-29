@@ -1,0 +1,46 @@
+{
+  "niveau": "strategique",
+  "message_direction": "L'entreprise a doublé son volume de devis pour une progression de chiffre d'affaires bien moindre, et sa marge s'érode à chaque exercice.",
+  "hypotheses": [
+    {
+      "identifiant": "S1",
+      "enonce": "La croissance repose sur des clients qui paient plus tard qu'auparavant",
+      "statut": "retenue"
+    },
+    {
+      "identifiant": "S2",
+      "enonce": "La rentabilité se dégrade sur toutes les activités, pas seulement sur l'une d'elles",
+      "statut": "retenue"
+    },
+    {
+      "identifiant": "S3",
+      "enonce": "L'ouverture de la troisième agence explique à elle seule l'érosion de la marge",
+      "statut": "ecartee",
+      "motif": "Réfutée : la nouvelle agence affiche une marge supérieure à celle du siège historique."
+    },
+    {
+      "identifiant": "S4",
+      "enonce": "Le chiffre d'affaires par technicien recule à mesure que l'effectif grossit",
+      "statut": "ecartee",
+      "motif": "Réfutée : la production par technicien reste stable d'un exercice à l'autre."
+    }
+  ],
+  "variables": [
+    {
+      "mesure": "taux_transformation",
+      "dimension": "type_client",
+      "seuil_alerte": 0.25,
+      "pourquoi": "La bascule vers les professionnels et les syndics ne se transforme pas au même rythme que la clientèle historique.",
+      "decision_attendue": "Décider si l'entreprise poursuit la conquête des comptes structurés ou se recentre sur son socle de particuliers.",
+      "hypothese_source": "S1"
+    },
+    {
+      "mesure": "taux_marge_brute",
+      "dimension": "metier",
+      "seuil_alerte": 0.32,
+      "pourquoi": "Savoir si l'érosion est générale ou portée par une activité détermine s'il faut revoir la grille tarifaire ou sortir d'un métier.",
+      "decision_attendue": "Arbitrer entre revalorisation générale des tarifs et abandon de l'activité la moins rentable.",
+      "hypothese_source": "S2"
+    }
+  ]
+}

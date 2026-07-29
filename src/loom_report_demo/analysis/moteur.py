@@ -15,7 +15,7 @@ séparément, divisées en dernier.
 from __future__ import annotations
 
 from collections.abc import Mapping
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 import pandas as pd
 
@@ -60,7 +60,7 @@ class Ventilation:
     dimension: str
     fenetre: Fenetre
     ensemble: Valeur
-    modalites: tuple[Modalite, ...] = field(default_factory=tuple)
+    modalites: tuple[Modalite, ...] = ()
 
     @property
     def retenues(self) -> tuple[Modalite, ...]:
@@ -104,7 +104,7 @@ def _fenetrer(table: pd.DataFrame, base: cat.Base, borne: Fenetre) -> pd.DataFra
 
 
 def _agreger(mesure: cat.Mesure, table: pd.DataFrame) -> Valeur:
-    """Applique `facteur × num / den + décalage` sur un sous-ensemble déjà filtré."""
+    """Applique `facteur x num / den + décalage` sur un sous-ensemble déjà filtré."""
     agregat = mesure.agregat
     assert agregat is not None
     effectif = len(table)
@@ -212,7 +212,9 @@ def ventiler_fenetre(
     )
     ensemble = _calculer_sur(mesure, table)
 
-    libelles = list(dict.fromkeys(table[dimension.colonne].dropna()))
+    libelles: list[str] = list(
+        dict.fromkeys(str(valeur) for valeur in table[dimension.colonne].dropna())
+    )
     if dimension.ordonnee and dimension.modalites:
         connues = [m for m in dimension.modalites if m in libelles]
         libelles = connues + [m for m in libelles if m not in dimension.modalites]
@@ -222,12 +224,12 @@ def ventiler_fenetre(
     total_numerateur = ensemble.numerateur
     modalites: list[Modalite] = []
     for libelle in libelles:
-        sous_table = table[table[dimension.colonne] == libelle]
+        sous_table = table.loc[table[dimension.colonne] == libelle]
         valeur = _calculer_sur(mesure, sous_table)
         poids = valeur.numerateur / total_numerateur if total_numerateur else 0.0
         modalites.append(
             Modalite(
-                libelle=str(libelle),
+                libelle=libelle,
                 valeur=valeur.valeur,
                 effectif=valeur.effectif,
                 numerateur=valeur.numerateur,
@@ -258,9 +260,9 @@ def serie_mensuelle(
         _fenetrer(donnees.table(mesure.base), mesure.base, borne), mesure.base, filtre
     )
     points: list[PointMensuel] = []
-    for mois in sorted(table["mois"].unique()):
-        valeur = _calculer_sur(mesure, table[table["mois"] == mois])
-        points.append(PointMensuel(str(mois), valeur.valeur, valeur.effectif))
+    for mois in sorted({str(cle) for cle in table["mois"]}):
+        resultat = _calculer_sur(mesure, table.loc[table["mois"] == mois])
+        points.append(PointMensuel(mois, resultat.valeur, resultat.effectif))
     return tuple(points)
 
 

@@ -18,14 +18,22 @@ from loom_report_demo.analysis.chargement import (
     SEUIL_EXCEPTION_JOURS,
     SEUIL_RELANCE_RAPIDE_JOURS,
     Donnees,
+)
+from loom_report_demo.analysis.chargement import (
     donnees as charger_donnees,
 )
 from loom_report_demo.analysis.criblage import cribler
+from loom_report_demo.analysis.faisabilite import produit_des_files
+from loom_report_demo.analysis.files import construire_files
 from loom_report_demo.fingerprint import empreinte_jeu
+from loom_report_demo.niveaux import Niveau
 from loom_report_demo.workbook import tableaux
 from loom_report_demo.workbook.feuilles_donnees import ecrire_feuilles
-from loom_report_demo.workbook.formules import COLONNES_CALCULEES
-from loom_report_demo.workbook.schema import construire_schemas
+from loom_report_demo.workbook.formules import (
+    COLONNES_CALCULEES,
+    COLONNES_STRATEGIQUES,
+)
+from loom_report_demo.workbook.schema import ColonneCalculee, construire_schemas
 from loom_report_demo.workbook.selection import Selection
 
 #: Ordre d'apparition des onglets : restitution d'abord, sources ensuite.
@@ -76,6 +84,21 @@ def _modalites(source: Donnees, selection: Selection) -> dict[str, tuple[str, ..
     return resultat
 
 
+def _colonnes(niveau: Niveau) -> dict[str, tuple[ColonneCalculee, ...]]:
+    """Colonnes calculées à écrire, selon le niveau.
+
+    Les colonnes d'appui du stratégique coûtent cher — chaque ligne balaie celles
+    qui la précèdent — et ne servent qu'à deux mesures. On ne les écrit donc que
+    là où elles sont utiles.
+    """
+    if niveau is not Niveau.STRATEGIQUE:
+        return COLONNES_CALCULEES
+    fusion = {feuille: tuple(colonnes) for feuille, colonnes in COLONNES_CALCULEES.items()}
+    for feuille, ajouts in COLONNES_STRATEGIQUES.items():
+        fusion[feuille] = fusion.get(feuille, ()) + ajouts
+    return fusion
+
+
 def construire(
     selection: Selection,
     destination: Path,
@@ -91,14 +114,21 @@ def construire(
     """
     selection.valider(strict=strict)
     jeu = source if source is not None else charger_donnees(dossier_donnees)
-    schemas = construire_schemas(COLONNES_CALCULEES, dossier_donnees)
+    schemas = construire_schemas(_colonnes(selection.niveau), dossier_donnees)
     borne = fenetre(selection.cadrage, jeu.situation, jeu.debut)
-    mois = tuple(sorted({*jeu.factures["mois"].unique(), *jeu.devis["mois"].unique()}))
+    mois = tuple(
+        sorted(
+            {str(cle) for cle in jeu.factures["mois"]}
+            | {str(cle) for cle in jeu.devis["mois"]}
+        )
+    )
     metiers = tuple(sorted(str(x) for x in jeu.factures["metier"].dropna().unique()))
     empreinte = empreinte_jeu([paths.csv_source(n) for n in paths.FICHIERS_DONNEES])
 
     classeur = Workbook()
-    classeur.remove(classeur.active)
+    # `Workbook()` crée une feuille vide : on la retire par son index plutôt
+    # que par `active`, qui peut être nulle et n'est pas typée comme feuille.
+    classeur.remove(classeur.worksheets[0])
 
     ecrire_feuilles(classeur, schemas, dossier_donnees)
     tableaux.parametres(
@@ -109,8 +139,20 @@ def construire(
     tableaux.indicateurs(classeur, schemas, selection, _modalites(jeu, selection))
     tableaux.criblage(classeur, cribler(jeu, selection.niveau), selection)
 
-    classeur._sheets = [classeur[nom] for nom in ORDRE]  # noqa: SLF001
-    for nom in ORDRE:
+    ordre: list[str] = list(ORDRE)
+    if produit_des_files(selection.niveau):
+        tableaux.files_de_travail(
+            classeur, construire_files(jeu, selection.seuils()), jeu.situation, empreinte
+        )
+        ordre.insert(1, "Files de travail")
+
+    # Réordonnancement par l'API publique : écraser `_sheets` fonctionnait, mais
+    # reposait sur un détail d'implémentation d'openpyxl.
+    for position, nom in enumerate(ordre):
+        actuelle = classeur.sheetnames.index(nom)
+        if actuelle != position:
+            classeur.move_sheet(nom, offset=position - actuelle)
+    for nom in ordre:
         classeur[nom].sheet_properties.tabColor = COULEURS_ONGLET.get(nom, "B8C4CE")
     classeur["Synthèse"].sheet_view.tabSelected = True
     classeur.active = 0

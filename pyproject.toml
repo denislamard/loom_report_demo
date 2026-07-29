@@ -7,16 +7,34 @@ readme = "README.md"
 authors = [{ name = "Denis Lamard", email = "lamard.denis@gmail.com" }]
 
 requires-python = ">=3.14"
-dependencies = ["loom-ia", "openpyxl>=3.1", "pandas>=2.3.3"]
+dependencies = [
+    "loom-ia",
+    "openpyxl>=3.1",
+    "pandas>=2.3.3",
+]
 
 [project.scripts]
 app = "loom_report_demo:run"
+seed = "loom_report_demo:seed"
+profil = "loom_report_demo:profil"
+candidats = "loom_report_demo:candidats"
+rapport = "loom_report_demo:rapport"
 
 [tool.uv.sources]
 loom-ia = { git = "https://github.com/denislamard/loom" }
 
 [dependency-groups]
-dev = ["pytest>=8", "pytest-asyncio>=0.24", "ruff>=0.8", "pyright>=1.1.390"]
+dev = [
+    "pytest>=8",
+    "pytest-asyncio>=0.24",
+    "ruff>=0.8",
+    "pyright>=1.1.390",
+    # Ni pandas ni openpyxl ne publient de `py.typed`. Sans ces paquets, le mode
+    # strict considère chacun de leurs appels comme de type inconnu : plusieurs
+    # centaines de signalements sur les seuls modules qui les utilisent.
+    "pandas-stubs",
+    "types-openpyxl",
+]
 
 [build-system]
 requires = ["uv_build>=0.11,<0.12"]
@@ -33,3 +51,22 @@ select = ["E", "F", "I", "UP", "B", "ASYNC", "RUF"]
 typeCheckingMode = "strict"
 venvPath = "."
 venv = ".venv"
+
+# Les stubs d'openpyxl laissent l'API graphique partiellement non typée —
+# `add_data`, `set_categories`, `series`, les règles de mise en forme
+# conditionnelle. Ces inconnues sont dans les stubs, pas dans notre code : aucune
+# annotation de notre côté ne les résout, seuls des `cast` par appel le
+# feraient, ce qui coûterait plus en lisibilité que cela ne rapporte.
+#
+# On relâche donc les types inconnus UNIQUEMENT là où openpyxl est manipulé. Le
+# reste du projet — catalogue, criblage, parsing, générateur — conserve le mode
+# strict complet, et c'est là qu'il a de la valeur.
+[[tool.pyright.executionEnvironments]]
+root = "src/loom_report_demo/workbook"
+reportUnknownMemberType = false
+reportUnknownArgumentType = false
+reportUnknownVariableType = false
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

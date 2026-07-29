@@ -262,6 +262,67 @@ COLONNES_CALCULEES: dict[str, tuple[ColonneCalculee, ...]] = {
 }
 
 
+#: Colonnes d'appui du niveau stratégique. Elles n'existent que pour deux mesures
+#: — le chiffre d'affaires par technicien et la concentration client — dont le
+#: dénominateur n'est pas une somme. Les plages sont *expansives* (`$F$2:$F{r}`) :
+#: chaque ligne ne regarde que celles qui la précèdent, ce qui marque la première
+#: occurrence d'un technicien dans la fenêtre sans coûter un balayage complet.
+def _premiere_occurrence(debut: str, fin: str) -> str:
+    """Marque la première intervention de chaque technicien dans une fenêtre.
+
+    Les plages sont *expansives* — `{technicien_id}$2:{technicien_id}{r}` — donc
+    chaque ligne ne regarde que celles qui la précèdent. La somme de la colonne
+    vaut alors le nombre de techniciens distincts ayant travaillé sur la période,
+    et le décompte de valeurs distinctes redevient une simple `SUMIFS`.
+    """
+    tech = "{technicien_id}"
+    date = "{date_intervention}"
+    return (
+        f"=IF(AND({date}{{r}}>={debut},{date}{{r}}<={fin},"
+        f"COUNTIFS({tech}$2:{tech}{{r}},{tech}{{r}},"
+        f'{date}$2:{date}{{r}},">="&{debut},'
+        f'{date}$2:{date}{{r}},"<="&{fin})=1),1,0)'
+    )
+
+
+def _ca_client(debut: str, fin: str) -> str:
+    """Chiffre d'affaires d'un client sur une fenêtre, pour la concentration."""
+    return (
+        "=SUMIFS({fa_montant},{fa_client},{client_id}{r},"
+        f'{{fa_date}},">="&{debut},{{fa_date}},"<="&{fin})'
+    )
+
+
+COLONNES_STRATEGIQUES: dict[str, tuple[ColonneCalculee, ...]] = {
+    "Interventions": (
+        ColonneCalculee(
+            "technicien_nouveau",
+            "Technicien actif (fenêtre)",
+            _premiere_occurrence(DEBUT, FIN),
+            NB,
+            18,
+        ),
+        ColonneCalculee(
+            "technicien_nouveau_comparaison",
+            "Technicien actif (comparaison)",
+            _premiere_occurrence(DEBUT_COMPARAISON, FIN_COMPARAISON),
+            NB,
+            20,
+        ),
+    ),
+    "Clients": (
+        ColonneCalculee("ca_fenetre", "CA de la fenêtre", _ca_client(DEBUT, FIN), EUR, 16),
+        ColonneCalculee(
+            "ca_fenetre_comparaison",
+            "CA de la comparaison",
+            _ca_client(DEBUT_COMPARAISON, FIN_COMPARAISON),
+            EUR,
+            18,
+        ),
+    ),
+}
+
+
 def substitutions_globales(schemas: dict[str, Schema]) -> dict[str, str]:
     """Plages inter-feuilles utilisées par les colonnes calculées."""
     devis, factures, clients, interventions, techniciens = (
@@ -284,6 +345,8 @@ def substitutions_globales(schemas: dict[str, Schema]) -> dict[str, str]:
         "te_id": techniciens.plage("technicien_id"),
         "te_embauche": techniciens.plage("date_embauche"),
         "fa_montant": factures.plage("montant_ht"),
+        "fa_client": factures.plage("client_id"),
+        "fa_date": factures.plage("date_facture"),
     }
 
 
@@ -315,23 +378,29 @@ def formule_mesure(
     debut: str = DEBUT,
     fin: str = FIN,
     dimension: tuple[str, str] | None = None,
+    schemas: dict[str, Schema] | None = None,
 ) -> str:
     """Formule d'une mesure sur une fenêtre, éventuellement pour une modalité.
+
+    `schemas` n'est requis que pour la concentration client, dont la colonne
+    d'appui vit sur une autre feuille que la table de faits.
 
     Les mesures à dénominateur distinct et les mesures spéciales n'ont pas de
     traduction directe en `SUMIFS` ; elles arrivent avec les niveaux stratégique
     et opérationnel, au jalon 7.
     """
+    if dimension is not None and not mesure.ventilable:
+        raise ValueError(f"{mesure.cle} ne se ventile pas : son dénominateur n'est pas additif.")
     if mesure.special is not None:
-        raise NotImplementedError(
-            f"{mesure.cle} : mesure spéciale, sans gabarit Excel (jalon 7)."
-        )
+        if schemas is None:
+            raise ValueError(
+                f"{mesure.cle} : cette mesure a besoin de l'ensemble des schémas."
+            )
+        return _formule_speciale(mesure, schemas["Clients"], debut)
     agregat = mesure.agregat
     assert agregat is not None
     if agregat.distinct is not None:
-        raise NotImplementedError(
-            f"{mesure.cle} : dénominateur en valeurs distinctes, sans gabarit Excel (jalon 7)."
-        )
+        return _formule_par_effectif(mesure, agregat, schema, colonne_date, debut, fin)
 
     criteres = _criteres(schema, colonne_date, debut, fin, dimension)
     numerateur = _sumifs(schema.plage(agregat.numerateur), criteres)
@@ -351,6 +420,49 @@ def formule_mesure(
     if agregat.decalage:
         corps = f"{corps}{agregat.decalage:+}"
     return f'=IFERROR({corps},"")'
+
+
+def _formule_par_effectif(
+    mesure: cat.Mesure,
+    agregat: cat.Agregat,
+    schema: Schema,
+    colonne_date: str,
+    debut: str,
+    fin: str,
+) -> str:
+    """Rapport dont le dénominateur est un décompte de valeurs distinctes.
+
+    Excel ne sait pas compter des valeurs distinctes sous critère. On somme donc
+    une colonne d'appui qui vaut 1 sur la première occurrence de chaque
+    technicien dans la fenêtre, et 0 partout ailleurs : le décompte redevient une
+    somme, et le classeur reste vivant.
+    """
+    colonne = (
+        "technicien_nouveau" if debut == DEBUT else "technicien_nouveau_comparaison"
+    )
+    criteres = _criteres(schema, colonne_date, debut, fin)
+    numerateur = _sumifs(schema.plage(agregat.numerateur), criteres)
+    denominateur = _sumifs(schema.plage(colonne), criteres)
+    corps = f"{numerateur}/{denominateur}"
+    if agregat.facteur != 1.0:
+        corps = f"{agregat.facteur}*({corps})"
+    return f'=IFERROR({corps},"")'
+
+
+def _formule_speciale(mesure: cat.Mesure, schema: Schema, debut: str) -> str:
+    """Concentration : part du total portée par le décile supérieur.
+
+    `LARGE` donne le seuil du décile, `SUMIF` ce qui est au-dessus. Une égalité
+    exacte au seuil ferait basculer un client de plus dans le décile ; sur des
+    montants en euros, le cas ne se présente pas.
+    """
+    if mesure.special != "concentration_client":
+        raise NotImplementedError(f"{mesure.cle} : mesure spéciale sans gabarit Excel.")
+    colonne = "ca_fenetre" if debut == DEBUT else "ca_fenetre_comparaison"
+    plage = schema.plage(colonne)
+    rang = f'MAX(1,ROUND(COUNTIF({plage},">0")*0.1,0))'
+    seuil = f"LARGE({plage},{rang})"
+    return f'=IFERROR(SUMIF({plage},">="&{seuil})/SUM({plage}),"")'
 
 
 def formule_effectif(
@@ -376,6 +488,6 @@ def formule_ecart_points(cellule_actuelle: str, cellule_passee: str) -> str:
 
 
 def format_unite(mesure: cat.Mesure) -> str:
-    return {"€": EUR, "%": PCT, "j": "#,##0 \" j\";-#,##0 \" j\";\"–\"", "h": NB1}.get(
+    return {"€": EUR, "%": PCT, "j": "#,##0 \" j\";-#,##0 \" j\";\"-\"", "h": NB1}.get(
         mesure.unite.value, NB
     )

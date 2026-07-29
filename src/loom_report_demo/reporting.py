@@ -17,6 +17,15 @@ Elle a un coût : le jugement transite par une transcription. Si la calibration
 montre que l'information se perd au passage, l'alternative est de retirer
 `thinking` de l'orchestrateur et de lui donner directement le bloc `output`.
 C'est le premier point à trancher en exécution réelle.
+
+**Écart assumé au routage par coût.** `DefinitionNiveau.modele` annonce SONNET
+pour le stratégique et HAIKU ailleurs, au motif qu'une décision gelée douze mois
+mérite un modèle plus cher. Le rôle `selection` est pourtant unique et porté par
+HAIKU : le distinguer par niveau demanderait soit deux rôles — que
+l'orchestrateur verrait tous les deux dans sa liste d'outils, au risque qu'il
+choisisse le mauvais — soit une surcharge `llm_config` par rôle. Trancher sans
+exécuter aurait été un pari ; le critère de non-manipulabilité, lui, s'applique
+désormais à tous les niveaux, ce qui couvre le risque principal.
 """
 
 from __future__ import annotations
@@ -27,7 +36,8 @@ from datetime import date
 from typing import Any
 
 from loom_report_demo import paths
-from loom_report_demo.analysis.chargement import Donnees, donnees as charger_donnees
+from loom_report_demo.analysis.chargement import Donnees
+from loom_report_demo.analysis.chargement import donnees as charger_donnees
 from loom_report_demo.analysis.criblage import Criblage, cribler
 from loom_report_demo.analysis.outils import Registre, SpecOutil, construire_outils
 from loom_report_demo.analysis.profil import profil
@@ -125,12 +135,15 @@ async def explorer(
     compris après la boucle de réparation locale de `loom-ia`.
     """
     from loom_ia.agent import Agent
+    from loom_ia.tools.base import Tool
     from loom_ia.tools.function_tool import FunctionTool
 
     jeu = source if source is not None else charger_donnees()
     registre = Registre()
     specs: list[SpecOutil] = construire_outils(jeu, niveau, registre)
-    outils = [
+    # `list` est invariante : une `list[FunctionTool]` n'est pas une `list[Tool]`,
+    # même si `FunctionTool` hérite de `Tool`. On annote donc au type attendu.
+    outils: list[Tool] = [
         FunctionTool(
             name=spec.nom,
             description=spec.description,

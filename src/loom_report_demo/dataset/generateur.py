@@ -36,6 +36,7 @@ from loom_report_demo.dataset.lignes import (
     LigneRelance,
     LigneTechnicien,
     StatutDevis,
+    StatutFacture,
 )
 
 T = TypeVar("T")
@@ -111,7 +112,7 @@ def probabilite_acceptation(delai_relance: int | None) -> float:
 
 
 # ----------------------------------------------------------------- génération
-def generer(graine: int = P.GRAINE) -> JeuDeDonnees:  # noqa: C901, PLR0915
+def generer(graine: int = P.GRAINE) -> JeuDeDonnees:
     """Produit les sept tables. Aucune écriture disque, aucun effet de bord."""
     rng = random.Random(graine)
 
@@ -412,8 +413,7 @@ def generer(graine: int = P.GRAINE) -> JeuDeDonnees:  # noqa: C901, PLR0915
             date_echeance = date_facture + timedelta(days=delai)
             tva = (
                 0.10
-                if categorie in ("Plomberie", "Chauffage", "Salle de bain")
-                and typ == "Particulier"
+                if categorie in ("Plomberie", "Chauffage", "Salle de bain") and typ == "Particulier"
                 else 0.20
             )
             profil = client["profil_paiement"]
@@ -422,8 +422,13 @@ def generer(graine: int = P.GRAINE) -> JeuDeDonnees:  # noqa: C901, PLR0915
             # Court-circuit volontaire : le tirage n'a lieu que pour un litigieux.
             bloque = profil == "Litigieux" and rng.random() < P.PART_CONTENTIEUX
             date_paiement_prevue = date_facture + timedelta(days=jours_reels)
+            # Les deux variables sont annotées avant l'embranchement : sans cela,
+            # Pyright élargit une alternative de deux littéraux en `str`, qui
+            # n'est plus assignable au champ `StatutFacture` de la ligne.
+            date_paiement: date | None
+            statut_facture: StatutFacture
             if not bloque and date_paiement_prevue <= P.AUJOURDHUI:
-                date_paiement: date | None = date_paiement_prevue
+                date_paiement = date_paiement_prevue
                 statut_facture = "Payée"
             else:
                 date_paiement = None

@@ -42,8 +42,13 @@ FIXTURE = Path(__file__).parent / "fixtures" / "gestion.json"
 
 
 @cache
-def schemas():  # noqa: ANN201
-    return construire_schemas(f.COLONNES_CALCULEES)
+def schemas(strategique: bool = False):  # noqa: ANN201, FBT001, FBT002
+    """Les colonnes d'appui du stratégique ne sont écrites qu'à ce niveau."""
+    colonnes = dict(f.COLONNES_CALCULEES)
+    if strategique:
+        for feuille, ajouts in f.COLONNES_STRATEGIQUES.items():
+            colonnes[feuille] = colonnes.get(feuille, ()) + ajouts
+    return construire_schemas(colonnes)
 
 
 @cache
@@ -166,8 +171,20 @@ def test_la_fenetre_de_comparaison_pointe_dautres_cellules() -> None:
     assert f.DEBUT_COMPARAISON in passee
 
 
-def test_une_mesure_speciale_annonce_son_absence_de_gabarit() -> None:
-    with pytest.raises(NotImplementedError, match="jalon 7"):
+def test_une_mesure_speciale_a_desormais_son_gabarit() -> None:
+    """La concentration lit la colonne d'appui de la feuille Clients."""
+    formule = f.formule_mesure(
+        cat.mesure("concentration_client"),
+        schemas(strategique=True)["Factures"],
+        COLONNE_DATE[cat.Base.FACTURES],
+        schemas=schemas(strategique=True),
+    )
+    assert "LARGE(" in formule
+    assert "Clients!" in formule
+
+
+def test_une_mesure_speciale_exige_lensemble_des_schemas() -> None:
+    with pytest.raises(ValueError, match="ensemble des schémas"):
         f.formule_mesure(
             cat.mesure("concentration_client"),
             schemas()["Factures"],
@@ -175,12 +192,24 @@ def test_une_mesure_speciale_annonce_son_absence_de_gabarit() -> None:
         )
 
 
-def test_un_denominateur_distinct_annonce_son_absence_de_gabarit() -> None:
-    with pytest.raises(NotImplementedError, match="jalon 7"):
+def test_un_denominateur_distinct_somme_une_colonne_dappui() -> None:
+    """Excel ne compte pas de valeurs distinctes sous critère : on somme un marqueur."""
+    formule = f.formule_mesure(
+        cat.mesure("ca_par_technicien"),
+        schemas(strategique=True)["Interventions"],
+        COLONNE_DATE[cat.Base.INTERVENTIONS],
+    )
+    assert "SUMIFS(" in formule
+    assert "COUNTIFS(" not in formule, "le décompte doit être précalculé, pas refait ici"
+
+
+def test_une_mesure_non_ventilable_refuse_une_dimension() -> None:
+    with pytest.raises(ValueError, match="ne se ventile pas"):
         f.formule_mesure(
             cat.mesure("ca_par_technicien"),
-            schemas()["Interventions"],
+            schemas(strategique=True)["Interventions"],
             COLONNE_DATE[cat.Base.INTERVENTIONS],
+            dimension=("agence", '"Bordeaux"'),
         )
 
 

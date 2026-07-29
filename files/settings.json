@@ -163,6 +163,11 @@
                 "llm": "SONNET",
                 "criteria": [
                     {
+                        "name": "non_manipulabilite",
+                        "rule": "Un indicateur retenu ne doit pas pouvoir être amélioré sans créer de valeur réelle. Le taux de transformation compté en nombre de devis se manipule en cessant de chiffrer les gros dossiers ; le même taux compté en euros, beaucoup moins. Un délai moyen se manipule en écartant les cas difficiles. Ce critère importe partout, mais il devient critique sur une sélection gelée douze mois : un indicateur devenu cible SERA optimisé, et personne ne le rejugera avant un an.",
+                        "min_score": 0.75
+                    },
+                    {
                         "name": "actionnabilite",
                         "rule": "Chaque 'decision_attendue' doit désigner une action concrète que le dirigeant peut engager, sur un levier qu'il contrôle. Une décision qui consiste à « surveiller », « analyser » ou « suivre » n'est pas une décision. Un indicateur dont l'écart n'est pas corrigeable — parce qu'il tient à la nature de la prestation ou du client — ne doit pas être retenu.",
                         "min_score": 0.75

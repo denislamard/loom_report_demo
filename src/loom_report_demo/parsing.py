@@ -31,7 +31,7 @@ from __future__ import annotations
 import json
 import re
 from pathlib import Path
-from typing import Any, Literal, NotRequired, TypedDict, cast
+from typing import Literal, NotRequired, TypedDict, cast
 
 from loom_report_demo.analysis import catalogue as cat
 from loom_report_demo.niveaux import NIVEAUX, Niveau
@@ -84,7 +84,7 @@ _CLES_INDICATEUR_OPT = {"dimension", "seuil_alerte"}
 
 
 # ------------------------------------------------------------------- la forme
-def extraire_json(brut: str) -> dict[str, Any]:
+def extraire_json(brut: str) -> dict[str, object]:
     """Isole le premier objet JSON équilibré d'une sortie bavarde.
 
     Le modèle préfixe volontiers sa réponse d'une ligne de trace, et l'entoure
@@ -124,12 +124,30 @@ def extraire_json(brut: str) -> dict[str, Any]:
                     raise ErreurSortie(f"JSON invalide : {erreur}") from None
                 if not isinstance(charge, dict):
                     raise ErreurSortie("La sortie doit être un objet, pas une liste.")
-                return cast(dict[str, Any], charge)
+                return cast(dict[str, object], charge)
     raise ErreurSortie("Objet JSON non refermé dans la sortie de l'agent.")
 
 
+def _objet(valeur: object, contexte: str) -> dict[str, object]:
+    """Garde de forme : rend un dictionnaire dont les valeurs sont typées `object`.
+
+    `json.loads` rend du `Any`, qui se propage silencieusement dans tout le
+    module et prive les gardes en aval de la moindre vérification statique. On
+    referme donc la porte ici : après cet appel, plus rien n'est `Any`.
+    """
+    if not isinstance(valeur, dict):
+        raise ErreurSortie(f"{contexte} : objet attendu.")
+    return cast(dict[str, object], valeur)
+
+
+def _liste(valeur: object, contexte: str) -> list[object]:
+    if not isinstance(valeur, list):
+        raise ErreurSortie(f"{contexte} : liste attendue.")
+    return cast(list[object], valeur)
+
+
 def _verifier_cles(
-    objet: dict[str, Any], requises: set[str], optionnelles: set[str], contexte: str
+    objet: dict[str, object], requises: set[str], optionnelles: set[str], contexte: str
 ) -> None:
     presentes = set(objet)
     manquantes = requises - presentes
@@ -143,7 +161,7 @@ def _verifier_cles(
         )
 
 
-def _texte(objet: dict[str, Any], champ: str, contexte: str, maximum: int) -> str:
+def _texte(objet: dict[str, object], champ: str, contexte: str, maximum: int) -> str:
     valeur = objet.get(champ, "")
     if not isinstance(valeur, str) or not valeur.strip():
         raise ErreurSortie(f"{contexte} : le champ {champ!r} doit être un texte non vide.")
@@ -175,7 +193,17 @@ def garde_zero_chiffre(texte: str, champ: str, contexte: str) -> None:
     )
 
 
-def _seuil(objet: dict[str, Any], mesure: cat.Mesure, contexte: str) -> float | None:
+def _texte_optionnel(objet: dict[str, object], champ: str, contexte: str) -> str | None:
+    """Champ facultatif : absent ou nul vaut `None`, mais s'il est là c'est du texte."""
+    valeur = objet.get(champ)
+    if valeur is None or valeur == "":
+        return None
+    if not isinstance(valeur, str):
+        raise ErreurSortie(f"{contexte} : le champ {champ!r} doit être un texte ou nul.")
+    return valeur
+
+
+def _seuil(objet: dict[str, object], mesure: cat.Mesure, contexte: str) -> float | None:
     """Le seul nombre que l'agent a le droit d'écrire, et il reste contrôlé."""
     valeur = objet.get("seuil_alerte")
     if valeur is None:
@@ -194,14 +222,14 @@ def _seuil(objet: dict[str, Any], mesure: cat.Mesure, contexte: str) -> float | 
 
 
 # -------------------------------------------------------------- les invariants
-def _valider_hypotheses(brutes: list[Any]) -> dict[str, HypotheseBrute]:
-    if not isinstance(brutes, list) or not brutes:
+def _valider_hypotheses(brutes: object) -> dict[str, HypotheseBrute]:
+    liste = _liste(brutes, "'hypotheses'")
+    if not liste:
         raise ErreurSortie("'hypotheses' doit être une liste non vide.")
     connues: dict[str, HypotheseBrute] = {}
-    for rang, brute in enumerate(brutes, start=1):
+    for rang, valeur in enumerate(liste, start=1):
         contexte = f"hypothèse #{rang}"
-        if not isinstance(brute, dict):
-            raise ErreurSortie(f"{contexte} : objet attendu.")
+        brute = _objet(valeur, contexte)
         _verifier_cles(brute, _CLES_HYPOTHESE, _CLES_HYPOTHESE_OPT, contexte)
         identifiant = _texte(brute, "identifiant", contexte, 16)
         if identifiant in connues:
@@ -256,15 +284,16 @@ def _valider_boucle(
 
 
 # ------------------------------------------------------------------- l'entrée
-def analyser(charge: dict[str, Any]) -> Selection:
+def analyser(charge: dict[str, object]) -> Selection:
     """Valide un objet déjà décodé et rend une sélection utilisable."""
     _verifier_cles(charge, _CLES_SORTIE, set(), "sortie")
 
+    nom_niveau = _texte(charge, "niveau", "sortie", 32)
     try:
-        niveau = Niveau(charge["niveau"])
+        niveau = Niveau(nom_niveau)
     except ValueError:
         raise ErreurSortie(
-            f"Niveau inconnu : {charge['niveau']!r}. "
+            f"Niveau inconnu : {nom_niveau!r}. "
             f"Attendu {', '.join(n.value for n in Niveau)}."
         ) from None
 
@@ -273,9 +302,7 @@ def analyser(charge: dict[str, Any]) -> Selection:
 
     hypotheses = _valider_hypotheses(charge["hypotheses"])
 
-    brutes = charge["variables"]
-    if not isinstance(brutes, list):
-        raise ErreurSortie("'variables' doit être une liste.")
+    brutes = _liste(charge["variables"], "'variables'")
     attendus = NIVEAUX[niveau].nb_variables
     if len(brutes) != attendus:
         raise ErreurSortie(
@@ -284,14 +311,13 @@ def analyser(charge: dict[str, Any]) -> Selection:
         )
 
     indicateurs: list[Indicateur] = []
-    for rang, brute in enumerate(brutes, start=1):
+    for rang, valeur in enumerate(brutes, start=1):
         contexte = f"indicateur #{rang}"
-        if not isinstance(brute, dict):
-            raise ErreurSortie(f"{contexte} : objet attendu.")
+        brute = _objet(valeur, contexte)
         _verifier_cles(brute, _CLES_INDICATEUR, _CLES_INDICATEUR_OPT, contexte)
 
-        cle_mesure = brute["mesure"]
-        cle_dimension = brute.get("dimension") or None
+        cle_mesure = _texte(brute, "mesure", contexte, 64)
+        cle_dimension = _texte_optionnel(brute, "dimension", contexte)
         try:
             cat.valider(cle_mesure, cle_dimension, niveau)
         except (KeyError, ValueError) as erreur:

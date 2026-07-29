@@ -177,6 +177,8 @@ async def executer(
     saisir: Saisie | None = None,
     sortie: Ecriture | None = None,
     explorateur: Explorateur | None = None,
+    rejouer: bool = False,
+    forcer: bool = False,
 ) -> int:
     """Déroule le flux et rend le code de sortie du processus.
 
@@ -211,6 +213,30 @@ async def executer(
 
     ecrire(resume(choix))
 
+    if rejouer:
+        from loom_report_demo import etat
+
+        try:
+            retenue = etat.rejouer(choix.niveau)
+        except (FileNotFoundError, ValueError) as erreur:
+            ecrire(f"\n  {erreur}\n", file=sys.stderr)
+            return 1
+        ecrire("\n  Sélection rejouée depuis la dernière exécution.\n")
+        tableau_selection(retenue, ecrire)
+        chemin = _construire(retenue)
+        ecrire(f"\n  Classeur     {chemin}\n")
+        return 0
+
+    gel = None if forcer else _selection_gelee(choix.niveau)
+    if gel is not None:
+        ecrire(
+            f"\n  Une sélection est déjà gelée pour ce millésime "
+            f"({gel.millesime}, enregistrée le {gel.enregistre_le[:10]}).\n"
+            f"  Un référentiel qui change en cours d'année cesse d'être comparable.\n"
+            f"  Relancez avec --rejouer pour la reprendre, ou --forcer pour la refaire.\n"
+        )
+        return 1
+
     if explorateur is None:
         if paths.cles_absentes():
             ecrire(
@@ -225,7 +251,7 @@ async def executer(
     ecrire("\n  L'agent explore. Une minute environ, quelques centimes.\n")
     try:
         exploration = await explorateur(choix.niveau)
-    except Exception as erreur:  # noqa: BLE001 - la cause exacte importe peu ici
+    except Exception as erreur:
         ecrire(f"\n  L'exploration a échoué : {erreur}\n", file=sys.stderr)
         return 1
 
@@ -237,9 +263,31 @@ async def executer(
         ecrire("\n  Génération annulée.\n")
         return 0
 
+    _enregistrer(choix.niveau, exploration)
+
     chemin = _construire(retenue)
     ecrire(f"\n  Classeur     {chemin}\n")
     return 0
+
+
+def _selection_gelee(niveau: Niveau):
+    """Sélection encore valable pour le millésime courant, s'il y en a une."""
+    from loom_report_demo import etat
+    from loom_report_demo.analysis.chargement import donnees
+
+    # Seul le stratégique est gelé. Régénérer un rapport de gestion dans le mois
+    # est légitime — on corrige une donnée, on relance. Bloquer là serait une
+    # rigidité gratuite, et cela empêcherait de rejouer une démonstration.
+    if "gelée" not in NIVEAUX[niveau].duree_vie:
+        return None
+    return etat.gelee(niveau, donnees().situation)
+
+
+def _enregistrer(niveau: Niveau, exploration: Exploration) -> None:
+    from loom_report_demo import etat
+    from loom_report_demo.analysis.chargement import donnees
+
+    etat.enregistrer(niveau, exploration.brut, donnees().situation)
 
 
 def _explorateur_reel() -> Explorateur:
@@ -259,8 +307,18 @@ def _construire(selection: Selection) -> Path:
     return construire(selection, destination, strict=False)
 
 
-async def entry() -> None:
-    """Point d'entrée appelé par `loom_report_demo.main()`."""
-    code = await executer()
+async def entry(argv: list[str] | None = None) -> None:
+    """Point d'entrée appelé par `loom_report_demo.main()`.
+
+    Deux drapeaux seulement, tous deux au service de la démonstration :
+    `--rejouer` reprend la dernière sélection sans rappeler le modèle, ce qui
+    rend un rendez-vous reproductible ; `--forcer` passe outre le gel du
+    millésime stratégique.
+    """
+    arguments = sys.argv[1:] if argv is None else argv
+    code = await executer(
+        rejouer="--rejouer" in arguments,
+        forcer="--forcer" in arguments,
+    )
     if code:
         raise SystemExit(code)

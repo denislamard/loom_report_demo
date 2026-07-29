@@ -1,6 +1,6 @@
 {
  "gestion": {
-  "explores": 89,
+  "explores": 90,
   "materialite": {
    "panier_moyen_gagne|agence": 47840.36,
    "panier_moyen_gagne|type_client": 83284.47,
@@ -8,7 +8,7 @@
    "taux_transformation|tranche_montant": 48414.78,
    "taux_transformation|tranche_relance": 106770.11
   },
-  "recevables": 72,
+  "recevables": 73,
   "tete": [
    "taux_transformation|tranche_relance",
    "taux_transformation|tranche_montant",
@@ -18,7 +18,7 @@
   ]
  },
  "operationnel": {
-  "explores": 58,
+  "explores": 59,
   "materialite": {
    "taux_transformation|agence": 64603.06,
    "taux_transformation|commercial": 59525.95,
@@ -26,7 +26,7 @@
    "taux_transformation|tranche_montant": 43413.53,
    "taux_transformation|tranche_relance": 70387.63
   },
-  "recevables": 31,
+  "recevables": 32,
   "tete": [
    "taux_transformation|tranche_relance",
    "taux_transformation|commercial",
@@ -36,21 +36,21 @@
   ]
  },
  "strategique": {
-  "explores": 30,
+  "explores": 23,
   "materialite": {
-   "ca_par_technicien|agence": 82922.5,
-   "ca_par_technicien|anciennete_technicien": 144932.86,
-   "ca_par_technicien|metier": 179465.88,
    "panier_moyen_gagne|agence": 47840.36,
-   "panier_moyen_gagne|type_client": 83284.47
+   "panier_moyen_gagne|type_client": 83284.47,
+   "taux_transformation|agence": 31811.19,
+   "taux_transformation|metier": 27335.28,
+   "taux_transformation|type_client": 26486.94
   },
-  "recevables": 28,
+  "recevables": 21,
   "tete": [
-   "ca_par_technicien|metier",
-   "ca_par_technicien|anciennete_technicien",
    "panier_moyen_gagne|type_client",
-   "ca_par_technicien|agence",
-   "panier_moyen_gagne|agence"
+   "panier_moyen_gagne|agence",
+   "taux_transformation|agence",
+   "taux_transformation|type_client",
+   "taux_transformation|metier"
   ]
  }
 }
