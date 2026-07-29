@@ -76,6 +76,7 @@ def preparer(ws: Worksheet, largeur_b: int = 20, colonnes: int = 12, largeur: in
     ws.sheet_properties.pageSetUpPr.fitToPage = True
 
 
+
 def bandeau(ws: Worksheet, titre: str, sous_titre: str, mention: str, colonnes: int = 13) -> None:
     for ligne_ in range(1, 6):
         for colonne in range(1, colonnes + 2):
@@ -189,7 +190,9 @@ def ligne(
 def barres(ws: Worksheet, plage: str, couleur: str = BLEU) -> None:
     ws.conditional_formatting.add(
         plage,
-        DataBarRule(start_type="num", start_value=0, end_type="max", color=couleur, showValue=True),
+        DataBarRule(
+            start_type="num", start_value=0, end_type="max", color=couleur, showValue=True
+        ),
     )
 
 
@@ -220,7 +223,9 @@ def feux(ws: Worksheet, plage: str, seuil: float, plus_haut_mieux: bool = True) 
     )
 
 
-def saisie(ws: Worksheet, row: int, col: int, valeur: ValeurCellule, format_nombre: str) -> None:
+def saisie(
+    ws: Worksheet, row: int, col: int, valeur: ValeurCellule, format_nombre: str
+) -> None:
     """Cellule modifiable : bleu sur fond jaune, comme dans un modèle financier."""
     cellule = ws.cell(row=row, column=col, value=valeur)
     cellule.font = Font(name=POLICE, size=10, bold=True, color="0000FF")

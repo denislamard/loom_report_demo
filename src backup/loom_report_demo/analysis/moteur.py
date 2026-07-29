@@ -91,7 +91,9 @@ def _appliquer_filtre(table: pd.DataFrame, base: cat.Base, filtre: Filtre | None
     for cle, valeur in filtre.items():
         dimension = cat.dimension(cle)
         if not dimension.disponible_sur(base):
-            raise ValueError(f"Filtre impossible : {cle!r} n'existe pas sur la table {base.value}.")
+            raise ValueError(
+                f"Filtre impossible : {cle!r} n'existe pas sur la table {base.value}."
+            )
         resultat = resultat[resultat[dimension.colonne] == valeur]
     return resultat
 
@@ -109,9 +111,8 @@ def _agreger(mesure: cat.Mesure, table: pd.DataFrame) -> Valeur:
     numerateur = float(table[agregat.numerateur].sum()) if effectif else 0.0
 
     if not agregat.est_ratio:
-        return Valeur(
-            mesure.cle, agregat.facteur * numerateur + agregat.decalage, effectif, numerateur, None
-        )
+        return Valeur(mesure.cle, agregat.facteur * numerateur + agregat.decalage,
+                      effectif, numerateur, None)
 
     if agregat.distinct is not None:
         denominateur = float(table[agregat.distinct].nunique()) if effectif else 0.0

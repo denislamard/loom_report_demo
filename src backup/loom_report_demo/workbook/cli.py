@@ -27,7 +27,9 @@ def executer(argv: list[str] | None = None) -> int:
         required=True,
         help="Fichier JSON décrivant le niveau et les indicateurs retenus.",
     )
-    parseur.add_argument("--sortie", type=Path, default=None, help="Chemin du classeur produit.")
+    parseur.add_argument(
+        "--sortie", type=Path, default=None, help="Chemin du classeur produit."
+    )
     arguments = parseur.parse_args(argv)
 
     try:

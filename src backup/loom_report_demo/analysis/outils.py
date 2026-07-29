@@ -122,7 +122,9 @@ def _verifier(cle_mesure: str, cle_dimension: str | None, niveau: Niveau) -> cat
     return cat.mesure(cle_mesure)
 
 
-def _modalites_admises(dimension: cat.Dimension, donnees: Donnees, base: cat.Base) -> list[str]:
+def _modalites_admises(
+    dimension: cat.Dimension, donnees: Donnees, base: cat.Base
+) -> list[str]:
     colonne = donnees.table(base)[dimension.colonne]
     return sorted(str(x) for x in colonne.dropna().unique())
 
@@ -227,7 +229,9 @@ def _comparer(
         modalite_a: {"valeur": _arrondir(a.valeur, objet.unite), "effectif": a.effectif},
         modalite_b: {"valeur": _arrondir(b.valeur, objet.unite), "effectif": b.effectif},
         "ecart": _arrondir(ecart, objet.unite),
-        "favorable_a": None if ecart is None else (ecart > 0) == (objet.sens is cat.Sens.HAUT),
+        "favorable_a": None
+        if ecart is None
+        else (ecart > 0) == (objet.sens is cat.Sens.HAUT),
     }
 
 
@@ -301,9 +305,8 @@ def _concentration(
     paliers: list[dict[str, Any]] = []
     for rang, (libelle, part) in enumerate(poids, start=1):
         cumul += part
-        paliers.append(
-            {"rang": rang, "libelle": libelle, "part": round(part, 3), "cumul": round(cumul, 3)}
-        )
+        paliers.append({"rang": rang, "libelle": libelle, "part": round(part, 3),
+                        "cumul": round(cumul, 3)})
         if cumul >= 0.80:
             break
     return {
@@ -487,7 +490,10 @@ def _resumer(outil: str, arguments: dict[str, Any], resultat: dict[str, Any]) ->
     if outil == "ventilation":
         modalites = resultat.get("modalites", [])
         if not modalites:
-            return f"{arguments['mesure']} par {arguments['dimension']} — aucune modalité retenue"
+            return (
+            f"{arguments['mesure']} par {arguments['dimension']} — "
+            "aucune modalité retenue"
+        )
         pire = modalites[0]
         return (
             f"{arguments['mesure']} par {arguments['dimension']} — "

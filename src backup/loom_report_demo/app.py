@@ -97,7 +97,7 @@ def lire_choix(saisir: Saisie) -> DefinitionNiveau | None:
     while True:
         try:
             brut = saisir("  Votre choix [1-3, q] : ").strip().lower()
-        except EOFError, KeyboardInterrupt:
+        except (EOFError, KeyboardInterrupt):
             return None
         if brut in _QUITTER:
             return None
@@ -153,12 +153,10 @@ def arbitrer(selection: Selection, saisir: Saisie, ecrire: Ecriture) -> Selectio
     while True:
         borne = len(selection.variables)
         try:
-            reponse = (
-                saisir(f"  [Entrée] générer · [1-{borne}] retirer un indicateur · [q] annuler : ")
-                .strip()
-                .lower()
-            )
-        except EOFError, KeyboardInterrupt:
+            reponse = saisir(
+                f"  [Entrée] générer · [1-{borne}] retirer un indicateur · [q] annuler : "
+            ).strip().lower()
+        except (EOFError, KeyboardInterrupt):
             return None
         if reponse in ("q", "quitter", "annuler"):
             return None

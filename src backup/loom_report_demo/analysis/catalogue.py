@@ -295,7 +295,9 @@ _MESURES: tuple[Mesure, ...] = (
         niveaux=_OPE,
         nature=Nature.STOCK,
         agregat=Agregat(numerateur="retard_pondere", denominateur="encours"),
-        description=("Retard moyen pondéré par le montant : un gros impayé pèse plus qu'un petit."),
+        description=(
+            "Retard moyen pondéré par le montant : un gros impayé pèse plus qu'un petit."
+        ),
     ),
     Mesure(
         cle="exceptions_ouvertes",
@@ -398,7 +400,9 @@ _MESURES: tuple[Mesure, ...] = (
         sens=Sens.BAS,
         niveaux=_GESTION_OPE,
         conversion=Conversion.HEURES,
-        agregat=Agregat(numerateur="heures_reelles", denominateur="heures_devisees", decalage=-1.0),
+        agregat=Agregat(
+            numerateur="heures_reelles", denominateur="heures_devisees", decalage=-1.0
+        ),
         description="Écart entre heures réellement passées et heures devisées.",
     ),
     Mesure(

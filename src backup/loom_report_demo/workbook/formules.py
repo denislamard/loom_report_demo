@@ -48,7 +48,9 @@ SEUIL_EXCEPTION = "Paramètres!$C$13"
 SEUIL_RELANCE = "Paramètres!$C$14"
 
 
-def _tranches_imbriquees(champ: str, seuils: tuple[tuple[float, str], ...], haute: str) -> str:
+def _tranches_imbriquees(
+    champ: str, seuils: tuple[tuple[float, str], ...], haute: str
+) -> str:
     """`IF` imbriqués plutôt que `IFS` : compatible avec toutes les versions."""
     sortie = f'"{haute}"'
     for borne, libelle in reversed(seuils):
@@ -76,7 +78,9 @@ COLONNES_CALCULEES: dict[str, tuple[ColonneCalculee, ...]] = {
         ),
         ColonneCalculee("ligne", "Ligne", "=1", NB, 8),
         ColonneCalculee("est_gagne", "Gagné", '=IF({statut}{r}="Accepté",1,0)', NB, 9),
-        ColonneCalculee("ca_gagne", "CA gagné HT", "={montant_ht}{r}*{est_gagne}{r}", EUR, 14),
+        ColonneCalculee(
+            "ca_gagne", "CA gagné HT", "={montant_ht}{r}*{est_gagne}{r}", EUR, 14
+        ),
         ColonneCalculee(
             "montant_arbitre",
             "Montant arbitré HT",
@@ -84,7 +88,9 @@ COLONNES_CALCULEES: dict[str, tuple[ColonneCalculee, ...]] = {
             EUR,
             16,
         ),
-        ColonneCalculee("est_relance", "Relancé", '=IF({delai_1ere_relance_j}{r}="",0,1)', NB, 9),
+        ColonneCalculee(
+            "est_relance", "Relancé", '=IF({delai_1ere_relance_j}{r}="",0,1)', NB, 9
+        ),
         ColonneCalculee(
             "delai_relance_pondere",
             "Délai relance pondéré",
@@ -103,9 +109,7 @@ COLONNES_CALCULEES: dict[str, tuple[ColonneCalculee, ...]] = {
         ColonneCalculee(
             "tranche_relance",
             "Tranche de relance",
-            '=IF({delai_1ere_relance_j}{r}="","'
-            + JAMAIS_RELANCE
-            + '",'
+            '=IF({delai_1ere_relance_j}{r}="","' + JAMAIS_RELANCE + '",'
             + _tranches_imbriquees(
                 "{delai_1ere_relance_j}{r}", TRANCHES_RELANCE, TRANCHE_RELANCE_HAUTE
             )
@@ -116,7 +120,8 @@ COLONNES_CALCULEES: dict[str, tuple[ColonneCalculee, ...]] = {
         ColonneCalculee(
             "tranche_montant",
             "Tranche de montant",
-            "=" + _tranches_imbriquees("{montant_ht}{r}", TRANCHES_MONTANT, TRANCHE_MONTANT_HAUTE),
+            "="
+            + _tranches_imbriquees("{montant_ht}{r}", TRANCHES_MONTANT, TRANCHE_MONTANT_HAUTE),
             None,
             16,
         ),
@@ -151,7 +156,9 @@ COLONNES_CALCULEES: dict[str, tuple[ColonneCalculee, ...]] = {
             EUR,
             15,
         ),
-        ColonneCalculee("marge", "Marge brute", "={montant_ht}{r}-{cout_revient}{r}", EUR, 14),
+        ColonneCalculee(
+            "marge", "Marge brute", "={montant_ht}{r}-{cout_revient}{r}", EUR, 14
+        ),
         ColonneCalculee("est_payee", "Réglée", '=IF({date_paiement}{r}="",0,1)', NB, 9),
         ColonneCalculee(
             "encours",
@@ -169,7 +176,9 @@ COLONNES_CALCULEES: dict[str, tuple[ColonneCalculee, ...]] = {
             NB,
             11,
         ),
-        ColonneCalculee("retard_pondere", "Retard pondéré", "={retard}{r}*{encours}{r}", NB, 14),
+        ColonneCalculee(
+            "retard_pondere", "Retard pondéré", "={retard}{r}*{encours}{r}", NB, 14
+        ),
         ColonneCalculee(
             "delai_reel_pondere",
             "Délai réel (j)",
@@ -202,9 +211,7 @@ COLONNES_CALCULEES: dict[str, tuple[ColonneCalculee, ...]] = {
         ColonneCalculee(
             "tranche_age_creance",
             "Ancienneté de créance",
-            '=IF({est_payee}{r}=1,"'
-            + REGLEE
-            + '",'
+            '=IF({est_payee}{r}=1,"' + REGLEE + '",'
             + _tranches_imbriquees("{retard}{r}", TRANCHES_AGE, TRANCHE_AGE_HAUTE)
             + ")",
             None,
@@ -213,7 +220,8 @@ COLONNES_CALCULEES: dict[str, tuple[ColonneCalculee, ...]] = {
         ColonneCalculee(
             "tranche_montant",
             "Tranche de montant",
-            "=" + _tranches_imbriquees("{montant_ht}{r}", TRANCHES_MONTANT, TRANCHE_MONTANT_HAUTE),
+            "="
+            + _tranches_imbriquees("{montant_ht}{r}", TRANCHES_MONTANT, TRANCHE_MONTANT_HAUTE),
             None,
             16,
         ),
@@ -237,7 +245,8 @@ COLONNES_CALCULEES: dict[str, tuple[ColonneCalculee, ...]] = {
             "Ancienneté du technicien",
             "=IFERROR("
             + _tranches_imbriquees(
-                "({date_intervention}{r}-INDEX({te_embauche},MATCH({technicien_id}{r},{te_id},0)))",
+                "({date_intervention}{r}-INDEX({te_embauche},"
+                "MATCH({technicien_id}{r},{te_id},0)))",
                 TRANCHES_ANCIENNETE,
                 ANCIENNETE_HAUTE,
             )
@@ -384,7 +393,9 @@ def formule_mesure(
         raise ValueError(f"{mesure.cle} ne se ventile pas : son dénominateur n'est pas additif.")
     if mesure.special is not None:
         if schemas is None:
-            raise ValueError(f"{mesure.cle} : cette mesure a besoin de l'ensemble des schémas.")
+            raise ValueError(
+                f"{mesure.cle} : cette mesure a besoin de l'ensemble des schémas."
+            )
         return _formule_speciale(mesure, schemas["Clients"], debut)
     agregat = mesure.agregat
     assert agregat is not None
@@ -426,7 +437,9 @@ def _formule_par_effectif(
     technicien dans la fenêtre, et 0 partout ailleurs : le décompte redevient une
     somme, et le classeur reste vivant.
     """
-    colonne = "technicien_nouveau" if debut == DEBUT else "technicien_nouveau_comparaison"
+    colonne = (
+        "technicien_nouveau" if debut == DEBUT else "technicien_nouveau_comparaison"
+    )
     criteres = _criteres(schema, colonne_date, debut, fin)
     numerateur = _sumifs(schema.plage(agregat.numerateur), criteres)
     denominateur = _sumifs(schema.plage(colonne), criteres)
@@ -475,6 +488,6 @@ def formule_ecart_points(cellule_actuelle: str, cellule_passee: str) -> str:
 
 
 def format_unite(mesure: cat.Mesure) -> str:
-    return {"€": EUR, "%": PCT, "j": '#,##0 " j";-#,##0 " j";"-"', "h": NB1}.get(
+    return {"€": EUR, "%": PCT, "j": "#,##0 \" j\";-#,##0 \" j\";\"-\"", "h": NB1}.get(
         mesure.unite.value, NB
     )

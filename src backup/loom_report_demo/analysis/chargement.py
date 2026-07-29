@@ -112,15 +112,15 @@ def charger(dossier: Path | None = None, situation: date | None = None) -> Donne
     devis = _lire(source, "devis.csv", ["date_emission", "date_decision"])
     relances = _lire(source, "relances.csv", ["date_relance"])
     interventions = _lire(source, "interventions.csv", ["date_intervention"])
-    factures = _lire(source, "factures.csv", ["date_facture", "date_echeance", "date_paiement"])
+    factures = _lire(
+        source, "factures.csv", ["date_facture", "date_echeance", "date_paiement"]
+    )
 
     # La date de situation par défaut est le dernier mouvement observé : le jeu
     # ne contient rien au-delà, et la déduire évite de la maintenir en double.
-    jour = (
-        situation
-        if situation is not None
-        else max(devis["date_emission"].max(), factures["date_facture"].max()).date()
-    )
+    jour = situation if situation is not None else max(
+        devis["date_emission"].max(), factures["date_facture"].max()
+    ).date()
     debut = devis["date_emission"].min().date()
     horodatage = pd.Timestamp(jour)
 
@@ -156,12 +156,16 @@ def charger(dossier: Path | None = None, situation: date | None = None) -> Donne
         devis[["devis_id", "montant_ht"]].rename(columns={"montant_ht": "ca_lie"}),
         on="devis_id",
         how="left",
-    ).merge(techniciens[["technicien_id", "date_embauche"]], on="technicien_id", how="left")
+    ).merge(
+        techniciens[["technicien_id", "date_embauche"]], on="technicien_id", how="left"
+    )
     interventions["cout_total"] = cout.to_numpy()
     interventions["marge"] = interventions["ca_lie"] - interventions["cout_total"]
     interventions["metier"] = interventions["categorie"]
     interventions["ligne"] = 1
-    anciennete = (interventions["date_intervention"] - interventions["date_embauche"]).dt.days
+    anciennete = (
+        interventions["date_intervention"] - interventions["date_embauche"]
+    ).dt.days
     interventions["anciennete_jours"] = anciennete
     interventions["anciennete_technicien"] = [
         _tranche(a, TRANCHES_ANCIENNETE, ANCIENNETE_HAUTE) for a in anciennete

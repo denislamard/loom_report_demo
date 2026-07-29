@@ -117,7 +117,10 @@ def construire(
     schemas = construire_schemas(_colonnes(selection.niveau), dossier_donnees)
     borne = fenetre(selection.cadrage, jeu.situation, jeu.debut)
     mois = tuple(
-        sorted({str(cle) for cle in jeu.factures["mois"]} | {str(cle) for cle in jeu.devis["mois"]})
+        sorted(
+            {str(cle) for cle in jeu.factures["mois"]}
+            | {str(cle) for cle in jeu.devis["mois"]}
+        )
     )
     metiers = tuple(sorted(str(x) for x in jeu.factures["metier"].dropna().unique()))
     empreinte = empreinte_jeu([paths.csv_source(n) for n in paths.FICHIERS_DONNEES])

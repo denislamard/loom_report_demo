@@ -248,7 +248,9 @@ def _valider_hypotheses(brutes: object) -> dict[str, HypotheseBrute]:
     return connues
 
 
-def _valider_boucle(hypotheses: dict[str, HypotheseBrute], indicateurs: list[Indicateur]) -> None:
+def _valider_boucle(
+    hypotheses: dict[str, HypotheseBrute], indicateurs: list[Indicateur]
+) -> None:
     """Toute hypothèse notée finit quelque part, tout indicateur vient d'une hypothèse.
 
     C'est l'invariant qui empêche le modèle de rationaliser après coup. Il note
@@ -291,7 +293,8 @@ def analyser(charge: dict[str, object]) -> Selection:
         niveau = Niveau(nom_niveau)
     except ValueError:
         raise ErreurSortie(
-            f"Niveau inconnu : {nom_niveau!r}. Attendu {', '.join(n.value for n in Niveau)}."
+            f"Niveau inconnu : {nom_niveau!r}. "
+            f"Attendu {', '.join(n.value for n in Niveau)}."
         ) from None
 
     message = _texte(charge, "message_direction", "sortie", LONGUEUR_MAX_MESSAGE)

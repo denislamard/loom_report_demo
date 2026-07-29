@@ -97,7 +97,8 @@ def evaluer(donnees: Donnees, niveau: Niveau) -> Verdict:
         ouvertes = int((donnees.factures["est_payee"] == 0).sum())
         if ouvertes < 10:
             observations.append(
-                f"{ouvertes} factures ouvertes : la file de recouvrement sera vide ou anecdotique."
+                f"{ouvertes} factures ouvertes : la file de recouvrement sera vide "
+                f"ou anecdotique."
             )
 
     return Verdict(niveau, not observations, tuple(observations))

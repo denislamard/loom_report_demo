@@ -154,7 +154,9 @@ def _taux_marge_global(donnees: Donnees, borne: Fenetre) -> float:
 
     table = donnees.factures
     colonne = table[COLONNE_DATE[cat.Base.FACTURES]]
-    fenetree = table[(colonne >= pd.Timestamp(borne.debut)) & (colonne <= pd.Timestamp(borne.fin))]
+    fenetree = table[
+        (colonne >= pd.Timestamp(borne.debut)) & (colonne <= pd.Timestamp(borne.fin))
+    ]
     ca = float(fenetree["montant_ht"].sum())
     return float(fenetree["marge"].sum()) / ca if ca else 0.0
 
@@ -261,7 +263,9 @@ def _stabilite(
     return sum(parts) / len(parts)
 
 
-def _ecart_signe(ventilation: Ventilation, libelle: str, sens_defavorable: bool) -> float | None:
+def _ecart_signe(
+    ventilation: Ventilation, libelle: str, sens_defavorable: bool
+) -> float | None:
     """Écart d'une modalité à l'ensemble, positif quand il est défavorable."""
     ensemble = ventilation.ensemble.valeur
     if ensemble is None:
@@ -367,9 +371,13 @@ def cribler(
             rejetes.append(candidat)
             continue
         stabilite = _stabilite(donnees, mesure, dimension, borne, pire_libelle, sens_defavorable)
-        recevables.append(_remplacer_scores(candidat, stabilite=stabilite))
+        recevables.append(
+            _remplacer_scores(candidat, stabilite=stabilite)
+        )
 
-    plafond = max((c.scores.materialite_euros or 0.0 for c in recevables), default=0.0)
+    plafond = max(
+        (c.scores.materialite_euros or 0.0 for c in recevables), default=0.0
+    )
     plafond_dispersion = max((c.scores.dispersion for c in recevables), default=0.0)
     notes: list[Candidat] = []
     for candidat in recevables:
@@ -394,7 +402,9 @@ def cribler(
     )
 
 
-def _cible_hors(ventilation: Ventilation, pire: Modalite, retenues: list[Modalite]) -> float | None:
+def _cible_hors(
+    ventilation: Ventilation, pire: Modalite, retenues: list[Modalite]
+) -> float | None:
     """Valeur de l'ensemble si l'on retire la modalité défavorable.
 
     « Si Bordeaux faisait comme le reste du groupe » est un objectif atteignable ;

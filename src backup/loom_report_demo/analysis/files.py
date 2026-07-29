@@ -97,7 +97,9 @@ def _nom_client(donnees: Donnees, client_id: str) -> str:
     return str(ligne.iloc[0]) if len(ligne) else client_id
 
 
-def creances_a_appeler(donnees: Donnees, seuil_jours: float = SEUIL_RECOUVREMENT_JOURS) -> File:
+def creances_a_appeler(
+    donnees: Donnees, seuil_jours: float = SEUIL_RECOUVREMENT_JOURS
+) -> File:
     """Factures ouvertes et échues, les plus lourdes et les plus vieilles d'abord.
 
     La priorité est le produit du montant par l'ancienneté : un petit impayé très
@@ -118,7 +120,11 @@ def creances_a_appeler(donnees: Donnees, seuil_jours: float = SEUIL_RECOUVREMENT
             montant=float(ligne["encours"]),
             anciennete_jours=int(ligne["retard"]),
             priorite=float(ligne["priorite"]),
-            motif=("recouvrement" if ligne["retard"] > seuil_jours else "relance amiable"),
+            motif=(
+                "recouvrement"
+                if ligne["retard"] > seuil_jours
+                else "relance amiable"
+            ),
             detail={
                 "type_client": str(ligne["type_client"]),
                 "agence": str(ligne["agence"]),
@@ -193,7 +199,9 @@ def interventions_en_derive(donnees: Donnees, seuil: float = SEUIL_DERIVE) -> Fi
     """
     interventions = donnees.interventions.copy()
     interventions = interventions[interventions["heures_devisees"] > 0]
-    interventions["derive"] = interventions["heures_reelles"] / interventions["heures_devisees"] - 1
+    interventions["derive"] = (
+        interventions["heures_reelles"] / interventions["heures_devisees"] - 1
+    )
     depassements = interventions[interventions["derive"] > seuil].copy()
     total = len(depassements)
     depassements["surcout"] = (
@@ -229,11 +237,17 @@ def interventions_en_derive(donnees: Donnees, seuil: float = SEUIL_DERIVE) -> Fi
     )
 
 
-def construire_files(donnees: Donnees, seuils: dict[str, float] | None = None) -> tuple[File, ...]:
+def construire_files(
+    donnees: Donnees, seuils: dict[str, float] | None = None
+) -> tuple[File, ...]:
     """Les trois files, avec les seuils retenus par l'agent quand il en propose."""
     choisis = seuils or {}
     return (
-        creances_a_appeler(donnees, choisis.get("creances", SEUIL_RECOUVREMENT_JOURS)),
-        devis_a_relancer(donnees, donnees.situation, choisis.get("devis", SEUIL_RELANCE_JOURS)),
+        creances_a_appeler(
+            donnees, choisis.get("creances", SEUIL_RECOUVREMENT_JOURS)
+        ),
+        devis_a_relancer(
+            donnees, donnees.situation, choisis.get("devis", SEUIL_RELANCE_JOURS)
+        ),
         interventions_en_derive(donnees, choisis.get("derive", SEUIL_DERIVE)),
     )
