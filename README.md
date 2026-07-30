@@ -108,6 +108,8 @@ perdre, passez un chemin explicite à `uv run rapport --sortie`.
 - une clé API Anthropic, sur <https://console.anthropic.com/settings/keys>
 - une clé API MiniMax, sur <https://www.minimax.io> (section *API Keys*)
 
+Les modèles sont interchangeables. Chaque bloc llm de files/settings.json déclare son endpoint, son identifiant de modèle et sa tarification. Le rôle main désigne celui qui orchestre. En changer revient à modifier une ligne.
+
 ### Installation
 
 ```bash
