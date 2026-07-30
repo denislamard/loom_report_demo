@@ -89,7 +89,8 @@ async def test_executer_annonce_le_niveau_avant_toute_depense(
     assert await console.executer(saisir=saisies("2")) == 1
     sortie = capsys.readouterr().out
     assert "gestion" in sortie
-    assert "Socle imposé" in sortie
+    assert "Socle" in sortie
+    assert "Livrable" in sortie
     assert "uv run rapport" in sortie
 
 

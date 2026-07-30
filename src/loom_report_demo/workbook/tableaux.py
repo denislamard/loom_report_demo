@@ -69,28 +69,16 @@ def parametres(
 
     theme.titre_section(ws, 7, 2, "Paramètres de calcul", 3)
     lignes: list[tuple[str, theme.ValeurCellule, str, str]] = [
-        (
-            "Date de situation",
-            situation,
-            theme.DATE,
-            "Référence de tous les calculs d'âge et de retard. La modifier recalcule le rapport.",
-        ),
+        ("Date de situation", situation, theme.DATE,
+         "Référence de tous les calculs d'âge et de retard. La modifier recalcule le rapport."),
         ("Début de la fenêtre", "=$C$8-364", theme.DATE, "Douze mois glissants."),
         ("Fin de la fenêtre", "=$C$8", theme.DATE, ""),
         ("Début de la comparaison", "=$C$8-729", theme.DATE, "Les douze mois précédents."),
         ("Fin de la comparaison", "=$C$8-365", theme.DATE, ""),
-        (
-            "Seuil de créance à risque",
-            seuil_exception,
-            theme.JOURS,
-            "Ancienneté à partir de laquelle une créance passe en recouvrement.",
-        ),
-        (
-            "Délai de relance visé",
-            seuil_relance,
-            theme.JOURS,
-            "Au-delà, le taux de transformation chute nettement.",
-        ),
+        ("Seuil de créance à risque", seuil_exception, theme.JOURS,
+         "Ancienneté à partir de laquelle une créance passe en recouvrement."),
+        ("Délai de relance visé", seuil_relance, theme.JOURS,
+         "Au-delà, le taux de transformation chute nettement."),
     ]
     for decalage, (libelle, valeur, format_nombre, note) in enumerate(lignes):
         row = f.LIGNE_SITUATION + decalage
@@ -172,7 +160,9 @@ def parametres(
             name=theme.POLICE, size=9, color=theme.ROUGE if decalage == 0 else theme.ANTHRACITE
         )
         ligne_note = debut_notes + decalage
-        ws.merge_cells(start_row=ligne_note, start_column=2, end_row=ligne_note, end_column=4)
+        ws.merge_cells(
+            start_row=ligne_note, start_column=2, end_row=ligne_note, end_column=4
+        )
         ws.row_dimensions[debut_notes + decalage].height = 15
     return ws
 
@@ -258,18 +248,8 @@ def detail_mensuel(
         + [f"=$C{total}-$D{total}", f'=IFERROR($E{total}/$C{total},"")']
         + [f"=SUM({c}{LIGNE_MOIS}:{c}{derniere})" for c in "GHI"]
         + [f'=IFERROR($I{total}/$H{total},"")', f"=SUM($K{LIGNE_MOIS}:$K{derniere})"],
-        [
-            None,
-            theme.EUR,
-            theme.EUR,
-            theme.EUR,
-            theme.PCT,
-            theme.EUR,
-            theme.EUR,
-            theme.EUR,
-            theme.PCT,
-            theme.EUR,
-        ],
+        [None, theme.EUR, theme.EUR, theme.EUR, theme.PCT, theme.EUR, theme.EUR,
+         theme.EUR, theme.PCT, theme.EUR],
         gras=True,
         fond=theme.BLEU_CLAIR,
     )
@@ -285,24 +265,35 @@ def _carte_mesure(
     mesure: cat.Mesure,
     schemas: dict[str, Schema],
     accent: str,
+    dimension: str | None = None,
 ) -> None:
+    """Une carte d'indicateur.
+
+    Le libellé porte la dimension quand il y en a une : sans elle, deux
+    indicateurs bâtis sur la même mesure — le panier moyen par agence et par type
+    de client — donnent deux cartes rigoureusement identiques, et le lecteur ne
+    peut pas savoir laquelle il regarde.
+    """
     schema, colonne_date = _schema_de(mesure, schemas)
     valeur = f.formule_mesure(mesure, schema, colonne_date, schemas=schemas)
     lettre = chr(ord("A") + col - 1)
     if mesure.comparable_entre_periodes:
         passee = f.formule_mesure(
-            mesure, schema, colonne_date, f.DEBUT_COMPARAISON, f.FIN_COMPARAISON, schemas=schemas
-        )
+            mesure, schema, colonne_date, f.DEBUT_COMPARAISON, f.FIN_COMPARAISON
+        , schemas=schemas)
         sous_texte = f'=IFERROR(({valeur[1:]})/({passee[1:]})-1,"")'
         format_sous = theme.VARIATION
     else:
         sous_texte = "état à la date de situation"
         format_sous = None
+    libelle = mesure.libelle
+    if dimension is not None:
+        libelle = f"{libelle} · par {cat.dimension(dimension).libelle.lower()}"
     theme.carte(
         ws,
         row,
         col,
-        mesure.libelle,
+        libelle,
         valeur,
         f.format_unite(mesure),
         sous_texte,
@@ -333,7 +324,9 @@ def synthese(
 
     accents = (theme.BLEU, theme.VERT, theme.ORANGE, theme.ROUGE)
     for indice, cle in enumerate(selection.socle):
-        _carte_mesure(ws, 7, 2 + 3 * (indice % 4), cat.mesure(cle), schemas, accents[indice % 4])
+        _carte_mesure(
+            ws, 7, 2 + 3 * (indice % 4), cat.mesure(cle), schemas, accents[indice % 4]
+        )
     for indice, indicateur in enumerate(selection.variables):
         _carte_mesure(
             ws,
@@ -342,6 +335,7 @@ def synthese(
             cat.mesure(indicateur.mesure),
             schemas,
             accents[indice % 4],
+            indicateur.dimension,
         )
     theme.note(
         ws,
@@ -416,15 +410,15 @@ def _decomposition(
 
     def compte(debut: str, fin: str, row: int) -> str:
         return (
-            f'=COUNTIFS({factures.plage("date_facture")},">="&{debut},'
-            f'{factures.plage("date_facture")},"<="&{fin},'
+            f"=COUNTIFS({factures.plage('date_facture')},\">=\"&{debut},"
+            f"{factures.plage('date_facture')},\"<=\"&{fin},"
             f"{factures.plage('metier')},$B{row})"
         )
 
     def montant(debut: str, fin: str, row: int) -> str:
         return (
             f"=SUMIFS({factures.plage('montant_ht')},{factures.plage('date_facture')},"
-            f'">="&{debut},{factures.plage("date_facture")},"<="&{fin},'
+            f"\">=\"&{debut},{factures.plage('date_facture')},\"<=\"&{fin},"
             f"{factures.plage('metier')},$B{row})"
         )
 
@@ -438,9 +432,9 @@ def _decomposition(
             [
                 metier,
                 compte(f.DEBUT_COMPARAISON, f.FIN_COMPARAISON, row),
-                f"=IFERROR({montant(f.DEBUT_COMPARAISON, f.FIN_COMPARAISON, row)[1:]}/$C{row},0)",
+                f'=IFERROR({montant(f.DEBUT_COMPARAISON, f.FIN_COMPARAISON, row)[1:]}/$C{row},0)',
                 compte(f.DEBUT, f.FIN, row),
-                f"=IFERROR({montant(f.DEBUT, f.FIN, row)[1:]}/$E{row},0)",
+                f'=IFERROR({montant(f.DEBUT, f.FIN, row)[1:]}/$E{row},0)',
             ],
             [None, theme.NB, theme.EUR, theme.NB, theme.EUR],
             alterne=decalage % 2 == 1,
@@ -469,7 +463,9 @@ def _decomposition(
     theme.titre_section(ws, pont, 2, "Ponts d'écart", 6)
     theme.entetes(ws, pont + 1, 2, ["Effet", "Montant", "Lecture"])
     #: Panier qu'on aurait constaté avec la structure de N et les prix de N-1.
-    structure = f"SUMPRODUCT($E{premiere}:$E{derniere},$D{premiere}:$D{derniere})/$E{total}"
+    structure = (
+        f"SUMPRODUCT($E{premiere}:$E{derniere},$D{premiere}:$D{derniere})/$E{total}"
+    )
     effets = (
         (
             "Volume",
@@ -659,14 +655,8 @@ def _bloc_indicateur(
             mesure, schema, colonne_date, dimension=critere, schemas=schemas
         )
         passee = f.formule_mesure(
-            mesure,
-            schema,
-            colonne_date,
-            f.DEBUT_COMPARAISON,
-            f.FIN_COMPARAISON,
-            critere,
-            schemas=schemas,
-        )
+            mesure, schema, colonne_date, f.DEBUT_COMPARAISON, f.FIN_COMPARAISON, critere
+        , schemas=schemas)
         ecart = (
             f.formule_variation(f"$C{row}", f"$E{row}")
             if mesure.comparable_entre_periodes
@@ -675,11 +665,11 @@ def _bloc_indicateur(
         numerateur = mesure.agregat.numerateur if mesure.agregat else "montant_ht"
         part = (
             f"=IFERROR(SUMIFS({schema.plage(numerateur)},"
-            f'{schema.plage(colonne_date)},">="&{f.DEBUT},'
-            f'{schema.plage(colonne_date)},"<="&{f.FIN},'
-            f'{schema.plage(dimension.colonne)},"{modalite}")'
+            f"{schema.plage(colonne_date)},\">=\"&{f.DEBUT},"
+            f"{schema.plage(colonne_date)},\"<=\"&{f.FIN},"
+            f"{schema.plage(dimension.colonne)},\"{modalite}\")"
             f"/SUMIFS({schema.plage(numerateur)},"
-            f'{schema.plage(colonne_date)},">="&{f.DEBUT},'
+            f"{schema.plage(colonne_date)},\">=\"&{f.DEBUT},"
             f'{schema.plage(colonne_date)},"<="&{f.FIN}),"")'
         )
         theme.ligne(
@@ -727,14 +717,8 @@ def _bloc_indicateur(
             else '="état"',
             "=1",
         ],
-        [
-            None,
-            f.format_unite(mesure),
-            theme.NB,
-            f.format_unite(mesure),
-            theme.VARIATION if mesure.comparable_entre_periodes else None,
-            theme.PCT,
-        ],
+        [None, f.format_unite(mesure), theme.NB, f.format_unite(mesure),
+         theme.VARIATION if mesure.comparable_entre_periodes else None, theme.PCT],
         gras=True,
         fond=theme.BLEU_CLAIR,
     )
@@ -875,7 +859,8 @@ def files_de_travail(
     theme.bandeau(
         ws,
         "Files de travail",
-        f"Situation au {situation:%d/%m/%Y} · listes triées par priorité, à traiter dans l'ordre",
+        f"Situation au {situation:%d/%m/%Y} · listes triées par priorité, "
+        "à traiter dans l'ordre",
         "Opérationnel",
         colonnes=9,
     )

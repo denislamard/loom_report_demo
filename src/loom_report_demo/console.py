@@ -13,10 +13,12 @@ from __future__ import annotations
 
 import json
 import sys
+import textwrap
 from pathlib import Path
 from typing import TYPE_CHECKING
 
 from loom_report_demo import paths
+from loom_report_demo.analysis import catalogue as cat
 from loom_report_demo.app import Ecriture, Explorateur, Saisie
 from loom_report_demo.niveaux import (
     NIVEAUX,
@@ -34,6 +36,8 @@ if TYPE_CHECKING:
 
 #: Largeur des règles et des bandeaux, en caractères.
 _LARGEUR = 74
+#: Largeur réservée au montant, à droite de chaque indicateur.
+_COLONNE_EUROS = 14
 _TITRE = "Bâti-Sud — rapport de pilotage"
 _SOUS_TITRE = "Démonstration loom-ia · jeu de données fictif, 4 exercices"
 
@@ -63,27 +67,6 @@ def menu() -> str:
     return "\n".join(lignes)
 
 
-def resume(d: DefinitionNiveau) -> str:
-    """Ce que le niveau choisi implique, affiché avant toute dépense de jetons."""
-    nature = "tableau de bord" if d.livrable is Livrable.TABLEAU_DE_BORD else "file de travail"
-    return "\n".join(
-        (
-            "",
-            _regle(),
-            f"  Niveau retenu      {d.niveau.value}",
-            f"  Question           {d.question}",
-            f"  Cadrage            {d.cadrage}",
-            f"  Livrable           {nature}",
-            f"  Indicateurs        {len(d.socle)} de socle + {d.nb_variables} choisis "
-            f"par l'agent = {d.nb_indicateurs}",
-            f"  Socle imposé       {', '.join(d.socle)}",
-            f"  Modèle d'analyse   {_orchestrateur()}",
-            f"  Durée de vie       {d.duree_vie}",
-            _regle(),
-        )
-    )
-
-
 def _orchestrateur() -> str:
     """Modèle réellement aux commandes, lu dans la configuration.
 
@@ -95,12 +78,39 @@ def _orchestrateur() -> str:
         config = json.loads(paths.settings().read_text(encoding="utf-8"))
         principal = next(r for r in config["roles"] if r["name"] == "main")
         return str(principal["llm"])
-    except (OSError, KeyError, StopIteration, json.JSONDecodeError):
+    except OSError, KeyError, StopIteration, json.JSONDecodeError:
         return "non déterminé"
 
 
+def resume(d: DefinitionNiveau) -> str:
+    """Ce que le niveau implique, en cinq lignes plutôt qu'en dix.
+
+    L'écran précédent alignait dix couples clé-valeur. Personne ne les lit : ce
+    qui compte est ce qu'on va obtenir et combien l'agent en décide.
+    """
+    nature = "tableau de bord" if d.livrable is Livrable.TABLEAU_DE_BORD else "files de travail"
+    lignes = [
+        "",
+        _regle(),
+        f"  {d.question}",
+        f"  {d.cadrage}",
+        f"  Livrable   {nature} · sélection {d.duree_vie}",
+    ]
+    # Le socle opérationnel dépasse la largeur d'une ligne : on le replie plutôt
+    # que de le tronquer, car chaque clé y est utile.
+    socle = textwrap.wrap(", ".join(d.socle), _LARGEUR - 13)
+    for rang, morceau in enumerate(socle):
+        etiquette = "  Socle      " if rang == 0 else " " * 13
+        lignes.append(f"{etiquette}{morceau}")
+    lignes.append(
+        f"  L'agent choisit {d.nb_variables} indicateurs de plus · modèle {_orchestrateur()}"
+    )
+    lignes.append(_regle())
+    return "\n".join(lignes)
+
+
 def lire_choix(saisir: Saisie) -> DefinitionNiveau | None:
-    """Boucle de saisie. Rend `None` si l'utilisateur quitte.
+    """Boucle de saisie du menu. Rend `None` si l'utilisateur quitte.
 
     Une saisie invalide n'interrompt pas : elle réaffiche la consigne. Une
     interruption clavier ou une fin de flux valent « quitter ».
@@ -108,7 +118,7 @@ def lire_choix(saisir: Saisie) -> DefinitionNiveau | None:
     while True:
         try:
             brut = saisir("  Votre choix [1-3, q] : ").strip().lower()
-        except (EOFError, KeyboardInterrupt):
+        except EOFError, KeyboardInterrupt:
             return None
         if brut in _QUITTER:
             return None
@@ -117,44 +127,95 @@ def lire_choix(saisir: Saisie) -> DefinitionNiveau | None:
         print(f"  Choix non reconnu : {brut!r}. Attendu 1, 2, 3 ou q.")
 
 
-def trace(exploration: Exploration, ecrire: Ecriture) -> None:
-    """Affiche ce que l'agent a fait, hypothèse par hypothèse.
+def _compter_outils(exploration: Exploration) -> str:
+    """« ventilation ×7 · croiser ×3 » plutôt que quatorze lignes de détail."""
+    comptes: dict[str, int] = {}
+    for appel in exploration.registre.appels:
+        if appel.outil != "noter_hypothese":
+            comptes[appel.outil] = comptes.get(appel.outil, 0) + 1
+    ordonnes = sorted(comptes.items(), key=lambda x: -x[1])
+    return " · ".join(f"{nom} ×{n}" for nom, n in ordonnes)
 
-    L'exploration dure une minute. En console c'est du temps mort, sauf si l'on
-    montre le raisonnement au fil de l'eau. Le prospect regarde l'agent réfléchir
-    et se tromper ; le classeur, il le regarde dix secondes.
+
+def trace(exploration: Exploration, ecrire: Ecriture) -> None:
+    """Ce que l'agent a fait, en deux lignes.
+
+    La version précédente déroulait chaque appel, hypothèses et sondages mêlés
+    dans l'ordre d'arrivée. On y lisait mal, et surtout on n'y lisait rien : le
+    verdict de chaque hypothèse figure plus bas, et le détail complet part dans
+    la feuille « Ce qui a été regardé ». Ici, seule compte l'ampleur du travail.
+    """
+    registre = exploration.registre
+    duree = sum(a.duree_ms for a in registre.appels) / 1000
+    ecrire("")
+    ecrire(
+        f"  Exploration   {len(registre.hypotheses)} hypothèses · "
+        f"{registre.sondages} sondages · {duree:.1f} s"
+    )
+    ecrire(f"                {_compter_outils(exploration)}")
+
+
+def _materialite(exploration: Exploration | None, mesure: str, dimension: str | None) -> str:
+    """Ce que vaut l'écart, en euros. C'est le chiffre qui emporte la décision."""
+    if exploration is None:
+        return ""
+    cle = f"{mesure}|{dimension}"
+    for candidat in exploration.criblage.evalues:
+        if candidat.cle == cle and candidat.scores.materialite_euros:
+            montant = f"{candidat.scores.materialite_euros:,.0f}".replace(",", " ")
+            return f"{montant} €/an"
+    return ""
+
+
+def _abreger(texte: str, largeur: int) -> str:
+    if len(texte) <= largeur:
+        return texte
+    return texte[: largeur - 1].rstrip() + "…"
+
+
+def tableau_selection(
+    selection: Selection, ecrire: Ecriture, exploration: Exploration | None = None
+) -> None:
+    """La sélection soumise à l'arbitrage.
+
+    Les retenues occupent la place, les écartées tiennent sur une ligne chacune :
+    l'une se décide, l'autre se survole. Le motif complet reste dans le classeur.
     """
     ecrire("")
-    ecrire(_regle())
-    ecrire(f"  Exploration — {exploration.registre.sondages} sondages")
-    ecrire("")
-    for appel in exploration.registre.appels:
-        if appel.outil == "noter_hypothese":
-            ecrire(f"  ○ {appel.resume}")
-        else:
-            ecrire(f"    ├ {appel.outil:<18} {appel.duree_ms:>5} ms   {appel.resume}")
+    ecrire(_regle("━"))
+    for ligne_ in textwrap.wrap(selection.message_direction, _LARGEUR - 4):
+        ecrire(f"  {ligne_}")
+    ecrire(_regle("━"))
     ecrire("")
 
-
-def tableau_selection(selection: Selection, ecrire: Ecriture) -> None:
-    """La sélection soumise à l'arbitrage, avant toute génération."""
-    ecrire(_regle())
-    ecrire(f"  {selection.message_direction}")
-    ecrire("")
-    ecrire("  Indicateurs retenus")
     for rang, indicateur in enumerate(selection.variables, start=1):
-        ecrire(f"   {rang}  {indicateur.mesure} par {indicateur.dimension or '—'}")
-        ecrire(f"      {indicateur.decision_attendue}")
-    if selection.ecartees:
+        mesure = cat.mesure(indicateur.mesure)
+        coupe = (
+            f"par {cat.dimension(indicateur.dimension).libelle.lower()}"
+            if indicateur.dimension
+            else "ensemble"
+        )
+        euros = _materialite(exploration, indicateur.mesure, indicateur.dimension)
+        # La colonne des euros est ancrée à droite : le libellé est raccourci
+        # pour qu'elle ne se décale jamais, quelle que soit la mesure.
+        entete = _abreger(f"{mesure.libelle} · {coupe}", _LARGEUR - _COLONNE_EUROS - 6)
+        ecrire(f"  {rang}  {entete:<{_LARGEUR - _COLONNE_EUROS - 6}}{euros:>{_COLONNE_EUROS}}")
+        ecrire(f"     → {_abreger(indicateur.decision_attendue, _LARGEUR - 8)}")
         ecrire("")
-        ecrire("  Hypothèses écartées")
+
+    if selection.ecartees:
+        ecrire(f"  Écartées ({len(selection.ecartees)})")
         for hypothese in selection.ecartees:
-            ecrire(f"      {hypothese.identifiant}  {hypothese.enonce}")
-            ecrire(f"          {hypothese.motif}")
-    ecrire(_regle())
+            ecrire(f"   {hypothese.identifiant:<4}{_abreger(hypothese.motif, _LARGEUR - 8)}")
+        ecrire("")
 
 
-def arbitrer(selection: Selection, saisir: Saisie, ecrire: Ecriture) -> Selection | None:
+def arbitrer(
+    selection: Selection,
+    saisir: Saisie,
+    ecrire: Ecriture,
+    exploration: Exploration | None = None,
+) -> Selection | None:
     """Laisse l'humain retirer un indicateur avant génération.
 
     Trois raisons d'être. C'est la seule barrière avant qu'une bêtise n'atteigne
@@ -171,13 +232,11 @@ def arbitrer(selection: Selection, saisir: Saisie, ecrire: Ecriture) -> Selectio
     while True:
         borne = len(selection.variables)
         ecrire("")
-        ecrire("   g   générer le classeur")
-        if borne > 1:
-            ecrire(f"   1-{borne}   retirer un indicateur de la liste")
-        ecrire("   q   annuler sans rien produire")
+        options = "[g] générer" + (f" · [1-{borne}] retirer" if borne > 1 else "")
+        ecrire(f"  {options} · [q] annuler")
         try:
-            reponse = saisir("  Votre choix [g, 1-%d, q] : " % borne).strip().lower()
-        except (EOFError, KeyboardInterrupt):
+            reponse = saisir(f"  Votre choix [g, 1-{borne}, q] : ").strip().lower()
+        except EOFError, KeyboardInterrupt:
             return None
 
         if reponse in ("q", "quitter", "annuler"):
@@ -186,15 +245,12 @@ def arbitrer(selection: Selection, saisir: Saisie, ecrire: Ecriture) -> Selectio
             return selection
         if reponse.isdigit() and 1 <= int(reponse) <= borne:
             if borne == 1:
-                ecrire(
-                    "  Il doit rester au moins un indicateur. Choisissez [q] pour"
-                    " tout annuler."
-                )
+                ecrire("  Il doit rester au moins un indicateur. Choisissez [q] pour tout annuler.")
                 continue
             retire = selection.variables[int(reponse) - 1]
             selection = selection.sans(int(reponse) - 1)
             ecrire(f"\n  Retiré : {retire.mesure} par {retire.dimension or '—'}")
-            tableau_selection(selection, ecrire)
+            tableau_selection(selection, ecrire, exploration)
             continue
         ecrire(f"  Choix non reconnu : {reponse!r}.")
 
@@ -282,9 +338,9 @@ async def executer(
         return 1
 
     trace(exploration, ecrire)
-    tableau_selection(exploration.selection, ecrire)
+    tableau_selection(exploration.selection, ecrire, exploration)
 
-    retenue = arbitrer(exploration.selection, lire, ecrire)
+    retenue = arbitrer(exploration.selection, lire, ecrire, exploration)
     if retenue is None:
         ecrire("\n  Génération annulée.\n")
         return 0

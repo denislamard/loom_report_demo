@@ -387,23 +387,41 @@ def test_arbitrer_redemande_apres_une_saisie_invalide() -> None:
     assert retenue is not None
 
 
-def test_la_trace_montre_les_hypotheses_et_les_sondages(
-    capsys: pytest.CaptureFixture[str],
-) -> None:
+def test_la_trace_resume_lampleur_du_travail(capsys: pytest.CaptureFixture[str]) -> None:
+    """Deux lignes : le détail complet part dans la feuille « Ce qui a été regardé »."""
     console.trace(_exploration(), print)
-    rendu = capsys.readouterr().out
-    assert "La transformation dépend du délai de relance" in rendu
-    assert "ventilation" in rendu
+    rendu = capsys.readouterr().out.strip().split("\n")
+    assert len(rendu) == 2, f"la trace doit tenir en deux lignes : {rendu}"
+    assert "hypothèses" in rendu[0] and "sondages" in rendu[0]
+    assert "ventilation ×" in rendu[1]
 
 
 def test_le_tableau_montre_les_hypotheses_ecartees(
     capsys: pytest.CaptureFixture[str],
 ) -> None:
-    """Elles portent la moitié de la valeur du rapport."""
+    """Elles portent la moitié de la valeur du rapport, sur une ligne chacune."""
     console.tableau_selection(charger_selection(FIXTURE), print)
     rendu = capsys.readouterr().out
-    assert "Hypothèses écartées" in rendu
+    assert "Écartées (2)" in rendu
     assert "Montpellier" in rendu
+
+
+def test_le_tableau_affiche_la_materialite_en_euros(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """C'est le chiffre qui emporte la décision : il ne peut pas rester invisible."""
+    exploration = _exploration()
+    console.tableau_selection(exploration.selection, print, exploration)
+    assert "€/an" in capsys.readouterr().out
+
+
+def test_aucune_ligne_ne_depasse_la_largeur_de_la_regle(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    exploration = _exploration()
+    console.tableau_selection(exploration.selection, print, exploration)
+    for ligne in capsys.readouterr().out.split("\n"):
+        assert len(ligne) <= console._LARGEUR, ligne
 
 
 def test_le_flux_complet_produit_un_classeur(capsys: pytest.CaptureFixture[str]) -> None:
@@ -442,3 +460,19 @@ def test_le_flux_refuse_dexplorer_sans_cle(
     code = asyncio.run(console.executer(saisir=_saisies("2")))
     assert code == 1
     assert "uv run rapport" in capsys.readouterr().out
+
+
+def test_le_resume_annonce_la_nature_du_livrable() -> None:
+    """L'opérationnel produit des files, pas un tableau de bord : ça doit se voir."""
+    from loom_report_demo.niveaux import NIVEAUX
+
+    assert "files de travail" in console.resume(NIVEAUX[Niveau.OPERATIONNEL])
+    assert "tableau de bord" in console.resume(NIVEAUX[Niveau.GESTION])
+
+
+def test_le_resume_ne_deborde_jamais() -> None:
+    from loom_report_demo.niveaux import NIVEAUX
+
+    for niveau in Niveau:
+        for ligne in console.resume(NIVEAUX[niveau]).split("\n"):
+            assert len(ligne) <= console._LARGEUR, ligne

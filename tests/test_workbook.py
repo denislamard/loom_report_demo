@@ -21,6 +21,7 @@ confronte.
 from __future__ import annotations
 
 import json
+import tempfile
 from functools import cache
 from pathlib import Path
 
@@ -400,3 +401,31 @@ def test_ecrire_feuilles_ne_depend_pas_du_repertoire_courant(tmp_path: Path) -> 
     classeur.remove(classeur.active)
     ecrire_feuilles(classeur, schemas())
     assert set(classeur.sheetnames) == set(f.COLONNES_CALCULEES)
+
+
+def test_deux_cartes_sur_la_meme_mesure_restent_distinctes() -> None:
+    """Cas rencontré en exécution réelle : l'agent a retenu deux coupes du panier
+    moyen et deux du taux de transformation. Sans la dimension au libellé, la
+    Synthèse affichait deux paires de cartes rigoureusement identiques."""
+    from openpyxl import load_workbook
+
+    charge = json.loads(FIXTURE.read_text(encoding="utf-8"))
+    charge["variables"] = [
+        {**charge["variables"][0], "mesure": "panier_moyen_gagne", "dimension": "type_client",
+         "seuil_alerte": None},
+        {**charge["variables"][1], "mesure": "panier_moyen_gagne", "dimension": "agence",
+         "seuil_alerte": None},
+        {**charge["variables"][2], "mesure": "taux_transformation", "dimension": "agence",
+         "seuil_alerte": 0.25},
+        {**charge["variables"][3], "mesure": "taux_transformation", "dimension": "type_client",
+         "seuil_alerte": 0.25},
+    ]
+    from loom_report_demo.parsing import analyser
+    from loom_report_demo.workbook import construire
+
+    with tempfile.TemporaryDirectory() as dossier:
+        chemin = construire(analyser(charge), Path(dossier) / "c.xlsx")
+        feuille = load_workbook(chemin, data_only=True)["Synthèse"]
+        libelles = [feuille.cell(row=11, column=c).value for c in (2, 5, 8, 11)]
+    assert len(set(libelles)) == 4, f"cartes indiscernables : {libelles}"
+    assert all("PAR " in str(x) for x in libelles)
