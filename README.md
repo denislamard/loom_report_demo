@@ -2,181 +2,92 @@
 
 Démonstration de [`loom-ia`](https://github.com/denislamard/loom) sur un cas de
 gestion : produire le tableau de bord d'une PME artisanale à partir de ses
-exports comptables, **en laissant l'agent décider quels indicateurs méritent
+exports comptables, **en laissant un agent décider quels indicateurs méritent
 d'être suivis**.
 
-Le scénario est celui de Bâti-Sud, une entreprise de plomberie, chauffage et
-électricité de douze techniciens répartis sur trois agences. Quatre exercices
-d'historique, sept fichiers CSV, et une question posée en console : *où va mon
-entreprise*, *qu'est-ce que je corrige ce mois-ci*, ou *qu'est-ce que je traite
-cette semaine*. Le programme rend un classeur Excel.
-
-> **État : jalon 4 sur 8.** Le classeur est produit, complet et vérifié, à partir
-> d'une sélection d'indicateurs. L'agent qui la choisira arrive au jalon 6.
-> Voir [ROADMAP.md](ROADMAP.md).
+**Application console.** On répond à une question, l'agent explore les données,
+propose une sélection d'indicateurs, et le programme produit un classeur Excel.
 
 ---
 
-## Ce que la démo cherche à montrer
+## 1. L'objectif
 
-Le point intéressant n'est pas qu'un LLM commente des chiffres. C'est le partage
-du travail entre ce qui doit être exact et ce qui demande du jugement.
+Le scénario est celui de Bâti-Sud, une entreprise fictive de plomberie,
+chauffage et électricité : douze techniciens, trois agences, quatre exercices
+d'historique, sept fichiers CSV. Aucune donnée réelle, aucun client réel.
 
-**L'agent choisit la question, le code calcule la réponse.** Le modèle ne
-rapporte jamais une valeur : il rend une *spécification* d'indicateur — mesure,
-dimension, cadrage, comparaison. Python la revalide contre son catalogue, résout
-le gabarit de formule correspondant, et écrit dans le classeur. La valeur
-affichée n'a jamais transité par le modèle, même s'il l'a vue pendant son
-exploration.
+L'intérêt n'est pas qu'un modèle de langage commente des chiffres. C'est le
+partage du travail entre ce qui doit être **exact** et ce qui demande du
+**jugement**.
 
-**Aucun chiffre dans la prose du modèle.** Il rédige un constat qualitatif et
-désigne les indicateurs par leur clé. La garde est triviale à écrire et à
-tester : une chaîne contenant un chiffre est rejetée, et `repair_attempts`
-relance le rôle. Seule exception, le `seuil_alerte` — parce qu'un seuil est un
-jugement, pas une mesure.
+### L'agent choisit la question, le code calcule la réponse
 
-**Le pré-criblage est du ressort du code.** Énumérer l'espace des candidats à une
-dimension est trivial pour Python et coûteux pour un modèle. Chaque candidat est
-scoré sur cinq critères — effectif, dispersion, monotonie, stabilité, et surtout
-**matérialité en euros** : *combien rapporterait d'amener la modalité la plus
-défavorable au niveau des autres*. Ce dernier score convertit une anomalie
-statistique en argent, et empêche le modèle de retenir un écart spectaculaire
-mais sans enjeu. L'agent n'intervient que sur l'espace à deux dimensions et
-conditionnel, qui est combinatoire — c'est là qu'il gagne sa place.
+Le modèle ne rapporte jamais une valeur. Il rend une *spécification*
+d'indicateur : une mesure, une dimension, un cadrage. Python la revalide contre
+son catalogue, résout le gabarit de formule correspondant, et l'écrit dans le
+classeur. **La valeur affichée n'a jamais transité par le modèle**, même s'il l'a
+vue pendant son exploration.
 
-Le catalogue déclare aussi les croisements **tautologiques**, où la dimension est
-dérivée de la grandeur mesurée. « Le panier moyen croît avec la tranche de
-montant » est vrai par construction : les cinq scores le notent au maximum, un
-humain le voit d'un coup d'œil, et un modèle le retiendrait avec assurance.
+### Aucun chiffre dans la prose du modèle
 
-**Les hypothèses réfutées sont livrées avec les trouvailles.** L'agent note ses
-hypothèses *avant* de sonder, ce qui l'empêche de rationaliser après coup. Toute
-hypothèse notée finit retenue ou écartée avec son motif ; l'invariant est vérifié
-par le parsing, sans clé d'API. Un dirigeant qui apprend que ce n'est *pas*
-l'agence récente qui plombe la marge a gagné sa réunion.
+Il rédige un constat qualitatif et désigne les indicateurs par leur clé. La
+garde tient en une expression régulière, se teste sans clé d'API, et la promesse
+s'explique en une phrase : *le modèle n'écrit aucun chiffre, donc il ne peut pas
+se tromper sur un chiffre*. Seule exception : le `seuil_alerte`, parce qu'un
+seuil est un jugement et non une mesure.
 
-**La liberté de l'agent est bornée par la durée de vie de sa décision.** Un
-indicateur stratégique est gelé douze mois : il mérite Sonnet et un juge sévère,
-avec un critère bloquant de non-manipulabilité. Un seuil opérationnel est
-recalculé à chaque exécution : Haiku suffit. Le routage par coût devient un
-argument d'architecture, pas seulement une économie.
+### Le criblage relève du code, pas du modèle
 
----
+Énumérer l'espace des candidats à une dimension est trivial pour Python et
+coûteux pour un modèle. Le programme score donc en amont tous les croisements
+valides, quatre-vingt-dix au niveau gestion, sur cinq critères : effectif,
+dispersion, monotonie, stabilité, et surtout **matérialité en euros**. Ce dernier
+critère mesure ce que rapporterait d'amener la modalité la plus défavorable au
+niveau des autres. Il convertit une anomalie statistique en argent, et écarte les
+écarts spectaculaires mais sans enjeu.
 
-## Les trois niveaux
+L'agent n'intervient que sur l'espace à deux dimensions et conditionnel, celui
+qui est réellement combinatoire.
 
-Le niveau est la seule décision prise par l'humain. Tout le reste s'y adosse, et
-`niveaux.py` en est la source unique.
+### Les hypothèses réfutées sont livrées avec les trouvailles
+
+L'agent note ses hypothèses **avant** de sonder, ce qui l'empêche de rationaliser
+après coup. Toute hypothèse notée finit retenue ou écartée avec son motif ;
+l'invariant est vérifié par le parsing. Un dirigeant qui apprend que ce n'est
+*pas* l'agence récente qui plombe la marge a gagné sa réunion.
+
+### Trois niveaux, trois libertés
+
+Le niveau est la seule décision prise par l'humain. Tout le reste s'y adosse,
+selon un principe simple : **la liberté de l'agent est inversement
+proportionnelle à la durée de vie de sa décision.**
 
 | | Stratégique | Gestion | Opérationnel |
 |---|---|---|---|
 | Question | Où va mon entreprise ? | Qu'est-ce que je corrige ce mois-ci ? | Qu'est-ce que je traite cette semaine ? |
-| Cadrage | 4 exercices, N vs N-1 | 12 mois glissants | 30 derniers jours |
+| Cadrage | exercice N contre N-1 | 12 mois glissants | 30 derniers jours |
 | Socle imposé | 4 mesures | 4 mesures | 3 mesures de flux |
 | Choisis par l'agent | 2 | 4 | 2 |
-| Durée de vie | 12 mois, gelée | 1 mois | recalculée |
-| Modèle | SONNET | HAIKU | HAIKU |
-| Livrable | tableau de bord | tableau de bord | **file de travail** |
+| Durée de vie | gelée 12 mois | revue chaque mois | recalculée |
+| Livrable | tableau de bord | tableau de bord | **files de travail** |
 
-Le troisième niveau ne produit pas le même objet. Ce n'est pas un tableau
-d'indicateurs à contempler, c'est une liste triée d'unités à traiter — les
-créances à appeler, les devis à relancer. Elle sort aussi en JSON, pour être
-poussée dans la file d'un agent de relance.
-
----
-
-## Architecture
-
-```
-assets/data/*.csv
-    │
-    ├─► fingerprint_dataset()      SHA-256 par fichier + empreinte globale
-    │
-    ▼
-analysis/profil.py                 volumétrie, dimensions, totaux d'ancrage
-analysis/criblage.py               énumération + 5 scores, dont la matérialité
-    │
-    ▼
-reporting.explorer(niveau)
-    │
-    ▼
-Agent (loom-ia) ─► M3_MAIN, orchestrateur
-                       │  noter_hypothese() puis 5 outils pandas
-                       │  arguments en enum fermés — tools.validate_arguments
-                       ▼
-                   rôle exploration ─► HAIKU ou SONNET selon le niveau
-                       │   output.schema ◄── validation + repair_attempts
-                       │   judge (20 %)  ◄── SONNET
-                       ▼
-                 sélection d'indicateurs, hypothèses écartées
-    │
-    ▼
-[console]  affichage, retrait possible d'un indicateur  ← l'humain tranche
-    │
-    ▼
-parsing.parse_selection()          garde zéro-chiffre, validation catalogue
-    │
-    ▼
-workbook/                          openpyxl — formules vivantes, jamais de valeurs figées
-    │
-    ▼
-rapports/Bati-Sud_<niveau>.xlsx
-```
-
-### Les modules
-
-`__init__.py` porte `run()` et diffère l'import de `app` : au niveau module, il
-tirerait `loom_ia` dès qu'on importe le moindre sous-module, y compris ceux qui
-doivent rester testables sans clé d'API.
-
-`app.py` ne porte que le contrat de la couche d'interaction — les trois alias
-qui décrivent les coutures injectables — et `entry()`. Une quarantaine de lignes,
-lisibles d'un coup d'œil.
-
-`console.py` porte le déroulé : menu, trace de l'exploration, tableau de
-sélection, arbitrage humain, génération. La saisie et l'écriture y sont
-injectées, ce qui rend tout le flux testable sans terminal.
-
-`niveaux.py` porte le type de domaine qui commute tout le reste : cadrage,
-socle, nombre d'indicateurs variables, modèle, durée de vie, nature du livrable.
-
-`dataset/` génère le jeu fictif. `lignes.py` porte le contrat de données,
-`parametres.py` les constantes métier et la trajectoire, `generateur.py` la
-production. Bibliothèque standard uniquement.
-
-`fingerprint.py` calcule les empreintes. `hashlib` uniquement.
-
-`paths.py` résout les chemins indépendamment du répertoire courant. Sans aucune
-dépendance.
-
-`parsing.py` est la frontière : tout ce qui vient du modèle y passe. Décodage,
-garde zéro-chiffre, validation contre le catalogue, invariant des hypothèses.
-Bibliothèque standard uniquement.
-
-`reporting.py` sera le **seul** module à importer `loom_ia`.
-
-`analysis/` porte le catalogue de mesures, les cadrages, le moteur de calcul, le
-criblage et le profil. `catalogue.py` est purement déclaratif — c'est de lui que seront tirés
-les `enum` fermés des outils d'exploration. `chargement.py` est le seul module
-qui fait des jointures ; le moteur ne connaît que des colonnes plates. Pandas
-uniquement, pas de réseau.
-
-`workbook/` produit le classeur. `openpyxl` uniquement. `schema.py` résout les
-colonnes par nom de champ, `formules.py` traduit l'algèbre du catalogue en
-`SUMIFS`, `selection.py` porte le contrat que l'agent remplira au jalon 6.
-
-Tout sauf `reporting.py` se teste sans clé d'API et sans dépenser un centime.
+Le troisième niveau ne produit pas le même objet : ce n'est pas un tableau
+d'indicateurs à contempler, c'est une liste triée d'unités à traiter : créances à
+appeler, devis à relancer, interventions en dérive. Elle sort aussi en JSON, pour
+être poussée dans la file d'un agent de relance.
 
 ---
 
-## Installation
+## 2. Faire fonctionner la démonstration
 
 ### Prérequis
 
 - Python 3.14 ou plus récent
 - [uv](https://docs.astral.sh/uv/)
-- Une clé API Anthropic, sur <https://console.anthropic.com>
-- Une clé API MiniMax, sur <https://www.minimax.io>
+- une clé API Anthropic, sur <https://console.anthropic.com/settings/keys>
+- une clé API MiniMax, sur <https://www.minimax.io> (section *API Keys*)
+
+### Installation
 
 ```bash
 git clone <ce-dépôt> loom_report_demo
@@ -184,57 +95,43 @@ cd loom_report_demo
 uv sync
 ```
 
-`pandas` et `openpyxl` ont été ajoutés aux dépendances : `uv lock` est nécessaire
-avant le premier `uv sync`. Les deux publient des roues `cp314`, `pandas` depuis
-la 2.3.3.
+### Renseigner le fichier `.env`
 
-### Les clés d'API
+Sans lui, l'application affiche le menu mais refuse d'explorer.
 
 ```bash
 cp files/.env.example files/.env
 $EDITOR files/.env
+```
+
+Le fichier doit contenir vos deux clés :
+
+```dotenv
+# files/.env
+ANTHROPIC_API_KEY=sk-ant-votre-cle-ici
+M3_API_KEY=votre-cle-ici
+```
+
+**Les noms de variables ne sont pas arbitraires.** Ils proviennent du champ
+`api_keyname` de chaque bloc `llm` dans `files/settings.json` : renommer l'un
+oblige à renommer l'autre.
+
+Vérifiez que le fichier est bien exclu du dépôt avant tout commit :
+
+```bash
 git check-ignore -v files/.env
 ```
 
-Si la dernière commande ne renvoie rien, vos clés partiront au prochain commit.
+Si cette commande ne renvoie rien, **vos clés partiront au prochain commit**.
 
-Les noms de variables ne sont pas arbitraires : ils proviennent du champ
-`api_keyname` de chaque bloc `llm` dans `files/settings.json`. Renommer l'un
-oblige à renommer l'autre.
-
-### Le jeu de données
-
-Les sept CSV sont versionnés dans `assets/data`. Ils sont **fictifs** : aucune
-donnée réelle, aucun client réel. Ils sont livrés plutôt que régénérés à chaque
-exécution, faute de quoi la narration changerait d'un lancement à l'autre et le
-prompt ne serait plus calibrable.
-
-Quatre exercices, du 01/07/2022 au 30/06/2026. La trajectoire est lisible : deux
-agences et sept techniciens à l'origine, deux embauches en 2023, ouverture de
-Montpellier en septembre 2024, douze techniciens à la fin. Le nombre de devis
-double, le chiffre d'affaires progresse de 60 %, la marge perd 7,6 points.
-
-`uv run seed` les régénère à l'identique : le générateur est déterministe, donc
-un `git status` propre après régénération prouve que les données du dépôt
-correspondent au code qui les produit. C'est le contrôle le plus simple, et il
-tient en une commande.
-
-Chaque exécution affiche l'empreinte SHA-256 du jeu, qui figurera dans le
-classeur : elle établit que le rapport se rapporte à ces fichiers exacts, non
-modifiés depuis. Elle n'établit en revanche aucune antériorité — cela
-demanderait un horodatage RFC 3161 par un tiers de confiance.
-
----
-
-## Utilisation
+### Lancer l'application
 
 ```bash
-uv run app        # le rapport
-uv run seed       # régénérer le jeu de données
-uv run profil     # la carte du terrain remise à l'agent
-uv run candidats  # ce que le criblage trouve seul, sans IA
-uv run rapport --selection tests/fixtures/gestion.json
+uv run app
 ```
+
+L'application pose une question, annonce ce qu'elle va produire, puis explore.
+L'exploration prend une minute environ et coûte quelques centimes.
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -251,83 +148,190 @@ uv run rapport --selection tests/fixtures/gestion.json
    q   quitter
 ```
 
-Le menu est formulé dans la langue du client. « Stratégique, gestion,
-opérationnel » est du vocabulaire de contrôleur de gestion : un artisan ne sait
-pas y répondre, alors que la question se répond seule. En rendez-vous, le menu
-lui-même est déjà un argument — et un test échoue si ce jargon réapparaît dans un
-libellé.
+Le menu est formulé dans la langue du client : « stratégique, gestion,
+opérationnel » est du vocabulaire de contrôleur de gestion, auquel un artisan ne
+sait pas répondre.
 
----
+La sélection proposée est ensuite soumise à votre arbitrage, matérialité en euros
+à l'appui. Vous pouvez en retirer un indicateur avant génération : c'est la seule
+barrière entre une erreur du modèle et le livrable.
 
-## Observabilité
+```
+  1  Taux de transformation des devis · par délai de premi…  106 770 €/an
+     → Fixer un délai de relance maximal et l'outiller, plutôt que de le…
 
-Les chemins déclarés dans `files/settings.json` sont relatifs au répertoire remis
-à `Agent`, c'est-à-dire `files/`. Après une exécution :
+  [g] générer · [1-4] retirer · [q] annuler
+```
+
+Le classeur atterrit dans `rapports/`.
+
+### Les autres commandes
+
+| Commande | Ce qu'elle fait | Clé requise |
+|---|---|---|
+| `uv run app` | le flux complet | oui |
+| `uv run app --rejouer` | reprend la dernière sélection sans rappeler le modèle | non |
+| `uv run app --forcer` | passe outre le gel d'une sélection stratégique | oui |
+| `uv run seed` | régénère le jeu de données | non |
+| `uv run profil --niveau gestion` | la carte du terrain remise à l'agent | non |
+| `uv run candidats --niveau gestion` | ce que le criblage trouve seul, sans IA | non |
+| `uv run rapport --selection tests/fixtures/gestion.json` | produit un classeur depuis une sélection écrite à la main | non |
+
+`--rejouer` sert en rendez-vous client : un agent qui choisit d'autres
+indicateurs à chaque lancement empêche de montrer deux fois la même chose.
+
+### Le jeu de données
+
+Les sept CSV sont versionnés dans `assets/data`. Ils sont livrés plutôt que
+régénérés à chaque exécution, faute de quoi la narration changerait d'un
+lancement à l'autre et les prompts ne seraient plus calibrables.
+
+`uv run seed` les régénère à l'identique. Le générateur étant déterministe, un
+`git status` propre après régénération prouve que les données du dépôt
+correspondent bien au code qui les produit.
+
+### Observabilité
+
+Les chemins déclarés dans `files/settings.json` sont relatifs à `files/`.
 
 | Chemin | Contenu |
 |---|---|
-| `files/log/agent.log` | échanges LLM complets, niveau `DEBUG` |
-| `files/log/metrics.jsonl` | une ligne par appel : tokens, coût, latence |
+| `files/log/agent.log` | échanges LLM complets |
+| `files/log/metrics.jsonl` | une ligne par appel : jetons, coût, latence |
+| `files/log/derniere_sortie.txt` | dernière réponse brute du modèle, écrite avant validation |
 | `files/log/usage/` | consommation cumulée par session |
-| `files/log/memory/` | historique conversationnel, compacté au-delà de 12 000 tokens |
-| `files/log/selection/` | sélection d'indicateurs persistée, un fichier par niveau |
+| `files/log/selection/` | sélection persistée, un fichier par niveau |
 
-Le garde-fou budgétaire est armé à `max_cost_run: 0.05`, `max_calls_run: 25`,
-`max_cost_session: 1.0`, en mode `warn`. Passez-le à `error` pour qu'il bloque.
+En cas d'échec de l'exploration, `derniere_sortie.txt` dit immédiatement s'il
+s'agit d'un problème de forme ou de contenu.
+
+Le garde-fou budgétaire est armé dans `settings.json` : `max_cost_run`,
+`max_calls_run` et `max_cost_session`, en mode `warn`.
 
 ---
 
-## Développement
+## 3. Architecture logicielle
+
+### Le flux
+
+```
+assets/data/*.csv                    sept exports, versionnés
+    │
+    ├─► fingerprint.py               SHA-256 par fichier + empreinte globale
+    │
+    ▼
+analysis/chargement.py               jointures, colonnes dérivées
+analysis/profil.py                   la carte du terrain
+analysis/criblage.py                 tous les croisements valides, 5 scores
+    │
+    ▼
+reporting.py ──► Agent (loom-ia)     SEUL module à importer loom_ia
+                     │
+                     │  noter_hypothese, puis cinq outils pandas
+                     │  arguments en enum fermés, niveau capturé
+                     ▼
+                 rôle `main`         explore, juge ET rédige la sortie
+                     │               output.schema + juge SONNET (20 %)
+                     ▼
+                 JSON de sélection
+    │
+    ▼
+parsing.py                           garde zéro-chiffre, validation catalogue,
+    │                                invariant des hypothèses
+    ▼
+console.py                           affichage, arbitrage humain
+    │
+    ▼
+workbook/                            openpyxl, formules vivantes
+    │
+    ▼
+rapports/Bati-Sud_<niveau>.xlsx
+```
+
+### Les modules
+
+**`app.py`** ne porte que deux choses : le contrat de la couche d'interaction,
+soit trois alias décrivant les coutures injectables, et `entry()`. Une
+cinquantaine de lignes.
+
+**`console.py`** déroule l'exécution : menu, trace, tableau de sélection,
+arbitrage, génération. Saisie et écriture y sont injectées, ce qui rend tout le
+flux testable sans terminal.
+
+**`niveaux.py`** définit le type de domaine qui commute tout le reste : cadrage,
+socle, nombre d'indicateurs variables, durée de vie, nature du livrable.
+
+**`analysis/`** est le cœur analytique : pandas uniquement, aucun réseau.
+`catalogue.py` y est purement déclaratif : dix-neuf mesures et douze dimensions,
+avec leurs unités, leur sens, leur nature (flux ou stock) et les croisements
+**tautologiques** interdits. C'est de lui que sont tirés les `enum` fermés des
+outils d'exploration. `chargement.py` est le seul module qui fait des jointures ;
+le moteur ne connaît que des colonnes plates. `outils.py` expose les six outils remis à
+l'agent sous forme de fonctions pures, ce qui permet de les éprouver
+exhaustivement sans clé d'API.
+
+**`parsing.py`** est la frontière. Tout ce qui vient du modèle y passe, et rien
+n'en ressort qui n'ait été confronté au catalogue. Bibliothèque standard
+uniquement.
+
+**`workbook/`** produit le classeur. `formules.py` traduit l'algèbre du catalogue
+en `SUMIFS`. `schema.py` résout les colonnes par **nom de champ**, jamais par
+lettre. Ces noms sont exactement ceux du catalogue, ce qui garantit que le
+classeur et pandas calculent la même chose.
+
+**`dataset/`** génère le jeu fictif de façon déterministe. **`etat.py`** persiste
+la sélection d'une édition à l'autre. **`reporting.py`** est le seul module à
+importer `loom_ia`, et se réduit à un câblage d'une page.
+
+### Trois décisions qui structurent le reste
+
+**Un seul modèle, un seul contrat.** L'orchestrateur explore, juge et rédige la
+sortie structurée. Une première version séparait le raisonnement de la mise en
+forme ; le transcripteur recevait les constats en texte libre et devait
+reconstruire une enveloppe qu'il n'avait jamais vue. Il inventait des clés. Le
+prix de la fusion est le raisonnement étendu : `thinking` étant incompatible avec
+un schéma de sortie, il a été retiré de l'orchestrateur.
+
+**On somme avant de diviser.** La marge moyenne de trois agences n'est pas la
+moyenne de leurs trois taux. Chaque mesure porte son numérateur et son
+dénominateur en colonnes distinctes, agrégés séparément, divisés en dernier.
+
+**Les mesures de stock ne se comparent pas entre périodes.** Un encours est un
+état à la date de situation ; le comparer aux douze mois précédents produisait
+des écarts de plusieurs milliers de pour cent. Le moteur refuse de produire cet
+écart plutôt que d'en produire un faux.
+
+### Ce qui se teste sans dépenser un jeton
 
 ```bash
-uv run pytest              # sans clé d'API
+uv run pytest        # ~480 cas, quelques secondes
 uv run ruff check .
-uv run ruff format .
 uv run pyright
 ```
 
-331 cas au jalon 4, tous sans clé d'API, en une dizaine de secondes. Les tests du
-classeur portent sur les **chaînes de formule**, jamais sur des valeurs : c'est
-ce qui permet de s'en tenir à `openpyxl`, sans LibreOffice, en intégration
-continue. La saisie est
-injectée plutôt que lue directement, ce qui rend le menu testable sans terminal.
+Tout sauf `reporting.py` se teste sans clé d'API : les outils d'exploration
+s'éprouvent exactement comme le modèle les appellera, et les gardes du parsing
+tournent sur des fixtures JSON. Le classeur, lui, s'assertit sur les chaînes de
+formule produites plutôt que sur des valeurs : le recalcul complet par
+LibreOffice prend près d'une minute sur soixante-quatre mille formules.
 
-Les tests du jeu de données se répartissent en deux familles. La
-**reproductibilité** protège la démonstration : une empreinte de référence est
-figée, et toute évolution du générateur doit être un geste explicite. Les
-**invariants** protègent la crédibilité : pas de facture sans devis, pas
-d'intervention avant l'embauche du technicien, une décision jamais antérieure à
-son émission — et la trajectoire d'entreprise elle-même, car si un réglage la
-casse, la démonstration meurt en silence.
+Ce qui échappe aux tests est le comportement du modèle lui-même : qualité des
+hypothèses, respect de la méthode, coût réel. Cela ne se vérifie qu'en exécution.
 
 ---
 
 ## Limites connues
 
-**Ce n'est pas un outil de comptabilité.** Le jeu de données est fictif et la
-marge calculée est une marge sur coûts directs, hors frais de structure.
+**Ce n'est pas un outil de comptabilité.** Le jeu est fictif et la marge calculée
+est une marge sur coûts directs, hors frais de structure.
 
 **Le classeur ne porte pas de valeurs en cache.** `openpyxl` écrit des formules ;
 Excel et LibreOffice les calculent à l'ouverture, mais `pandas.read_excel` sur le
-fichier produit renverra des cellules vides. Un `--recalc` optionnel est prévu.
+fichier produit renverra des cellules vides.
 
-**Les colonnes calculées existent deux fois**, en pandas pour l'analyse et en
-formules pour le classeur. C'est une duplication assumée : le rapport doit rester
-vivant, et aucune abstraction ne traduit honnêtement pandas en Excel. Les seuils
-sont importés d'un seul module, un test vérifie que les deux jeux portent les
-mêmes noms, et la concordance des valeurs est contrôlée par un recalcul complet
-hors CI.
-
-**La sélection de l'agent varie d'une exécution à l'autre.** `--rejouer`
-rechargera la dernière sélection depuis `files/log/selection/`, ce qui est
-indispensable en démonstration client.
-
-**`M3_MAIN` porte `thinking: adaptive`.** Un rôle à `output.schema` y est
-incompatible sur Anthropic : les rôles d'exploration tournent donc sur HAIKU ou
-SONNET, sans thinking.
+**La sélection de l'agent varie d'une exécution à l'autre.** `--rejouer` existe
+pour cette raison.
 
 ---
-
-## Licence et contact
 
 Denis Lamard, App-Novative. <lamard.denis@gmail.com>
