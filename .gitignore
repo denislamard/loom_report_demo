@@ -4,7 +4,6 @@ files/.env
 
 # Sorties d'exécution
 files/log/
-rapports/*.xlsx
 
 # Python
 __pycache__/
