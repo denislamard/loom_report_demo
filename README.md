@@ -76,6 +76,27 @@ d'indicateurs à contempler, c'est une liste triée d'unités à traiter : créa
 appeler, devis à relancer, interventions en dérive. Elle sort aussi en JSON, pour
 être poussée dans la file d'un agent de relance.
 
+### Voir le résultat sans rien installer
+
+Les trois rapports sont livrés dans le dossier `rapports/` :
+
+| Fichier | Niveau |
+|---|---|
+| `Bati-Sud_strategique.xlsx` | Où va mon entreprise ? |
+| `Bati-Sud_gestion.xlsx` | Qu'est-ce que je corrige ce mois-ci ? |
+| `Bati-Sud_operationnel.xlsx` | Qu'est-ce que je traite cette semaine ? |
+
+Deux feuilles méritent le détour. **Synthèse** porte le socle imposé, les
+indicateurs choisis et les ponts de décomposition d'écart. **Ce qui a été
+regardé** liste les hypothèses réfutées avec leur motif, ainsi que les
+croisements que le criblage a écartés et pourquoi.
+
+Tout y est en formules vivantes : changer la date de situation dans la feuille
+**Paramètres** recalcule l'ensemble du classeur.
+
+Une nouvelle exécution écrase ces fichiers. Pour en produire d'autres sans les
+perdre, passez un chemin explicite à `uv run rapport --sortie`.
+
 ---
 
 ## 2. Faire fonctionner la démonstration
