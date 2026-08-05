@@ -8,6 +8,11 @@ d'être suivis**.
 **Application console.** On répond à une question, l'agent explore les données,
 propose une sélection d'indicateurs, et le programme produit un classeur Excel.
 
+**Le harnais** — [`loom-ia`](https://github.com/denislamard/loom), le socle
+d'orchestration d'agents sur lequel repose cette démonstration : routage
+multi-modèles, intégration MCP, mémoire de conversation persistante,
+observabilité et gestion de budgets.
+
 ---
 
 ## 1. L'objectif
@@ -76,30 +81,9 @@ d'indicateurs à contempler, c'est une liste triée d'unités à traiter : créa
 appeler, devis à relancer, interventions en dérive. Elle sort aussi en JSON, pour
 être poussée dans la file d'un agent de relance.
 
-### Voir le résultat sans rien installer
-
-Les trois rapports sont livrés dans le dossier `rapports/` :
-
-| Fichier | Niveau |
-|---|---|
-| `Bati-Sud_strategique.xlsx` | Où va mon entreprise ? |
-| `Bati-Sud_gestion.xlsx` | Qu'est-ce que je corrige ce mois-ci ? |
-| `Bati-Sud_operationnel.xlsx` | Qu'est-ce que je traite cette semaine ? |
-
-Deux feuilles méritent le détour. **Synthèse** porte le socle imposé, les
-indicateurs choisis et les ponts de décomposition d'écart. **Ce qui a été
-regardé** liste les hypothèses réfutées avec leur motif, ainsi que les
-croisements que le criblage a écartés et pourquoi.
-
-Tout y est en formules vivantes : changer la date de situation dans la feuille
-**Paramètres** recalcule l'ensemble du classeur.
-
-Une nouvelle exécution écrase ces fichiers. Pour en produire d'autres sans les
-perdre, passez un chemin explicite à `uv run rapport --sortie`.
-
 ---
 
-## 2. Faire fonctionner la démonstration
+## 2. Démarrer
 
 ### Prérequis
 
@@ -108,7 +92,9 @@ perdre, passez un chemin explicite à `uv run rapport --sortie`.
 - une clé API Anthropic, sur <https://console.anthropic.com/settings/keys>
 - une clé API MiniMax, sur <https://www.minimax.io> (section *API Keys*)
 
-Les modèles sont interchangeables. Chaque bloc llm de files/settings.json déclare son endpoint, son identifiant de modèle et sa tarification. Le rôle main désigne celui qui orchestre. En changer revient à modifier une ligne.
+Les modèles sont interchangeables. Chaque bloc `llm` de `files/settings.json`
+déclare son endpoint, son identifiant de modèle et sa tarification. Le rôle
+`main` désigne celui qui orchestre. En changer revient à modifier une ligne.
 
 ### Installation
 
@@ -147,7 +133,19 @@ git check-ignore -v files/.env
 
 Si cette commande ne renvoie rien, **vos clés partiront au prochain commit**.
 
-### Lancer l'application
+### Le jeu de données
+
+Les sept CSV sont versionnés dans `assets/data`. Ils sont livrés plutôt que
+régénérés à chaque exécution, faute de quoi la narration changerait d'un
+lancement à l'autre et les prompts ne seraient plus calibrables.
+
+`uv run seed` les régénère à l'identique. Le générateur étant déterministe, un
+`git status` propre après régénération prouve que les données du dépôt
+correspondent bien au code qui les produit.
+
+---
+
+## 3. Utilisation
 
 ```bash
 uv run app
@@ -203,37 +201,30 @@ Le classeur atterrit dans `rapports/`.
 `--rejouer` sert en rendez-vous client : un agent qui choisit d'autres
 indicateurs à chaque lancement empêche de montrer deux fois la même chose.
 
-### Le jeu de données
+### Voir le résultat sans rien installer
 
-Les sept CSV sont versionnés dans `assets/data`. Ils sont livrés plutôt que
-régénérés à chaque exécution, faute de quoi la narration changerait d'un
-lancement à l'autre et les prompts ne seraient plus calibrables.
+Les trois rapports sont livrés dans le dossier `rapports/` :
 
-`uv run seed` les régénère à l'identique. Le générateur étant déterministe, un
-`git status` propre après régénération prouve que les données du dépôt
-correspondent bien au code qui les produit.
-
-### Observabilité
-
-Les chemins déclarés dans `files/settings.json` sont relatifs à `files/`.
-
-| Chemin | Contenu |
+| Fichier | Niveau |
 |---|---|
-| `files/log/agent.log` | échanges LLM complets |
-| `files/log/metrics.jsonl` | une ligne par appel : jetons, coût, latence |
-| `files/log/derniere_sortie.txt` | dernière réponse brute du modèle, écrite avant validation |
-| `files/log/usage/` | consommation cumulée par session |
-| `files/log/selection/` | sélection persistée, un fichier par niveau |
+| `Bati-Sud_strategique.xlsx` | Où va mon entreprise ? |
+| `Bati-Sud_gestion.xlsx` | Qu'est-ce que je corrige ce mois-ci ? |
+| `Bati-Sud_operationnel.xlsx` | Qu'est-ce que je traite cette semaine ? |
 
-En cas d'échec de l'exploration, `derniere_sortie.txt` dit immédiatement s'il
-s'agit d'un problème de forme ou de contenu.
+Deux feuilles méritent le détour. **Synthèse** porte le socle imposé, les
+indicateurs choisis et les ponts de décomposition d'écart. **Ce qui a été
+regardé** liste les hypothèses réfutées avec leur motif, ainsi que les
+croisements que le criblage a écartés et pourquoi.
 
-Le garde-fou budgétaire est armé dans `settings.json` : `max_cost_run`,
-`max_calls_run` et `max_cost_session`, en mode `warn`.
+Tout y est en formules vivantes : changer la date de situation dans la feuille
+**Paramètres** recalcule l'ensemble du classeur.
+
+Une nouvelle exécution écrase ces fichiers. Pour en produire d'autres sans les
+perdre, passez un chemin explicite à `uv run rapport --sortie`.
 
 ---
 
-## 3. Architecture logicielle
+## 4. Architecture
 
 ### Le flux
 
@@ -289,8 +280,8 @@ socle, nombre d'indicateurs variables, durée de vie, nature du livrable.
 avec leurs unités, leur sens, leur nature (flux ou stock) et les croisements
 **tautologiques** interdits. C'est de lui que sont tirés les `enum` fermés des
 outils d'exploration. `chargement.py` est le seul module qui fait des jointures ;
-le moteur ne connaît que des colonnes plates. `outils.py` expose les six outils remis à
-l'agent sous forme de fonctions pures, ce qui permet de les éprouver
+le moteur ne connaît que des colonnes plates. `outils.py` expose les six outils
+remis à l'agent sous forme de fonctions pures, ce qui permet de les éprouver
 exhaustivement sans clé d'API.
 
 **`parsing.py`** est la frontière. Tout ce qui vient du modèle y passe, et rien
@@ -306,7 +297,7 @@ classeur et pandas calculent la même chose.
 la sélection d'une édition à l'autre. **`reporting.py`** est le seul module à
 importer `loom_ia`, et se réduit à un câblage d'une page.
 
-### Trois décisions qui structurent le reste
+### Décisions structurantes
 
 **Un seul modèle, un seul contrat.** L'orchestrateur explore, juge et rédige la
 sortie structurée. Une première version séparait le raisonnement de la mise en
@@ -324,7 +315,27 @@ dénominateur en colonnes distinctes, agrégés séparément, divisés en dernie
 des écarts de plusieurs milliers de pour cent. Le moteur refuse de produire cet
 écart plutôt que d'en produire un faux.
 
-### Ce qui se teste sans dépenser un jeton
+### Observabilité
+
+Les chemins déclarés dans `files/settings.json` sont relatifs à `files/`.
+
+| Chemin | Contenu |
+|---|---|
+| `files/log/agent.log` | échanges LLM complets |
+| `files/log/metrics.jsonl` | une ligne par appel : jetons, coût, latence |
+| `files/log/derniere_sortie.txt` | dernière réponse brute du modèle, écrite avant validation |
+| `files/log/usage/` | consommation cumulée par session |
+| `files/log/selection/` | sélection persistée, un fichier par niveau |
+
+En cas d'échec de l'exploration, `derniere_sortie.txt` dit immédiatement s'il
+s'agit d'un problème de forme ou de contenu.
+
+Le garde-fou budgétaire est armé dans `settings.json` : `max_cost_run`,
+`max_calls_run` et `max_cost_session`, en mode `warn`.
+
+---
+
+## 5. Tests
 
 ```bash
 uv run pytest        # ~480 cas, quelques secondes
@@ -343,7 +354,7 @@ hypothèses, respect de la méthode, coût réel. Cela ne se vérifie qu'en exé
 
 ---
 
-## Limites connues
+## 6. Limites connues
 
 **Ce n'est pas un outil de comptabilité.** Le jeu est fictif et la marge calculée
 est une marge sur coûts directs, hors frais de structure.
@@ -357,4 +368,56 @@ pour cette raison.
 
 ---
 
-Denis Lamard, App-Novative. <lamard.denis@gmail.com>
+## 7. Licence
+
+**GNU Affero General Public License v3.0 ou ultérieure** (`AGPL-3.0-or-later`)
+© 2026 App-Novative — comme [loom-ia](https://github.com/denislamard/loom), dont
+ce dépôt dépend et qu'il importe.
+
+Ce n'est pas un choix esthétique. Le dépôt importe `loom_ia` : il en constitue
+une œuvre dérivée, et l'AGPL est la seule licence compatible tant que loom-ia est
+sous AGPL. Pour un usage propriétaire sans obligation de publication, une licence
+commerciale distincte peut être négociée auprès d'App-Novative, qui détient les
+droits sur les deux.
+
+Le fichier `LICENSE` doit être **identique à l'octet** au texte publié par la
+FSF, qui interdit d'en modifier une seule ligne. Il ne se recopie donc pas à la
+main :
+
+```bash
+curl -sSL https://www.gnu.org/licenses/agpl-3.0.txt -o LICENSE
+```
+
+Déclarer aussi la licence dans `pyproject.toml` (PEP 639) :
+
+```toml
+license = "AGPL-3.0-or-later"
+license-files = ["LICENSE"]
+```
+
+---
+
+## L'auteur
+
+Je m'appelle **Denis Lamard**, développeur freelance spécialisé dans les
+systèmes agentiques, sous le nom App-Novative. Vingt ans de développement, dont
+trois consacrés à concevoir et mettre en production des agents IA et des
+traitements automatisés par LLM.
+
+loom-ia n'est pas un projet de laboratoire. C'est le socle que j'utilise dans
+les projets que mes clients me confient, et il évolue au fil des missions. La
+plupart des choix décrits plus haut, le budget qui coupe avant la facture,
+l'historique rendu portable entre fournisseurs, le juge qui mesure au lieu de
+bloquer, viennent de problèmes rencontrés en production et pas d'une intention
+de design.
+
+C'est aussi ma façon de travailler. Un agent qui marche une fois, c'est une
+démo. Le vôtre devra fonctionner mille fois.
+
+[![Site](https://img.shields.io/badge/site-denislamard.github.io-0b7285?style=flat-square&logo=githubpages&logoColor=white)](https://denislamard.github.io/)
+[![GitHub](https://img.shields.io/badge/github-denislamard-24292f?style=flat-square&logo=github&logoColor=white)](https://github.com/denislamard)
+[![Contact](https://img.shields.io/badge/contact-lamard.denis%40gmail.com-c92a2a?style=flat-square&logo=gmail&logoColor=white)](mailto:lamard.denis@gmail.com)
+[![Disponibilité](https://img.shields.io/badge/disponible-septembre%202026-2b8a3e?style=flat-square)](https://denislamard.github.io/)
+
+Le détail de ce que je fais est sur mon site, le code sur GitHub. Si vous avez un
+agent à mettre en production, écrivez-moi.
